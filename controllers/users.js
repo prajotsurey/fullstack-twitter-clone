@@ -3,7 +3,7 @@ const User = require('../models/User');
 const logger = require('../utils/logger');
 const bcrypt = require('bcrypt');
 
-userRouter.post('/', async (request, response, next) => {
+userRouter.post('/', async (request, response) => {
   const saltRounds = 10;
   const body = request.body;
   if(body.username && body.password && body.password.length > 7){
