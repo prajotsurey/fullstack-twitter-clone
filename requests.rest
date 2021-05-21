@@ -2,8 +2,8 @@ POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
 
 {
-    "title": "blog 1",
-    "content": "content 1"
+    "title": "s",
+    "content": "s"
 }
 
 #####################
@@ -18,7 +18,7 @@ content-type: application/json
 
 ############################
 
-DELETE http://localhost:3001/api/blogs/60a3c423fa6ffa74c287cad8 HTTP/1.1
+DELETE http://localhost:3001/api/blogs/60a6592ef4398b4583d16cb6 HTTP/1.1
 content-type: application/json
 
 ############################

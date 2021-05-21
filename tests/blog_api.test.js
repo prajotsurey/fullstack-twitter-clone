@@ -25,10 +25,18 @@ test('blog can be added', async() => {
     content: 'content new',
   });
   expect(response.body.title).toBe('title new');
-
   const blogs = await helper.blogsInDb();
-  
   expect(blogs.length).toBe(helper.initialBlogs.length + 1);
+});
+
+test('blog with missing title cannot be added', async() => {
+  const response = await api.post('/api/blogs').send({
+    title: '',
+    content: 'content new',
+  });
+  expect(response.status).toBe(400);
+  const blogs = await helper.blogsInDb();
+  expect(blogs.length).toBe(helper.initialBlogs.length);
 });
 
 test('blog can be deleted', async() => {
@@ -39,12 +47,25 @@ test('blog can be deleted', async() => {
   expect(await updatedBlogs).toHaveLength(blogs.length - 1);
 });
 
-test('blog detail is returned', async() => {
-
+test('Non existing blog cannot be deleted', async() => {
   const blogs = await helper.blogsInDb();
-  console.log(blogs);
+  const nonExistingId = await helper.nonExistingId();
+  const response = await api.delete(`/api/blogs/${nonExistingId}`);
+  expect(response.status).toBe(404);
+  const updatedBlogs = helper.blogsInDb();
+  expect(await updatedBlogs).toHaveLength(blogs.length);
+});
+
+test('blog detail is returned', async() => {
+  const blogs = await helper.blogsInDb();
   const response = await api.get(`/api/blogs/${blogs[0].id}`);
   expect(response.body.title).toBe(blogs[0].title);
+});
+
+test('non existing blog detail is not returned', async() => {
+  const nonExistingId = await helper.nonExistingId();
+  const response = await api.get(`/api/blogs/${nonExistingId}`);
+  expect(response.status).toBe(404);
 });
 
 afterAll(()=> {

@@ -6,7 +6,7 @@ blogRouter.get('/', async (request,response) => {
   return response.json(blogs);
 });
 
-blogRouter.post('/', (request,response) => {
+blogRouter.post('/', (request,response, next) => {
   const body = request.body;
 
   if(!body.content) { 
@@ -19,10 +19,11 @@ blogRouter.post('/', (request,response) => {
     date: new Date()
   });
 
-  blog.save().then(savedBlog => {
-    response.json(savedBlog);
-  });
-
+  blog.save()
+    .then(savedBlog => {
+      response.json(savedBlog);
+    })
+    .catch(error => next(error));
 });
 
 blogRouter.get('/:id', async (request, response, next) => {
