@@ -1,0 +1,4 @@
+user login
+update user schema with blog references
+update blog schema with user references
+update blog creation to add user id in blog ref and blod id in user ref

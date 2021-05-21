@@ -29,7 +29,17 @@ content-type: application/json
 
 {
     "username": "username1",
-    "password": "p"
+    "password": "pasdasdasdasd"
+}
+
+############################
+
+POST http://localhost:3001/api/login/ HTTP/1.1
+content-type: application/json
+
+{
+    "username": "username1s",
+    "password": "pasdasdasdasd"
 }
 
 ############################
