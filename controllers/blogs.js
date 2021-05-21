@@ -37,4 +37,16 @@ blogRouter.get('/:id', async (request, response, next) => {
     .catch( error => next(error));
 });
 
+blogRouter.delete('/:id', async (request, response, next) => {
+  Blog.findByIdAndDelete(request.params.id)
+    .then( item => {
+      if(item) {
+        response.status(204).end();
+      } else {
+        response.status(404).send({error : 'object not found'});
+      }
+    })
+    .catch( error => next(error));
+});
+
 module.exports = blogRouter;
