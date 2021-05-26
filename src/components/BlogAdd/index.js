@@ -1,8 +1,8 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
-import axios from 'axios';
 import * as Yup from 'yup';
 import TextInput from '../TextInput';
+import blogService from '../../services/blogService';
 
 const BlogAddView = () => {
 
@@ -17,11 +17,11 @@ const BlogAddView = () => {
   })
 
   const submitForm = async (values) => {
-    const response = await axios.post('http://localhost:3001/api/blogs',{
+    const savedBlog = await blogService.createBblog({
       title: values.title,
-      content: values.content
-    });
-    console.log(response.data)
+      content: values.content,
+    })
+    console.log(savedBlog)
   }
 
   return(

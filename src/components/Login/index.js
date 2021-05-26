@@ -4,9 +4,11 @@ import {
 } from 'formik';
 import * as Yup from 'yup'
 import TextInput from '../TextInput';
+import loginService from '../../services/loginService';
+import { useHistory } from 'react-router';
 
-const Login = () => {
-  
+const Login = ({setUser}) => {
+  const history = useHistory();
   const initialValues = {
     username: "",
     password: "",
@@ -17,15 +19,24 @@ const Login = () => {
     password: Yup.string().required()
   })
 
-  const submitForm = (values) => {
-    console.log(values)
+  const login = async (values) => {
+    try{
+      const user = await loginService.login(values)
+      setUser(user)
+      history.push('/')
+      window.localStorage.setItem(
+        'blogappuser', JSON.stringify(user)
+      ) 
+    } catch(error) {
+      console.log(error)
+    }
   };
 
   return(
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values) => {submitForm(values)}}
+      onSubmit={(values) => {login(values)}}
     > 
       {() => (
         <Form>
