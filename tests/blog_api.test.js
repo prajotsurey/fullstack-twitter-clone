@@ -40,6 +40,22 @@ describe('blog test', () => {
     expect(blogs.length).toBe(helper.initialBlogs.length + 1);
   });
   
+  test('added blog has author field', async() => {
+    const response = await api.post('/api/blogs')
+      .set({'authorization': authorizationHeader})
+      .send({
+        title: 'title new',
+        content: 'content new',
+      });
+    expect(response.status).toBe(200);
+    expect(response.body.title).toBe('title new');
+    console.log(savedUser);
+    console.log(response.body);
+    expect(response.body.author).toEqual(savedUser.id);
+    const blogs = await helper.blogsInDb();
+    expect(blogs.length).toBe(helper.initialBlogs.length + 1);
+  });
+
   test('blog cannot be added by a logged out user', async() => {
     const response = await api.post('/api/blogs')
       .send({

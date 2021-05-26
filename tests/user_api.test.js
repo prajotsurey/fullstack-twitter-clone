@@ -5,6 +5,7 @@ const app = require('../app');
 const bcrypt = require('bcrypt');
 const helper = require('./test_helper');
 const mongoose = require('mongoose');
+const resetAndLogin = require('./login_helper');
 
 const api = supertest(app);
 
@@ -47,6 +48,27 @@ describe('when one user is added', () => {
 
     const updatedUsers = await helper.usersInDb();
     expect(updatedUsers).toHaveLength(usersAtStart.length);
+  });
+});
+
+describe('creating blogs', () => {
+  let authorizationHeader, savedUser;
+  beforeEach(async() => {
+    const response = await resetAndLogin();
+    authorizationHeader = response.authorizationHeader;
+    savedUser = response.savedUser;
+  });
+  test('created blog shows up in users blogs field', async () => {
+    const response = await api.post('/api/blogs')
+      .set({'authorization': authorizationHeader})
+      .send({
+        title: 'title new',
+        content: 'content new',
+      });
+    expect(response.status).toBe(200);
+    expect(response.body.title).toBe('title new');
+    const user = await User.findById(savedUser.id).populate('blogs');
+    expect(user.blogs[0].id).toContain(response.body.id);
   });
 });
 

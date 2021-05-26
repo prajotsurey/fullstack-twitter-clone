@@ -12,7 +12,7 @@ const getTokenFrom = request => {
 };
 
 blogRouter.get('/', async (request,response) => {
-  const blogs = await Blog.find({});
+  const blogs = await Blog.find({}).populate('author');
   return response.json(blogs);
 });
 
@@ -35,10 +35,14 @@ blogRouter.post('/', async (request,response, next) => {
     const blog = new Blog({
       title: body.title,
       content: body.content,
+      author: user.id,
       date: new Date()
     });
 
     const savedBlog = await blog.save();
+    user.blogs = user.blogs.concat(savedBlog._id);
+    const save = await user.save();
+    console.log(save);
     response.json(savedBlog);
   
   } catch(error) {
@@ -49,6 +53,7 @@ blogRouter.post('/', async (request,response, next) => {
 
 blogRouter.get('/:id', async (request, response, next) => {
   Blog.findById(request.params.id)
+    .populate('author')
     .then( blog => {
       if(blog) {
         response.json(blog);

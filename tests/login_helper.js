@@ -14,6 +14,7 @@ const resetAndLogin = async () => {
     username: savedUser.username,
     id: savedUser._id
   };
+  savedUser.id = savedUser._id.toString();
   const token = await jwt.sign(userForToken,process.env.SECRET);
   const authorizationHeader = `bearer ${token}`;
   
