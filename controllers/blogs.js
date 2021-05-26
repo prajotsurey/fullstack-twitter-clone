@@ -1,29 +1,50 @@
 const blogRouter = require('express').Router();
 const Blog = require('../models/Blog');
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
+
+const getTokenFrom = request => {
+  const authorization = request.get('authorization');
+  if(authorization && authorization.toLowerCase().startsWith('bearer')) {
+    return authorization.substring(7);
+  }
+  return null;
+};
 
 blogRouter.get('/', async (request,response) => {
   const blogs = await Blog.find({});
   return response.json(blogs);
 });
 
-blogRouter.post('/', (request,response, next) => {
+blogRouter.post('/', async (request,response, next) => {
   const body = request.body;
+  const token = getTokenFrom(request);
+  try{
+    const decodedToken = jwt.verify(token, process.env.SECRET);
 
-  if(!body.content) { 
-    return response.status(400).json({error: 'content missing'});
+    if(!token || !decodedToken.id) {
+      return response.status(401).json({error: 'token missing or invalid'});
+    }
+
+    const user = await User.findById(decodedToken.id);
+
+    if(!body.content) { 
+      return response.status(400).json({error: 'content missing'});
+    }
+
+    const blog = new Blog({
+      title: body.title,
+      content: body.content,
+      date: new Date()
+    });
+
+    const savedBlog = await blog.save();
+    response.json(savedBlog);
+  
+  } catch(error) {
+    next(error);
   }
 
-  const blog = new Blog({
-    title: body.title,
-    content: body.content,
-    date: new Date()
-  });
-
-  blog.save()
-    .then(savedBlog => {
-      response.json(savedBlog);
-    })
-    .catch(error => next(error));
 });
 
 blogRouter.get('/:id', async (request, response, next) => {
