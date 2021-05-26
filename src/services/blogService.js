@@ -12,6 +12,12 @@ const getBlogs = async() => {
   return response.data
 }
 
+const getBlog = async(id) => {
+  const response = await axios.get(`${baseUrl}/id`)
+  return response.data
+}
+
+
 const createBblog = async (values) => {
   const config = { 
     headers: {  Authorization : token },

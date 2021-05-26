@@ -4,6 +4,7 @@ import {
 } from 'formik';
 import * as Yup from 'yup'
 import TextInput from '../TextInput';
+import userService from '../../services/userService'
 
 const SignUp = () => {
   const initialValues = {
@@ -18,8 +19,14 @@ const SignUp = () => {
     passwordConfirm: Yup.string().required(),
   })
 
-  const submitForm = (values) => {
-    console.log(values)
+  const submitForm = async (values) => {
+    const credentials = {
+      username: values.username,
+      password: values.password,
+    }
+
+    await userService.createUser(credentials)
+
   };
 
   return(

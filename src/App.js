@@ -11,6 +11,7 @@ import LoginView from './components/Login';
 import blogService from './services/blogService';
 
 import axios from 'axios';
+import SignUp from './components/SignUp';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -34,6 +35,11 @@ const App = () => {
     }
   },[])
 
+  const handleLogout = () => {
+    setUser(null)
+    window.localStorage.removeItem('blogappuser')
+  }
+
   return(
     <>
     {
@@ -42,7 +48,7 @@ const App = () => {
         <Link to='/'>home</Link>
         <Link to='/blogs'>blogs</Link>
         <Link to='/addblog'>Add blog</Link>
-        <Link to='/login'>Login</Link>
+        <button onClick={handleLogout}>Logout</button>
         </>
       : <></>
     }
@@ -59,8 +65,12 @@ const App = () => {
       <Route path='/blogs'>
         <BlogList blogs={blogs} user={user}/>
       </Route>
+      <Route path='/signup'>
+        <SignUp blogs={blogs} user={user}/>
+      </Route>
       <Route path='/'>
-        home
+        home <Link to='/login'>Login</Link>
+        <Link to='/signup'>Signup</Link>
       </Route>
     </Switch>
     </>

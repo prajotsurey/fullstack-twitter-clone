@@ -3,9 +3,14 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import TextInput from '../TextInput';
 import blogService from '../../services/blogService';
+import { useHistory } from 'react-router';
 
-const BlogAddView = () => {
+const BlogAddView = ({user}) => {
+  const history = useHistory()
 
+  if(!user) {
+    history.push('/login')
+  }
   const initialValues = {
   title: "",
   content: "",
