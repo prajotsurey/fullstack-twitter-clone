@@ -19,9 +19,10 @@ userRouter.post('/', async (request, response, next) => {
   }
 });
 
-userRouter.get('/', async (request,response) => {
-  const users = await User.find({}).populate('blogs');
-  response.status(200).json(users); 
+userRouter.get('/:id', async (request,response) => {
+  const returnedUser = await User.findById(request.params.id).populate('blogs');
+  console.log(returnedUser);
+  return response.status(200).json(returnedUser); 
 });
 
 module.exports = userRouter;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { 
   Route,
   Switch,
-  Link
 } from 'react-router-dom'
 import BlogList from './components/BlogList';
 import BlogDetail from './components/BlogDetail';
@@ -14,6 +13,7 @@ import Landing from './components/Landing';
 import axios from 'axios';
 import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
+import Profile from './components/Profile';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -44,11 +44,6 @@ const App = () => {
 
   return(
     <>
-    {
-      user
-      ?<NavBar handleLogout={handleLogout}/>
-      : <></>
-    }
     <Switch>
       <Route path='/login'>
         <LoginView user={user} setUser={setUser}/>
@@ -60,10 +55,18 @@ const App = () => {
         <BlogDetail user={user}/>
       </Route>
       <Route path='/blogs'>
+        <NavBar handleLogout={handleLogout}/>
         <BlogList blogs={blogs} user={user}/>
       </Route>
       <Route path='/signup'>
         <SignUp blogs={blogs} user={user}/>
+      </Route>
+      <Route path='/profile'>
+        {
+          user
+          ?<Profile user={user}/>
+          :<></>
+        }
       </Route>
       <Route path='/'>
         <Landing blogs={blogs} user={user} setUser={setUser}/>

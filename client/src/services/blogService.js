@@ -18,7 +18,7 @@ const getBlog = async(id) => {
 }
 
 
-const createBblog = async (values) => {
+const createBlog = async (values) => {
   const config = { 
     headers: {  Authorization : token },
   }
@@ -27,4 +27,4 @@ const createBblog = async (values) => {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { setToken, getBlogs, createBblog}
+export default { setToken, getBlogs, createBlog, getBlog}

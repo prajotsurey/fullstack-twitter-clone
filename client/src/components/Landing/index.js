@@ -1,7 +1,4 @@
-import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import BlogList from '../BlogList';
-import LoginView from '../Login';
 const Landing = ({blogs, user, setUser}) => {
   const history = useHistory();
   if(user){
@@ -20,7 +17,7 @@ const Landing = ({blogs, user, setUser}) => {
           Join Blogger today.
         </div>
         <Link className="h-12 p-3 bg-white text-center rounded-md mb-4" to="/login">Login</Link>
-        <Link className="h-12 p-3 bg-white text-center rounded-md" to="/login">Sign Up</Link>
+        <Link className="h-12 p-3 bg-white text-center rounded-md" to="/signup">Sign Up</Link>
       </div>
     </div>
   )
