@@ -26,7 +26,8 @@ const NavBar = ({handleLogout}) => {
           <button onClick={handleLogout}>Logout</button>
         </div>
       </div>
-      <div className={overlayClass}></div>
+      <div className={overlayClass}>
+      </div>
     </div>
   )
 };

@@ -14,6 +14,8 @@ import axios from 'axios';
 import SignUp from './components/SignUp';
 import NavBar from './components/NavBar';
 import Profile from './components/Profile';
+import LeftSidebar from './components/LeftSidebar';
+import RightSidebar from './components/RightSidebar';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -55,8 +57,12 @@ const App = () => {
         <BlogDetail user={user}/>
       </Route>
       <Route path='/blogs'>
-        <NavBar handleLogout={handleLogout}/>
-        <BlogList blogs={blogs} user={user}/>
+        <div className="flex flex-row justify-center">
+          <LeftSidebar/>
+          <div className="flex-grow max-w-screen-md"> 
+            <BlogList blogs={blogs} user={user} handleLogout={handleLogout}/>
+          </div>
+        </div>
       </Route>
       <Route path='/signup'>
         <SignUp blogs={blogs} user={user}/>
