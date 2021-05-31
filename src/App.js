@@ -9,9 +9,11 @@ import BlogDetail from './components/BlogDetail';
 import BlogAddView from './components/BlogAdd';
 import LoginView from './components/Login';
 import blogService from './services/blogService';
+import Landing from './components/Landing';
 
 import axios from 'axios';
 import SignUp from './components/SignUp';
+import NavBar from './components/NavBar';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -44,17 +46,12 @@ const App = () => {
     <>
     {
       user
-      ?<>
-        <Link to='/'>home</Link>
-        <Link to='/blogs'>blogs</Link>
-        <Link to='/addblog'>Add blog</Link>
-        <button onClick={handleLogout}>Logout</button>
-        </>
+      ?<NavBar handleLogout={handleLogout}/>
       : <></>
     }
     <Switch>
       <Route path='/login'>
-        <LoginView setUser={setUser}/>
+        <LoginView user={user} setUser={setUser}/>
       </Route>
       <Route path='/addBlog'>
         <BlogAddView user={user}/>
@@ -69,8 +66,7 @@ const App = () => {
         <SignUp blogs={blogs} user={user}/>
       </Route>
       <Route path='/'>
-        home <Link to='/login'>Login</Link>
-        <Link to='/signup'>Signup</Link>
+        <Landing blogs={blogs} user={user} setUser={setUser}/>
       </Route>
     </Switch>
     </>
