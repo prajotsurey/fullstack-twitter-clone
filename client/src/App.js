@@ -21,7 +21,6 @@ import Profile from './pages/Profile';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-  const [user, setUser] = useState(null);
 
   const fetchBlogs = async () => {
     const response = await axios.get('http://localhost:3001/api/blogs');
@@ -32,43 +31,29 @@ const App = () => {
     fetchBlogs();
   },[])
 
-  useEffect( () => {
-    const loggedInUser = window.localStorage.getItem('blogappuser')
-    if(loggedInUser){
-      const parsedUser = JSON.parse(loggedInUser)
-      setUser(parsedUser)
-      blogService.setToken(parsedUser.token)
-    }
-  },[])
-
-  const handleLogout = () => {
-    setUser(null)
-    window.localStorage.removeItem('blogappuser')
-  }
-  console.log('user in app.js - ',user)
   return(
     <>
     <Switch>
-      <PrivateRoute user={user} path='/addBlog'>
+      <PrivateRoute path='/addBlog'>
         <CreateBlog />
       </PrivateRoute>
-      <PrivateRoute user={user} path='/blog/:id'>
+      <PrivateRoute path='/blog/:id'>
         <BlogDetail />
       </PrivateRoute>
-      <PrivateRoute user={user} path='/blogs'>
-        <Browse blogs={blogs} handleLogout={handleLogout}/>
+      <PrivateRoute path='/blogs'>
+        <Browse blogs={blogs} handleLogout={1}/>
       </PrivateRoute>
-      <PrivateRoute user={user} path='/profile'>
-        <Profile user={user}/>
+      <PrivateRoute path='/profile'>
+        <Profile user={1}/>
       </PrivateRoute>
       <Route path='/signup'>
-        <SignUp blogs={blogs} user={user}/>
+        <SignUp blogs={blogs} user={1}/>
       </Route>
       <Route path='/login'>
-        <Login setUser={setUser}/>
+        <Login />
       </Route>
       <Route path='/'>
-        <Landing blogs={blogs} user={user} setUser={setUser}/>
+        <Landing blogs={blogs} user={1} setUser={1}/>
       </Route>
     </Switch>
     </>

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import useAuthStorage from '../hooks/useAuthStorage';
 
-export function PrivateRoute({user, children, ...rest }) {
-  console.log('user in private route - ', user);
+export function PrivateRoute({ children, ...rest }) {
+  const auth = useAuthStorage();
+  const user = auth.getToken();
   return (
     <Route
       {...rest}

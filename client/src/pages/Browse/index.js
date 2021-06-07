@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router';
 import NavBar from '../../components/NavBar';
 import LeftSidebar from '../../components/LeftSidebar';
 const BlogList = ({blogs,user,handleLogout}) => {
