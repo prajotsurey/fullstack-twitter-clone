@@ -3,16 +3,13 @@ import {
   Formik, Field, Form
 } from 'formik';
 import * as Yup from 'yup'
-import TextInput from '../TextInput';
+import TextInput from '../../components/TextInput';
 import loginService from '../../services/loginService';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
-const Login = ({user, setUser}) => {
+const Login = ({setUser}) => {
   const history = useHistory();
-  if(user){
-    history.push('/blogs');
-  }
   const initialValues = {
     username: "",
     password: "",

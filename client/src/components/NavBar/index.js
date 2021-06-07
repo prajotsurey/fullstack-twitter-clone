@@ -23,7 +23,7 @@ const NavBar = ({handleLogout}) => {
           <Link to='/profile'>Profile</Link>
         </div>
         <div>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={() => handleLogout()}>Logout</button>
         </div>
       </div>
       <div className={overlayClass}>

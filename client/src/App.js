@@ -3,19 +3,21 @@ import {
   Route,
   Switch,
 } from 'react-router-dom'
-import BlogList from './components/BlogList';
-import BlogDetail from './components/BlogDetail';
-import BlogAddView from './components/BlogAdd';
-import LoginView from './components/Login';
-import blogService from './services/blogService';
-import Landing from './components/Landing';
 
+import { PrivateRoute } from './helpers/routes';
+
+import blogService from './services/blogService';
 import axios from 'axios';
-import SignUp from './components/SignUp';
-import NavBar from './components/NavBar';
-import Profile from './components/Profile';
-import LeftSidebar from './components/LeftSidebar';
-import RightSidebar from './components/RightSidebar';
+
+import Browse from './pages/Browse';
+import BlogDetail from './pages/BlogDetail';
+import CreateBlog from './pages/CreateBlog';
+
+import Login from './pages/Login';
+import Landing from './pages/Landing';
+import SignUp from './pages/SignUp';
+
+import Profile from './pages/Profile';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -43,36 +45,27 @@ const App = () => {
     setUser(null)
     window.localStorage.removeItem('blogappuser')
   }
-
+  console.log('user in app.js - ',user)
   return(
     <>
     <Switch>
-      <Route path='/login'>
-        <LoginView user={user} setUser={setUser}/>
-      </Route>
-      <Route path='/addBlog'>
-        <BlogAddView user={user}/>
-      </Route>
-      <Route path='/blog/:id'>
-        <BlogDetail user={user}/>
-      </Route>
-      <Route path='/blogs'>
-        <div className="flex flex-row justify-center">
-          <LeftSidebar/>
-          <div className="flex-grow max-w-screen-md"> 
-            <BlogList blogs={blogs} user={user} handleLogout={handleLogout}/>
-          </div>
-        </div>
-      </Route>
+      <PrivateRoute user={user} path='/addBlog'>
+        <CreateBlog />
+      </PrivateRoute>
+      <PrivateRoute user={user} path='/blog/:id'>
+        <BlogDetail />
+      </PrivateRoute>
+      <PrivateRoute user={user} path='/blogs'>
+        <Browse blogs={blogs} handleLogout={handleLogout}/>
+      </PrivateRoute>
+      <PrivateRoute user={user} path='/profile'>
+        <Profile user={user}/>
+      </PrivateRoute>
       <Route path='/signup'>
         <SignUp blogs={blogs} user={user}/>
       </Route>
-      <Route path='/profile'>
-        {
-          user
-          ?<Profile user={user}/>
-          :<></>
-        }
+      <Route path='/login'>
+        <Login setUser={setUser}/>
       </Route>
       <Route path='/'>
         <Landing blogs={blogs} user={user} setUser={setUser}/>

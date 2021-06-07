@@ -1,16 +1,10 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import TextInput from '../TextInput';
+import TextInput from '../../components/TextInput';
 import blogService from '../../services/blogService';
-import { useHistory } from 'react-router';
 
-const BlogAddView = ({user}) => {
-  const history = useHistory()
-
-  if(!user) {
-    history.push('/login')
-  }
+const CreateBlog = () => {
   const initialValues = {
   title: "",
   content: "",
@@ -51,4 +45,4 @@ const BlogAddView = ({user}) => {
   )
 }
 
-export default BlogAddView
+export default CreateBlog
