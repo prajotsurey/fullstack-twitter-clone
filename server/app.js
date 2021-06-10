@@ -7,6 +7,7 @@ const userRouter = require('./controllers/users');
 const middleware = require('./utils/middleware');
 const cors = require('cors');
 const loginRouter = require('./controllers/login');
+const path = require('path');
 
 const app = express();
 logger.info('connecting to', config.MONGODB_URI);
@@ -20,7 +21,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
   });
 
 app.use(cors());
-app.use(express.static('build'));
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 app.use(express.json());
 app.use(middleware.requestLogger);
 
