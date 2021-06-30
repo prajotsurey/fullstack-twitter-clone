@@ -1,6 +1,6 @@
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lMSIsImlkIjoiNjBhN2JjNDA5ZTAyZGE2MzZhYWIwNzhjIiwiaWF0IjoxNjIyMDA1MDY0fQ.QqXPzTBoKGna56xDSYf_W-4tlREtsAdLwoncF-yqGgA
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld3VzZXJuYW1lNCIsImlkIjoiNyIsImlhdCI6MTYyNTA1ODAyNH0.SYrzqxbQL0Temrpuibi4PBgJg2uDqRBWeuH17b6kagk
 
 {
     "title": "authorized blog title",
@@ -14,12 +14,12 @@ content-type: application/json
 
 ######################
 
-GET http://localhost:3001/api/blogs/60ade3949afce2339446f13c HTTP/1.1
+GET http://localhost:3001/api/blogs/1 HTTP/1.1
 content-type: application/json
 
 ############################
 
-DELETE http://localhost:3001/api/blogs/60ade15e197cc531614999fe HTTP/1.1
+DELETE http://localhost:3001/api/blogs/2 HTTP/1.1
 content-type: application/json
 
 ############################
@@ -29,13 +29,13 @@ POST http://localhost:3001/api/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "username": "username1",
-    "password": "pasdasdasdasd"
+    "username": "newusername4",
+    "password": "newpassword"
 }
 
 ############################
 
-GET http://localhost:3001/api/users/ HTTP/1.1
+GET http://localhost:3001/api/users/1 HTTP/1.1
 content-type: application/json
 
 ############################
@@ -44,8 +44,8 @@ POST http://localhost:3001/api/login/ HTTP/1.1
 content-type: application/json
 
 {
-    "username": "username1",
-    "password": "pasdasdasdasd"
+    "username": "newusername4",
+    "password": "newpassword"
 }
 
 ############################
