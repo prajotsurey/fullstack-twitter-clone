@@ -1,6 +1,7 @@
 import { Link, useHistory } from 'react-router-dom';
 const Landing = ({blogs, user, setUser}) => {
   const history = useHistory();
+  console.log('landing')
   if(user){
     history.push('/blogs')
   }

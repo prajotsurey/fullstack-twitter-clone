@@ -2,6 +2,7 @@ import React from 'react';
 import NavBar from '../../components/NavBar';
 import LeftSidebar from '../../components/LeftSidebar';
 const BlogList = ({blogs,user,handleLogout}) => {
+  console.log('blog browse')
   return(
     <div className="flex flex-row justify-center">
       <LeftSidebar/>

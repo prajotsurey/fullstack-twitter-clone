@@ -21,12 +21,20 @@ db.authenticate()
 
 app.use(cors());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+
+
 app.use(express.json());
 app.use(middleware.requestLogger);
 
 app.use('/api/blogs', blogRouter);
 app.use('/api/users', userRouter);
 app.use('/api/login', loginRouter);
+
+app.get('*', (req,res) =>{
+  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
+});
+
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 module.exports = app;
