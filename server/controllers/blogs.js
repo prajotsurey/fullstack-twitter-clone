@@ -1,6 +1,5 @@
 const blogRouter = require('express').Router();
-const Blog = require('../models/Blog');
-const User = require('../models/User');
+const models = require('../models');
 const jwt = require('jsonwebtoken');
 const db = require('../db');
 
@@ -15,10 +14,10 @@ const getTokenFrom = request => {
 
 blogRouter.get('/', async (request,response) => {
 
-  const result = await db.query('SELECT * FROM posts');
-  const blogs = result.rows;
+  const result = await models.post.findAll();
+  console.log(result.dataValues);
 
-  return response.json(blogs);
+  return response.json(result);
 });
 
 blogRouter.post('/', async (request,response, next) => {
@@ -31,23 +30,19 @@ blogRouter.post('/', async (request,response, next) => {
       return response.status(401).json({error: 'token missing or invalid'});
     }
 
-    const result = await db.query(
-      "SELECT * FROM users WHERE id = $1",
-      [decodedToken.id]
-      );
+    const result = await models.user.findOne({where: {id: decodedToken.id}})
 
-    const user = result.rows[0];
+    const user = result.dataValues;
+
+
 
     if(!body.content) { 
       return response.status(400).json({error: 'content missing'});
     }
 
-    const savedBlogResult = await db.query(
-      "INSERT INTO posts (content, user_id) VALUES ($1,$2) returning *",
-      [body.content, user.id]
-    )
+    const savedBlog = await models.post.create({ content:body.content, user_id:user.id}) 
 
-    response.json(savedBlogResult.rows[0]);
+    response.json(savedBlog);
   
   } catch(error) {
     next(error);
@@ -57,12 +52,9 @@ blogRouter.post('/', async (request,response, next) => {
 
 blogRouter.get('/:id', async (request, response, next) => {
 
-  const result = await db.query(
-    "SELECT * FROM posts where id = $1",
-    [request.params.id]
-    )
+  const result = await models.posts.findOne({where: {id: request.params.id}})
   
-  const post = result.rows[0];
+  const post = result.dataValues;
 
   if(post) {
     response.json(post);
@@ -72,10 +64,9 @@ blogRouter.get('/:id', async (request, response, next) => {
 });
 
 blogRouter.delete('/:id', async (request, response, next) => {
-  const result = db.query(
-    "DELETE FROM posts where id = $1",
-    [request.params.id]
-  )
+  await models.User.destroy({
+    where: { id: request.params.id }
+  })
   response.status(204).json({
     status: 'success'
   })

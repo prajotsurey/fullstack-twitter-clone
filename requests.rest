@@ -1,6 +1,6 @@
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld3VzZXJuYW1lNCIsImlkIjoiNyIsImlhdCI6MTYyNTA1ODAyNH0.SYrzqxbQL0Temrpuibi4PBgJg2uDqRBWeuH17b6kagk
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld3VzZXJuYW1lIiwiaWQiOjEsImlhdCI6MTYyNTEzNjkzOX0.Lf0DxvwXKReWpeTQR8JK-gSSjTfQXznY3vl6ry-adWI
 
 {
     "title": "authorized blog title",
@@ -29,7 +29,7 @@ POST http://localhost:3001/api/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "username": "newusername4",
+    "username": "newusername",
     "password": "newpassword"
 }
 
@@ -44,7 +44,7 @@ POST http://localhost:3001/api/login/ HTTP/1.1
 content-type: application/json
 
 {
-    "username": "newusername4",
+    "username": "newusername",
     "password": "newpassword"
 }
 

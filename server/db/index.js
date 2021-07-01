@@ -1,12 +1,12 @@
-const { Pool } = require('pg')
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "twitter",
-  password: "password",
-  port: 5432,
+const sequalize = require('sequelize')
+
+const DATABASE = process.env.NODE_ENV === "test"
+? process.env.TEST_DATABASE
+: process.env.DEV_DATABASE
+
+const db = new sequalize(DATABASE,'postgres','password',{
+  host: 'localhost',
+  dialect: 'postgres',
 })
 
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-}
+module.exports = db;

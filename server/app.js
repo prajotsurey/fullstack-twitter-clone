@@ -1,5 +1,4 @@
 const logger = require('./utils/logger');
-const mongoose = require('mongoose');
 const config = require('./utils/config');
 const express = require('express');
 const blogRouter = require('./controllers/blogs');
@@ -9,16 +8,16 @@ const cors = require('cors');
 const loginRouter = require('./controllers/login');
 const path = require('path');
 
+const db = require('./db');
 const app = express();
-logger.info('connecting to', config.MONGODB_URI);
 
-mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+db.authenticate()
   .then(() => {
-    logger.info('connected to MongoDB');
+    console.log('connected to database...')
   })
-  .catch(error => {
-    logger.info('error connecting to MongoDB',error.message);
-  });
+  .catch((err) => {
+    console.log('error connecting to database')
+  })
 
 app.use(cors());
 app.use(express.static(path.resolve(__dirname, '../client/build')));

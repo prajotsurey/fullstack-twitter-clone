@@ -1,18 +1,15 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('../models/User');
-const db = require('../db');
+const models = require('../models');
 
 const loginRouter = require('express').Router();
 
 loginRouter.post('/', async(request, response) => {
   const body = request.body;
-  const result = await db.query(
-    "SELECT * FROM users WHERE username = $1",
-    [body.username]
-  );
+  const result = await models.user.findOne({ where : {username : body.username }})
 
-  const user = result.rows[0]
+  const user = result.dataValues;
+
   console.log(user.password_hash, body.password)
   const passwordCorrect = user === null
     ? false
