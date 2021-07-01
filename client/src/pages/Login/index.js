@@ -8,7 +8,7 @@ import loginService from '../../services/loginService';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 
-const Login = ({setUser}) => {
+const Login = () => {
   const history = useHistory();
   const initialValues = {
     username: "",
@@ -23,7 +23,6 @@ const Login = ({setUser}) => {
   const login = async (values) => {
     try{
       const user = await loginService.login(values)
-      setUser(user)
       history.push('/')
       window.localStorage.setItem(
         'blogappuser', JSON.stringify(user)
