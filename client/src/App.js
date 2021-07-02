@@ -23,7 +23,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([]);
 
   const fetchBlogs = async () => {
-    const response = await axios.get('http://localhost:3001/api/blogs');
+    const response = await axios.get('/api/posts');
     setBlogs(response.data);
   }
 
@@ -37,10 +37,10 @@ const App = () => {
       <PrivateRoute path='/addBlog'>
         <CreateBlog />
       </PrivateRoute>
-      <PrivateRoute path='/blog/:id'>
+      <PrivateRoute path='/posts/:id'>
         <BlogDetail />
       </PrivateRoute>
-      <PrivateRoute path='/blogs'>
+      <PrivateRoute path='/posts'>
         <Browse blogs={blogs} handleLogout={1}/>
       </PrivateRoute>
       <PrivateRoute path='/profile'>

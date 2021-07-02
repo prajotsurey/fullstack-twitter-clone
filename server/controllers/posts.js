@@ -1,4 +1,4 @@
-const blogRouter = require('express').Router();
+const postRouter = require('express').Router();
 const models = require('../models');
 const jwt = require('jsonwebtoken');
 const db = require('../db');
@@ -12,15 +12,16 @@ const getTokenFrom = request => {
   return null;
 };
 
-blogRouter.get('/', async (request,response) => {
-
-  const result = await models.post.findAll({include: models.user});
-  console.log(result.dataValues);
-
-  return response.json(result);
+postRouter.get('/', async (request,response) => {
+  try{
+    const result = await models.post.findAll({include: models.user});
+    return response.json(result);
+  } catch(error) {
+    next(error);
+  }
 });
 
-blogRouter.post('/', async (request,response, next) => {
+postRouter.post('/', async (request,response, next) => {
   const body = request.body;
   const token = getTokenFrom(request);
   try{
@@ -33,8 +34,6 @@ blogRouter.post('/', async (request,response, next) => {
     const result = await models.user.findOne({where: {id: decodedToken.id}})
 
     const user = result.dataValues;
-
-
 
     if(!body.content) { 
       return response.status(400).json({error: 'content missing'});
@@ -50,26 +49,30 @@ blogRouter.post('/', async (request,response, next) => {
 
 });
 
-blogRouter.get('/:id', async (request, response, next) => {
-
-  const result = await models.post.findOne({where: {id: request.params.id}})
-  
-  const post = result.dataValues;
-
-  if(post) {
-    response.json(post);
-  } else {
-    response.status(404).end();
+postRouter.get('/:id', async (request, response, next) => {
+  try{
+    const post = await models.post.findOne({where: {id: request.params.id}, include: models.user})
+    if(post) {
+      response.json(post);
+    } else {
+      response.status(404).end();
+    }
+  } catch (error) {
+    next(error);
   }
 });
 
-blogRouter.delete('/:id', async (request, response, next) => {
-  await models.User.destroy({
-    where: { id: request.params.id }
-  })
-  response.status(204).json({
-    status: 'success'
-  })
+postRouter.delete('/:id', async (request, response, next) => {
+  try{
+    await models.post.destroy({
+      where: { id: request.params.id }
+    })
+    response.status(204).json({
+      status: 'success'
+    })
+  } catch (error) {
+    next(error);
+  }
 });
 
-module.exports = blogRouter;
+module.exports = postRouter;

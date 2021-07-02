@@ -6,9 +6,12 @@ const loginRouter = require('express').Router();
 
 loginRouter.post('/', async(request, response) => {
   const body = request.body;
-  const result = await models.user.findOne({ where : {username : body.username }})
-
-  const user = result.dataValues;
+  const user = await models.user.findOne({ 
+    where : {username : body.username },
+    attributes: {
+      include:['password_hash']
+    }
+  })
 
   console.log(user.password_hash, body.password)
   const passwordCorrect = user === null

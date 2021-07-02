@@ -2,7 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 const Landing = ({blogs, user, setUser}) => {
   const history = useHistory();
   if(user){
-    history.push('/blogs')
+    history.push('/posts')
   }
   return(
     <div className="flex ">
