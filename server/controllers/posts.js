@@ -62,6 +62,32 @@ postRouter.get('/:id', async (request, response, next) => {
   }
 });
 
+postRouter.get('/like/:id', async (request, response, next) => {
+  const token = getTokenFrom(request);
+  try{
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log(decodedToken)
+    if(!token || !decodedToken.id) {
+      return response.status(401).json({error: 'token missing or invalid'});
+    }
+
+    const result = await models.user.findOne({where: {id: decodedToken.id}})
+    const user = result.dataValues;
+
+    console.log(user)
+    const like = await models.likes.create({
+      user_id: user.id,
+      post_id: request.params.id
+    })
+    console.log(like)
+    response.json(like);
+
+  }  catch (error) {
+    next(error);
+  }
+});
+
+
 postRouter.delete('/:id', async (request, response, next) => {
   try{
     await models.post.destroy({
