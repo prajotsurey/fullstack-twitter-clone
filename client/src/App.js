@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { 
   Switch,
 } from 'react-router-dom'
 
 import { PrivateRoute, PublicRoute } from './helpers/routes';
-import axios from 'axios';
 
 import Browse from './pages/Browse';
 import BlogDetail from './pages/BlogDetail';
@@ -17,16 +16,6 @@ import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
-
-  const fetchBlogs = async () => {
-    const response = await axios.get('/api/posts');
-    setBlogs(response.data);
-  }
-
-  useEffect( () => {
-    fetchBlogs();
-  },[])
 
   return(
     <>
@@ -38,13 +27,13 @@ const App = () => {
         <BlogDetail />
       </PrivateRoute>
       <PrivateRoute path='/posts'>
-        <Browse blogs={blogs} handleLogout={1}/>
+        <Browse/>
       </PrivateRoute>
       <PrivateRoute path='/profile'>
         <Profile user={1}/>
       </PrivateRoute>
       <PublicRoute path='/signup'>
-        <SignUp blogs={blogs} user={1}/>
+        <SignUp user={1}/>
       </PublicRoute>
       <PublicRoute path='/login'>
         <Login />
