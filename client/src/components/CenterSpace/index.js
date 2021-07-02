@@ -14,5 +14,4 @@ const CentreSpace = (props) => {
   )
 }
 
-
 export default CentreSpace;
