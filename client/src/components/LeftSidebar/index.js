@@ -2,8 +2,22 @@ import React from 'react';
 
 const LeftSidebar = () => {
   return(
-    <div className="top-0 bottom-0 hidden flex-column bg-gray-100 md:flex lg:w-56 md:w-14">
-      <div className="text-2xl font-semibold">
+    <div className="top-0 bottom-0 flex flex-col py-4 lg:items-start md:flex lg:w-56 md:w-16 md:items-center">
+      <div className="flex flex-row items-center text-2xl py-3 px-3 rounded-full font-semibold hover:bg-green-50">
+        <div className="h-8 w-8 rounded-xl bg-green-200">
+          
+        </div>
+        <div className="hidden ml-2 lg:block">
+          Home
+        </div>
+      </div>
+      <div className="flex flex-row items-center text-2xl py-3 px-3 rounded-full font-semibold hover:bg-green-50">
+        <div className="h-8 w-8 rounded-xl bg-green-200">
+          
+        </div>
+        <div className="hidden ml-2 lg:block">
+          Explore
+        </div>
       </div>
     </div>
   )

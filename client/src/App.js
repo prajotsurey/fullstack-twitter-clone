@@ -8,7 +8,7 @@ import { PrivateRoute, PublicRoute } from './helpers/routes';
 import Browse from './pages/Browse';
 import BlogDetail from './pages/BlogDetail';
 import CreateBlog from './pages/CreateBlog';
-
+import CentreSpace from './components/CenterSpace';
 import Login from './pages/Login';
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
@@ -27,7 +27,9 @@ const App = () => {
         <BlogDetail />
       </PrivateRoute>
       <PrivateRoute path='/posts'>
-        <Browse/>
+        <CentreSpace>
+          <Browse />
+        </CentreSpace>
       </PrivateRoute>
       <PrivateRoute path='/profile'>
         <Profile user={1}/>
