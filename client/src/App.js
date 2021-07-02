@@ -16,7 +16,6 @@ import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 
 const App = () => {
-
   return(
     <>
     <Switch>
