@@ -16,9 +16,15 @@ module.exports = (sequelize, DataTypes) => {
   user.init({
     username: DataTypes.STRING,
     password_hash: DataTypes.STRING
-  }, {
+  },{
+      defaultScope:{
+      attributes: { 
+        exclude: ['password_hash']
+      }
+    },
     sequelize,
     modelName: 'user',
-  });
+  },  
+  );
   return user;
 };

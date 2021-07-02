@@ -14,7 +14,7 @@ const getTokenFrom = request => {
 
 blogRouter.get('/', async (request,response) => {
 
-  const result = await models.post.findAll();
+  const result = await models.post.findAll({include: models.user});
   console.log(result.dataValues);
 
   return response.json(result);
@@ -52,7 +52,7 @@ blogRouter.post('/', async (request,response, next) => {
 
 blogRouter.get('/:id', async (request, response, next) => {
 
-  const result = await models.posts.findOne({where: {id: request.params.id}})
+  const result = await models.post.findOne({where: {id: request.params.id}})
   
   const post = result.dataValues;
 
