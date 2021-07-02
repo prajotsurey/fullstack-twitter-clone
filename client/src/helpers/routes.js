@@ -23,3 +23,25 @@ export function PrivateRoute({ children, ...rest }) {
     />
   );
 }
+
+export function PublicRoute({ children, ...rest }) {
+  const auth = useAuthStorage();
+  const user = auth.getToken();
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        !user ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/posts",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}

@@ -1,9 +1,5 @@
-import { Link, useHistory } from 'react-router-dom';
-const Landing = ({blogs, user, setUser}) => {
-  const history = useHistory();
-  if(user){
-    history.push('/posts')
-  }
+import { Link } from 'react-router-dom';
+const Landing = () => {
   return(
     <div className="flex ">
       <div className="hidden md:flex w-full h-screen">

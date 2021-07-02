@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { 
-  Route,
   Switch,
 } from 'react-router-dom'
 
-import { PrivateRoute } from './helpers/routes';
-
-import blogService from './services/blogService';
+import { PrivateRoute, PublicRoute } from './helpers/routes';
 import axios from 'axios';
 
 import Browse from './pages/Browse';
@@ -46,15 +43,15 @@ const App = () => {
       <PrivateRoute path='/profile'>
         <Profile user={1}/>
       </PrivateRoute>
-      <Route path='/signup'>
+      <PublicRoute path='/signup'>
         <SignUp blogs={blogs} user={1}/>
-      </Route>
-      <Route path='/login'>
+      </PublicRoute>
+      <PublicRoute path='/login'>
         <Login />
-      </Route>
-      <Route path='/'>
-        <Landing blogs={blogs} user={1} setUser={1}/>
-      </Route>
+      </PublicRoute>
+      <PublicRoute path='/'>
+        <Landing />
+      </PublicRoute>
     </Switch>
     </>
   )
