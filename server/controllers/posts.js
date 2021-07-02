@@ -51,7 +51,7 @@ postRouter.post('/', async (request,response, next) => {
 
 postRouter.get('/:id', async (request, response, next) => {
   try{
-    const post = await models.post.findOne({where: {id: request.params.id}, include: models.user})
+    const post = await models.post.findOne({where: {id: request.params.id}, include: [models.user]})
     if(post) {
       response.json(post);
     } else {

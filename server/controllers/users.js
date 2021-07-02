@@ -18,18 +18,9 @@ userRouter.post('/', async (request, response, next) => {
 
 userRouter.get('/:id', async (request,response) => {
   // get posts
-  const User = await models.user.findOne({ where: {id: request.params.id}})
-  
-  // get user
-  const Posts = await models.post.findAll({ where: {user_id: request.params.id}})
+  const User = await models.user.findOne({ where: {id: request.params.id}, include: models.post})
 
-  //format
-  const user = {
-    ...User.dataValues,
-    blogs: Posts,
-  }
-
-  return response.status(200).json(user);  
+  return response.status(200).json(User);  
 });
 
 module.exports = userRouter;
