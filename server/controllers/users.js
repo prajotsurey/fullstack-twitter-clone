@@ -18,7 +18,7 @@ userRouter.post('/', async (request, response, next) => {
 
 userRouter.get('/:id', async (request,response) => {
   // get posts
-  const User = await models.user.findOne({ where: {id: request.params.id}, include: models.post})
+  const User = await models.user.findOne({ where: {id: request.params.id}, include: [{model: models.post, as:'created_posts'},{model: models.post, as:'liked_posts'}]})
 
   return response.status(200).json(User);  
 });

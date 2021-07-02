@@ -12,9 +12,9 @@ const getTokenFrom = request => {
   return null;
 };
 
-postRouter.get('/', async (request,response) => {
+postRouter.get('/', async (request,response,next) => {
   try{
-    const result = await models.post.findAll({include: models.user});
+    const result = await models.post.findAll({include: [{model: models.user, as:'creator'},{model: models.user, as:'likers'}]});
     return response.json(result);
   } catch(error) {
     next(error);
