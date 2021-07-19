@@ -13,6 +13,7 @@
   "author": "prajotsurey",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.12.1",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^9.0.2",

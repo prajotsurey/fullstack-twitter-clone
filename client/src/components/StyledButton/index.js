@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const StyledButton = ({children, inverted, ...rest}) => {
   if(inverted){
     return(
-      <Link className="p-3 bg-white text-center rounded-full border mb-4 bg-green-400 text-sm text-white font-bold" {...rest}>{children}</Link>
+      <Link className="py-2 px-3 bg-white text-center rounded-full border bg-green-400 text-sm text-white font-bold" {...rest}>{children}</Link>
     )  
   }
   return(
