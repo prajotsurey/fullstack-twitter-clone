@@ -17,7 +17,7 @@ const RightSidebar = () => {
   }
 
   return(
-    <div className="top-0 bottom-0 flex-col py-1 pl-6 lg:items-start hidden rightShowSmall:flex rightShowSmall:w-rightSmall rightShowLarge:w-rightLarge ">
+    <div className="top-0 bottom-0 flex-col py-1 ml-7 mr-3 lg:items-start hidden rightShowSmall:flex rightShowSmall:w-rightSmall rightShowLarge:w-rightLarge ">
       <div className="w-full">
         <Formik
         initialValues={initialValues}

@@ -10,7 +10,6 @@ const Profile = ({user}) => {
     setCurrentUser(returnedUser);
   }
 
-  console.log('here');
   useEffect(() => {
     fetchUser();
   },[])
@@ -29,7 +28,7 @@ const Profile = ({user}) => {
               {currentUser.username}
             </div>
             <div className="text-sm font-gray-100">
-
+              {currentUser.created_posts.length} tweets
             </div>
           </div>
         </div>
@@ -42,7 +41,7 @@ const Profile = ({user}) => {
               {currentUser.username}
             </div>
             <div className="text-sm text-gray-500">
-              {currentUser.blogs.length} blogs
+              {currentUser.created_posts.length} blogs
             </div>
           </div>
           <div>
@@ -55,7 +54,7 @@ const Profile = ({user}) => {
           </button>
         </div>
         <div className="pl-4 flex flex-col">
-        { currentUser.blogs.map(blog => {
+        { currentUser.created_posts.map(blog => {
             return(
               <div key={blog.id} className="flex flex-col mb-1 border-b p-4">
                 <div>{blog.content}</div>
