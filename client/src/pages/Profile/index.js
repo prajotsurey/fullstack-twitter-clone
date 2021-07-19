@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import StyledButton from '../../components/StyledButton';
 import userService from '../../services/userService';
-
+import Posts from '../../components/Posts';
+import SwitchButton from '../../components/SwitchButton';
 const Profile = ({user}) => {
   const [currentUser, setCurrentUser] = useState(null);
-  
+  const [postsToShow, setPostsToShow] = useState([]);
+  const [currentSwitch, setCurrentSwitch] = useState('1');
+
   const fetchUser = async () => {
     const returnedUser = await userService.getUser(user);
     setCurrentUser(returnedUser);
+    setPostsToShow(returnedUser.created_posts);
+  }
+
+  const changePostsToShow = (posts) => {
+    console.log(posts)
   }
 
   useEffect(() => {
@@ -16,52 +25,70 @@ const Profile = ({user}) => {
   
   if(currentUser){
     return(
-      <div className="">
+      <div className="flex flex-col">
         <div className="pl-4 h-14 flex flex-row items-center border-b"> 
           <Link to="/">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           </Link>
-          <div className="flex flex-col ml-2">
+          <div className="flex flex-col ml-7">
             <div className="text-xl font-semibold">
               {currentUser.username}
             </div>
-            <div className="text-sm font-gray-100">
+            <div className="text-xs text-gray-500">
               {currentUser.created_posts.length} tweets
             </div>
           </div>
         </div>
-        <div className="flex flex-row px-4 py-10 justify-between">
-          <div>
-            <div className="mx-2 h-16 w-16 rounded-md bg-green-200">
-              img
+        <div className="">
+          <div className="w-full h-coverPhotoHeight bg-gray-100">
+          </div>
+          <div className="p-3 w-full flex flex-col">
+            <div className="flex flex-row justify-between items-end">
+              <div className="h-profilePicHeight w-profilePicWidth border-4 border-white -mt-20 rounded-full bg-green-200">
+              </div>
+              <div className="mb-6">
+                <Link to="/" component={StyledButton}>
+                  Edit profile
+                </Link>
+              </div>
             </div>
             <div className="text-2xl font-semibold">
               {currentUser.username}
             </div>
             <div className="text-sm text-gray-500">
-              {currentUser.created_posts.length} blogs
+              @something
+            </div>
+            <div className="text-sm my-2">
+              bio
+            </div>
+            <div className="text-sm mb-2 text-gray-500">
+              joined date
+            </div>
+            <div className="text-sm text-gray-500">
+              <span className="text-black font-bold">32</span> following
+              <span className="ml-4 text-black font-bold">23</span> followers
             </div>
           </div>
-          <div>
-            button here
-          </div>
+
         </div>
         <div className="flex flex-row h-14 border-b">
-          <button className="text-green-600 px-6 font-semibold box-border border-b-4 border-green-500 hover:bg-green-200 focus:outline-none active:bg-green-700 ">
-            Blogs
-          </button>
+          <SwitchButton name={'1'} currentSwitch={currentSwitch} onClick={ () => {changePostsToShow('tweets'); setCurrentSwitch('1')} }>
+            Tweets
+          </SwitchButton>
+          <SwitchButton name={'2'} currentSwitch={currentSwitch} onClick={ () => {changePostsToShow('replies'); setCurrentSwitch('2')} }>
+            Tweets and Replies
+          </SwitchButton>
+          <SwitchButton name={'3'} currentSwitch={currentSwitch} onClick={ () => {changePostsToShow('tweets'); setCurrentSwitch('3')} }>
+            Media
+          </SwitchButton>
+          <SwitchButton name={'4'} currentSwitch={currentSwitch} onClick={ () => {changePostsToShow('likes'); setCurrentSwitch('4')} }>
+            Likes
+          </SwitchButton>
         </div>
         <div className="pl-4 flex flex-col">
-        { currentUser.created_posts.map(blog => {
-            return(
-              <div key={blog.id} className="flex flex-col mb-1 border-b p-4">
-                <div>{blog.content}</div>
-                <div className="text-xs text-green-700">blog author</div>
-              </div>
-            )
-          })}
+        <Posts posts={postsToShow}/>
       </div>
       </div>
     )

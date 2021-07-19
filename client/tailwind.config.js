@@ -8,7 +8,12 @@ module.exports = {
         'rightSmall':'290px',
         'rightLarge':'350px',
         'leftSmall':'68px',
-        'leftLarge':'275px'
+        'leftLarge':'275px',
+        'profilePicWidth':'133.5px'
+      },
+      height:{
+        'coverPhotoHeight': '200px',
+        'profilePicHeight': '133.5px',
       }
     },
     screens: {
