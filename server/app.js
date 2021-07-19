@@ -10,6 +10,7 @@ const path = require('path');
 
 const db = require('./db');
 const app = express();
+require('dotenv').config();
 
 db.authenticate()
   .then(() => {

@@ -31,7 +31,9 @@ const App = () => {
         </CentreSpace>
       </PrivateRoute>
       <PrivateRoute path='/profile'>
-        <Profile user={1}/>
+        <CentreSpace>
+          <Profile user={1}/>
+        </CentreSpace>
       </PrivateRoute>
       <PublicRoute path='/signup'>
         <SignUp user={1}/>

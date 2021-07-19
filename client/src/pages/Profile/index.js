@@ -6,10 +6,11 @@ const Profile = ({user}) => {
   const [currentUser, setCurrentUser] = useState(null);
   
   const fetchUser = async () => {
-    const returnedUser = await userService.getUser(user.id);
+    const returnedUser = await userService.getUser(user);
     setCurrentUser(returnedUser);
   }
 
+  console.log('here');
   useEffect(() => {
     fetchUser();
   },[])
@@ -23,6 +24,14 @@ const Profile = ({user}) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           </Link>
+          <div className="flex flex-col ml-2">
+            <div className="text-xl font-semibold">
+              {currentUser.username}
+            </div>
+            <div className="text-sm font-gray-100">
+
+            </div>
+          </div>
         </div>
         <div className="flex flex-row px-4 py-10 justify-between">
           <div>
