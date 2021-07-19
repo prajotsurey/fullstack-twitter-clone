@@ -12,7 +12,7 @@ import CentreSpace from './components/CenterSpace';
 import Login from './pages/Login';
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
-
+import Bookmarks from './pages/Bookmarks';
 import Profile from './pages/Profile';
 
 const App = () => {
@@ -28,6 +28,11 @@ const App = () => {
       <PrivateRoute path='/posts'>
         <CentreSpace>
           <Browse />
+        </CentreSpace>
+      </PrivateRoute>
+      <PrivateRoute path='/bookmarks'>
+        <CentreSpace>
+          <Bookmarks />
         </CentreSpace>
       </PrivateRoute>
       <PrivateRoute path='/profile'>
