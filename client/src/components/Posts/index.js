@@ -1,41 +1,38 @@
 import React from 'react';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import userService from '../../services/userService';
+import PopOver from '../PopOver';
 
-const Posts = ({posts}) => {
+const Posts = ({user, posts}) => {
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const AddToBookmarks = () => {
-    handleClose();
-    console.log('bookmarkadded')
+  const AddBookmark = (postID) => {
+    userService.addBookmark(user.id,postID);
+    console.log('add bookmark',postID);
   }
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+  
+  const RemoveBookmark = (postID) => {
+    userService.removeBookmark(user.id,postID);
+    console.log('remove bookmark',postID);
+  }
 
   return(
     <>
     { 
       posts.map(post => {
+        let add = true
+        if(user){
+          add = user.bookmarked_posts.find(p => p.id === post.id) ? false : true
+        }
         return(
           <div key={post.id} className="flex flex-row border-b p-3 hover:bg-gray-50">
             <div className="mr-3">
               <div className="h-12 w-12 rounded-xl bg-green-200">
-
               </div>
             </div>
             <div className="flex flex-col w-full">
               <div className="flex flex-row justify-between">
                 <div className="">
                   <span className="text-sm font-bold">
-                    Name 
+                    {post.id}
                   </span> 
                   <span className="text-sm text-gray-400">
                     @username
@@ -49,7 +46,6 @@ const Posts = ({posts}) => {
                 </div>
                 <div >
                   <button className="w-10 h-10 p-2 rounded-full bg-gray-50 hover:bg-gray-100" >
-                    
                   </button>
                 </div>
               </div>
@@ -63,20 +59,9 @@ const Posts = ({posts}) => {
                 <div className="flex-grow text-sm text-gray-400">
                   button
                 </div>
-                <div className="flex-grow text-sm text-gray-400" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                  <button>
-                    button
-                  </button>
-                </div>
-                <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem className="text-gray-400" onClick={AddToBookmarks}>Add to bookmarks</MenuItem>
-                  </Menu>
+                <PopOver id={post.id} addHandler={AddBookmark} removeHandler={RemoveBookmark} add={add}>
+                  button
+                </PopOver>
               </div>
             </div>
           </div>

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       post.belongsTo(models.user, {foreignKey: 'user_id',as:'creator'})
       post.belongsToMany(models.user, {through: models.likes, foreignKey: 'post_id',as:'likers'})
+      post.belongsToMany(models.user, {through: models.bookmarks, foreignKey: 'post_id',as:'bookmarkers'})
     }
   };
   post.init({

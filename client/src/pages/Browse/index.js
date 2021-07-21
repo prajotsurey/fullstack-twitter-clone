@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Posts from '../../components/Posts';
-import { Field, Form, Formik, FormikProps } from 'formik';
-
+import { Field, Form, Formik} from 'formik';
+import useAuthStorage from '../../hooks/useAuthStorage';
+import userService from '../../services/userService';
 const BlogList = () => {
+  const [currentUser, setCurrentUser] = useState(null);
   const [posts, setPosts] = useState([])
 
+  const auth = useAuthStorage();
   useEffect(() => {
     async function fetchPosts() {
       let url = '/api/posts/';
@@ -16,6 +19,18 @@ const BlogList = () => {
     fetchPosts();
 
   },[])
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = JSON.parse(auth.getToken());
+      if(user.id){
+        const returnedUser = await userService.getUser(user.id);
+        setCurrentUser(returnedUser);
+      }
+    }
+
+    fetchUser();
+  },[auth])
 
   return(
     <>
@@ -50,7 +65,7 @@ const BlogList = () => {
     </div>
     <div className="h-3 bg-gray-50 border-b">
     </div>
-    <Posts posts={posts} />
+    <Posts posts={posts} user={currentUser}/>
     </>
   );
 }

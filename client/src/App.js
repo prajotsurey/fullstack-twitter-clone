@@ -15,6 +15,7 @@ import SignUp from './pages/SignUp';
 import Bookmarks from './pages/Bookmarks';
 import Profile from './pages/Profile';
 
+
 const App = () => {
   return(
     <>
@@ -37,7 +38,7 @@ const App = () => {
       </PrivateRoute>
       <PrivateRoute path='/profile'>
         <CentreSpace>
-          <Profile user={1}/>
+          <Profile />
         </CentreSpace>
       </PrivateRoute>
       <PublicRoute path='/signup'>

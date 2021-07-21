@@ -4,24 +4,30 @@ import StyledButton from '../../components/StyledButton';
 import userService from '../../services/userService';
 import Posts from '../../components/Posts';
 import SwitchButton from '../../components/SwitchButton';
-const Profile = ({user}) => {
+import useAuthStorage from '../../hooks/useAuthStorage';
+
+const Profile = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [postsToShow, setPostsToShow] = useState([]);
   const [currentSwitch, setCurrentSwitch] = useState('1');
 
-  const fetchUser = async () => {
-    const returnedUser = await userService.getUser(user);
-    setCurrentUser(returnedUser);
-    setPostsToShow(returnedUser.created_posts);
-  }
-
+  const auth = useAuthStorage();
   const changePostsToShow = (posts) => {
     console.log(posts)
   }
 
   useEffect(() => {
+    const fetchUser = async () => {
+      const user = JSON.parse(auth.getToken());
+      console.log(user.id)
+      if(user.id){
+        const returnedUser = await userService.getUser(user.id);
+        setCurrentUser(returnedUser);
+        setPostsToShow(returnedUser.created_posts);
+      }
+    }
     fetchUser();
-  },[])
+  },[auth])
   
   if(currentUser){
     return(
@@ -88,7 +94,7 @@ const Profile = ({user}) => {
           </SwitchButton>
         </div>
         <div className="pl-4 flex flex-col">
-        <Posts posts={postsToShow}/>
+        <Posts posts={postsToShow} user={currentUser}/>
       </div>
       </div>
     )
