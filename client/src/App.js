@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Switch,
 } from 'react-router-dom'
@@ -14,9 +14,25 @@ import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import Bookmarks from './pages/Bookmarks';
 import Profile from './pages/Profile';
-
+import useAuthStorage from './hooks/useAuthStorage';
+import userService from './services/userService';
 
 const App = () => {
+  const [user, setUser] = useState(null)
+  const auth = useAuthStorage();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await JSON.parse(auth.getToken());
+      if(user.id){
+        const returnedUser = await userService.getUser(user.id);
+        setUser(returnedUser);
+      }
+    }
+
+    fetchUser();
+  },[auth])
+
   return(
     <>
     <Switch>
@@ -27,17 +43,17 @@ const App = () => {
         <BlogDetail />
       </PrivateRoute>
       <PrivateRoute path='/posts'>
-        <CentreSpace>
+        <CentreSpace user={user}>
           <Browse />
         </CentreSpace>
       </PrivateRoute>
       <PrivateRoute path='/bookmarks'>
-        <CentreSpace>
+        <CentreSpace user={user}>
           <Bookmarks />
         </CentreSpace>
       </PrivateRoute>
-      <PrivateRoute path='/profile'>
-        <CentreSpace>
+      <PrivateRoute path='/:handle'>
+        <CentreSpace user={user}>
           <Profile />
         </CentreSpace>
       </PrivateRoute>

@@ -13,6 +13,7 @@ const BookmarksList = () => {
     setAnchorEl(event.currentTarget);
   };
 
+  console.log(postsToShow)
   const clearBookmarks = async () => {
     try{
       await userService.clearBookmarks(currentUser.id)

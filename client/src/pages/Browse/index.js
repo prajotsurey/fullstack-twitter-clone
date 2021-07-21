@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Posts from '../../components/Posts';
 import { Field, Form, Formik} from 'formik';
 import useAuthStorage from '../../hooks/useAuthStorage';
 import userService from '../../services/userService';
+import blogService from '../../services/postService';
 const BlogList = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [posts, setPosts] = useState([])
 
   const auth = useAuthStorage();
   useEffect(() => {
-    async function fetchPosts() {
-      let url = '/api/posts/';
-      const result = await axios.get(url);
-      setPosts(result.data);
+    const fetchPosts = async () => {
+      const posts = await blogService.getPosts();
+      setPosts(posts)
     }
 
     fetchPosts();

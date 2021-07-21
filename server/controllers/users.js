@@ -22,14 +22,29 @@ userRouter.get('/:id', async (request,response) => {
   const User = await models.user.findOne({ 
     where: {id: request.params.id}, 
     include: [
-      {model: models.post, as:'created_posts'},
-      {model: models.post, as:'liked_posts'},
-      {model: models.post, as:'bookmarked_posts'}
+      {model: models.post, as:'created_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
+      {model: models.post, as:'liked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
+      {model: models.post, as:'bookmarked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
     ]
   })
 
   return response.status(200).json(User);  
 });
+
+userRouter.get('/handle/:handle', async (request,response) => {
+  console.log('here')
+  const User = await models.user.findOne({ 
+    where: {username: request.params.handle}, 
+    include: [
+      {model: models.post, as:'created_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
+      {model: models.post, as:'liked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
+      {model: models.post, as:'bookmarked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
+    ]
+  })
+
+  return response.status(200).json(User);  
+});
+
 
 userRouter.get('/:id/clearBookmarks', async (request,response) => {
   await models.bookmarks.destroy({where: {user_id: request.params.id}})

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import userService from '../../services/userService';
 import PopOver from '../PopOver';
 
@@ -31,11 +32,13 @@ const Posts = ({user, posts}) => {
             <div className="flex flex-col w-full">
               <div className="flex flex-row justify-between">
                 <div className="">
-                  <span className="text-sm font-bold">
-                    {post.id}
-                  </span> 
-                  <span className="text-sm text-gray-400">
-                    @username
+                  <span className="text-sm font-semibold">
+                    <Link to={`/${post.creator.username}`}>
+                      {post.creator.username}
+                    </Link>
+                  </span>
+                  <span className="text-sm text-gray-400 pl-1">
+                    @handle
                   </span>
                   <span className="text-sm text-gray-400 pl-1">
                     . date

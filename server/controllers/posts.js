@@ -15,6 +15,18 @@ const getTokenFrom = request => {
 postRouter.get('/', async (request,response,next) => {
   try{
     const result = await models.post.findAll({include: [{model: models.user, as:'creator'},{model: models.user, as:'likers'}]});
+    console.log('here')
+    return response.json(result);
+  } catch(error) {
+    next(error);
+  }
+});
+
+postRouter.get('/user/:id', async (request,response,next) => {
+  const id = request.params.id
+  try{
+    const result = await models.post.findAll({include: [{model: models.user, as:'creator'},{model: models.user, as:'likers'}]});
+    console.log('here')
     return response.json(result);
   } catch(error) {
     next(error);

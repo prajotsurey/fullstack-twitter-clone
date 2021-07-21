@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = '/api/blogs'
+const baseUrl = '/api/posts'
 
 let token = null
 
@@ -7,18 +7,23 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`
 }
 
-const getBlogs = async() => {
+const getPosts = async() => {
   const response = await axios.get(baseUrl)
   return response.data
 }
 
-const getBlog = async(id) => {
-  const response = await axios.get(`${baseUrl}/id`)
+const getPostsByUser = async (userID) => {
+  const response = await axios.get(`${baseUrl}/user/${userID}`)
+  return response.data
+}
+
+const getPost = async(id) => {
+  const response = await axios.get(`${baseUrl}/${id}`)
   return response.data
 }
 
 
-const createBlog = async (values) => {
+const createPost = async (values) => {
   const config = { 
     headers: {  Authorization : token },
   }
@@ -27,4 +32,4 @@ const createBlog = async (values) => {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { setToken, getBlogs, createBlog, getBlog}
+export default { setToken, getPosts, createPost, getPost, getPostsByUser}

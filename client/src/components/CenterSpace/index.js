@@ -3,16 +3,22 @@ import LeftSidebar from '../LeftSidebar';
 import RightSidebar from '../RightSidebar';
 
 const CentreSpace = (props) => {
-  return(
-    <div className="flex md:flex-row justify-center">
-      <LeftSidebar />
-      <div className="w-center"> 
-        <div className="flex flex-col border-r border-l">
-          {props.children}
+  if(props.user){
+    return(
+      <div className="flex md:flex-row justify-center">
+        <LeftSidebar username={props.user.username}/>
+        <div className="w-center"> 
+          <div className="flex flex-col border-r border-l">
+            {props.children}
+          </div>
         </div>
+        <RightSidebar />
       </div>
-      <RightSidebar />
-    </div>
+    )
+  }
+  return(
+    <>
+    </>
   )
 }
 

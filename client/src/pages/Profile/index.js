@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import StyledButton from '../../components/StyledButton';
+import { Link, useParams } from 'react-router-dom';
 import userService from '../../services/userService';
 import Posts from '../../components/Posts';
 import SwitchButton from '../../components/SwitchButton';
@@ -11,6 +10,9 @@ const Profile = () => {
   const [postsToShow, setPostsToShow] = useState([]);
   const [currentSwitch, setCurrentSwitch] = useState('1');
 
+  const [user, setUser] = useState(null);
+  const { handle } = useParams();
+
   const auth = useAuthStorage();
   const changePostsToShow = (posts) => {
     console.log(posts)
@@ -18,18 +20,27 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      const user = await userService.getUserByHandle(handle)
+      setUser(user);
+      setPostsToShow(user.created_posts)
+    }
+
+    fetchUser();
+  },[])
+
+
+  useEffect(() => {
+    const fetchUser = async () => {
       const user = JSON.parse(auth.getToken());
-      console.log(user.id)
       if(user.id){
         const returnedUser = await userService.getUser(user.id);
         setCurrentUser(returnedUser);
-        setPostsToShow(returnedUser.created_posts);
       }
     }
     fetchUser();
   },[auth])
   
-  if(currentUser){
+  if(user){
     return(
       <div className="flex flex-col">
         <div className="pl-4 h-14 flex flex-row items-center border-b"> 
@@ -40,10 +51,10 @@ const Profile = () => {
           </Link>
           <div className="flex flex-col ml-7">
             <div className="text-xl font-semibold">
-              {currentUser.username}
+              {user.username}
             </div>
             <div className="text-xs text-gray-500">
-              {currentUser.created_posts.length} tweets
+              {user.created_posts.length} tweets
             </div>
           </div>
         </div>
@@ -55,13 +66,13 @@ const Profile = () => {
               <div className="h-profilePicHeight w-profilePicWidth border-4 border-white -mt-20 rounded-full bg-green-200">
               </div>
               <div className="mb-6">
-                <Link to="/" component={StyledButton}>
+                <Link to="/" className="p-3 bg-white text-center rounded-full border mb-4 text-green-400 border-2 text-sm border-green-200 font-bold ">
                   Edit profile
                 </Link>
               </div>
             </div>
             <div className="text-2xl font-semibold">
-              {currentUser.username}
+              {user.username}
             </div>
             <div className="text-sm text-gray-500">
               @something
@@ -94,7 +105,7 @@ const Profile = () => {
           </SwitchButton>
         </div>
         <div className="pl-4 flex flex-col">
-        <Posts posts={postsToShow} user={currentUser}/>
+        <Posts posts={postsToShow} user={user}/>
       </div>
       </div>
     )

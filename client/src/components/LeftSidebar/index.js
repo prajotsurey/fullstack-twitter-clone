@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const LeftSidebar = () => {
+const LeftSidebar = ({username}) => {
   return(
     <div className="top-0 bottom-0 flex flex-col py-4 items-center leftShowLarge:items-start md:flex leftShowLarge:w-leftLarge w-leftSmall ">
       <div className="px-3">
@@ -30,7 +30,7 @@ const LeftSidebar = () => {
           <div className="h-8 w-8 rounded-xl bg-green-200">
           </div>
           <div className="hidden leftShowLarge:ml-2 leftShowLarge:block">
-          <Link to="/profile">Profile</Link>
+          <Link to={`/${username}`}>Profile</Link>
           </div>
         </div>
       </div>

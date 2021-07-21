@@ -12,6 +12,11 @@ const getUser = async (id) => {
   return response.data
 }
 
+const getUserByHandle = async (handle) => {
+  const response = await axios.get(`${baseUrl}/handle/${handle}`)
+  return response.data
+}
+
 const clearBookmarks = async (id) => {
   const response = await axios.get(`${baseUrl}/${id}/clearBookmarks`)
   console.log(response)
@@ -29,4 +34,4 @@ const removeBookmark = async (id,postID) => {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { createUser, getUser, clearBookmarks, addBookmark, removeBookmark }
+export default { createUser, getUser, clearBookmarks, addBookmark, removeBookmark, getUserByHandle }

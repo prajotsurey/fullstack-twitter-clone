@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import TextInput from '../../components/TextInput';
-import blogService from '../../services/blogService';
+import blogService from '../../services/postService';
 
 const CreateBlog = () => {
   const initialValues = {
