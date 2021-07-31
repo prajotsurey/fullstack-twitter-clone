@@ -32,7 +32,7 @@ const Posts = ({user, posts}) => {
             <div className="flex flex-col w-full">
               <div className="flex flex-row justify-between">
                 <div className="">
-                  <span className="text-sm font-semibold">
+                  <span className="text-sm font-semibold hover:underline">
                     <Link to={`/${post.creator.username}`}>
                       {post.creator.username}
                     </Link>
