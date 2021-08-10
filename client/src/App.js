@@ -24,7 +24,7 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const user = await JSON.parse(auth.getToken());
-      if(user.id){
+      if(user){
         const returnedUser = await userService.getUser(user.id);
         setUser(returnedUser);
       }

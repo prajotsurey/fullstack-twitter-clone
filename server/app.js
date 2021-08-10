@@ -17,6 +17,7 @@ db.authenticate()
     console.log('connected to database...')
   })
   .catch((err) => {
+    console.log(err)
     console.log('error connecting to database')
   })
 
