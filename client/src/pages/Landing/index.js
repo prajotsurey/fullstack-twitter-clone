@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
 import StyledButton from '../../components/StyledButton';
 
 const Landing = () => {
+  console.log('here');
   return(
     <div className="flex flex-col md:flex-row h-screen">
       <div className="md:flex w-full flex-grow bg-gray-200 md:h-screen order-last md:order-first">
@@ -18,8 +20,8 @@ const Landing = () => {
             Join Blogger today.
           </div>
           <div className="flex flex-col max-w-xs">
-            <StyledButton inverted to="/signup">Sign Up</StyledButton>
-            <StyledButton to="/login">Login</StyledButton>
+            <Link to="/signup">Sign Up</Link>
+            <Link to="/login">Login</Link>
           </div>
         </div>
       </div>
