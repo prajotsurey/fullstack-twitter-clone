@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import StyledButton from '../../components/StyledButton';
 
 const Landing = () => {
   console.log('here');

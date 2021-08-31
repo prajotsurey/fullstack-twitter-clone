@@ -1,4 +1,2 @@
-user login
-update user schema with blog references
-update blog schema with user references
-update blog creation to add user id in blog ref and blod id in user ref
+profile page is broke since because i removed the url parameter from it's route
+need to find better way to get current user

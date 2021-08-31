@@ -52,7 +52,7 @@ const App = () => {
           <Bookmarks />
         </CentreSpace>
       </PrivateRoute>
-      <PrivateRoute path='/:handle'>
+      <PrivateRoute path='/profile/:id'>
         <CentreSpace user={user}>
           <Profile />
         </CentreSpace>

@@ -11,7 +11,7 @@ const Profile = () => {
   const [currentSwitch, setCurrentSwitch] = useState('1');
 
   const [user, setUser] = useState(null);
-  const { handle } = useParams();
+  const { id } = useParams();
 
   const auth = useAuthStorage();
   const changePostsToShow = (posts) => {
@@ -20,7 +20,7 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const user = await userService.getUserByHandle(handle)
+      const user = await userService.getUserByHandle(id)
       setUser(user);
       setPostsToShow(user.created_posts)
     }
