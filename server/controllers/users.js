@@ -12,7 +12,7 @@ userRouter.post('/', async (request, response, next) => {
     // sequelize
 
     const User = await models.user.create({ username: body.username, password_hash: passwordHash });
-
+    console.log('here');
     response.status(200).json(User);
   }
 });

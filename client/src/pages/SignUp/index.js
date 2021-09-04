@@ -7,11 +7,9 @@ import TextInput from '../../components/TextInput';
 import userService from '../../services/userService'
 import { Link, useHistory } from 'react-router-dom'
 
-const SignUp = ({user}) => {
+const SignUp = () => {
   const history = useHistory();
-  if(user){
-    history.push('/blogs');
-  }
+  
   const initialValues = {
     username: "",
     password: "",
@@ -19,9 +17,9 @@ const SignUp = ({user}) => {
   }
   
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Username is required'),
-    password: Yup.string().required('Password is required'),
-    passwordConfirm: Yup.string().required('Password confirmation is required'),
+    username: Yup.string().required('Username is required').min(3, "username must be longer than 3 letters"),
+    password: Yup.string().required('Password is required').min(7, "password must be longer than 7 letters"),
+    passwordConfirm: Yup.string().required('Password confirmation is required').min(7, "password must be longer than 7 letters"),
   })
 
   const submitForm = async (values) => {
@@ -51,9 +49,9 @@ const SignUp = ({user}) => {
     > 
       {() => (
         <Form className="flex-col">
-          <Field name="username" placeholder="Username" component={TextInput}/>
-          <Field name="password" placeholder="Password" component={TextInput}/>
-          <Field name="passwordConfirm" placeholder="Confirm password" component={TextInput}/>
+          <TextInput name="username" placeholder="Username" type="email" component={TextInput}/>
+          <Field name="password" placeholder="Password" type="password" component={TextInput}/>
+          <Field name="passwordConfirm" placeholder="Confirm password" type="password" component={TextInput}/>
           <button className="rounded-md w-full bg-green-200 h-12 px-4" type="submit">Sign up</button>
         </Form>
       )}
