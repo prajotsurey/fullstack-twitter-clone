@@ -3,7 +3,7 @@ import {
   Formik, Field, Form
 } from 'formik';
 import * as Yup from 'yup'
-import TextInput from '../../components/TextInput';
+import TextInput from '../../components/CustomInput';
 import loginService from '../../services/loginService';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';

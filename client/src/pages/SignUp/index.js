@@ -3,7 +3,7 @@ import {
   Formik, Field, Form
 } from 'formik';
 import * as Yup from 'yup'
-import TextInput from '../../components/TextInput';
+import CustomInput from '../../components/CustomInput';
 import userService from '../../services/userService'
 import { Link, useHistory } from 'react-router-dom'
 
@@ -17,7 +17,7 @@ const SignUp = () => {
   }
   
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Username is required').min(3, "username must be longer than 3 letters"),
+    username: Yup.string().required('Username is required').min(4, "username must be longer than 3 letters"),
     password: Yup.string().required('Password is required').min(7, "password must be longer than 7 letters"),
     passwordConfirm: Yup.string().required('Password confirmation is required').min(7, "password must be longer than 7 letters"),
   })
@@ -49,9 +49,9 @@ const SignUp = () => {
     > 
       {() => (
         <Form className="flex-col">
-          <TextInput name="username" placeholder="Username" type="email" component={TextInput}/>
-          <Field name="password" placeholder="Password" type="password" component={TextInput}/>
-          <Field name="passwordConfirm" placeholder="Confirm password" type="password" component={TextInput}/>
+          <CustomInput label="Username" name="username" placeholder="you@example.com" type="email" />
+          <CustomInput label="Password" name="password" placeholder="Must be atleast 8 characters" type="password" />
+          <CustomInput label="Confirm password" name="passwordConfirm" placeholder="Confirm password" type="password" />
           <button className="rounded-md w-full bg-green-200 h-12 px-4" type="submit">Sign up</button>
         </Form>
       )}

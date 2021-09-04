@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import TextInput from '../../components/TextInput';
+import TextInput from '../../components/CustomInput';
 import blogService from '../../services/postService';
 
 const CreateBlog = () => {
