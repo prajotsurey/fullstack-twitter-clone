@@ -1,7 +1,6 @@
 const userRouter = require('express').Router();
 const models = require('../models');
 const bcrypt = require('bcrypt');
-const { Model } = require('mongoose');
 
 // create user / sign up route
 userRouter.post('/', async (request, response, next) => {
@@ -43,7 +42,7 @@ userRouter.post('/', async (request, response, next) => {
       message: 'passwords do not match'
     }]});
   }
-  console.log('after everything')
+  console.log('after everything');
   try{
     const passwordHash = await bcrypt.hash(body.password, saltRounds);
     const User = await models.user.create({ username: body.username, password_hash: passwordHash });
@@ -63,13 +62,13 @@ userRouter.get('/:id', async (request,response) => {
       {model: models.post, as:'liked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
       {model: models.post, as:'bookmarked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
     ]
-  })
+  });
 
   return response.status(200).json(User);  
 });
 
 userRouter.get('/handle/:handle', async (request,response) => {
-  console.log('here')
+  console.log('here');
   const User = await models.user.findOne({ 
     where: {username: request.params.handle}, 
     include: [
@@ -77,31 +76,31 @@ userRouter.get('/handle/:handle', async (request,response) => {
       {model: models.post, as:'liked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
       {model: models.post, as:'bookmarked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
     ]
-  })
+  });
 
   return response.status(200).json(User);  
 });
 
 
 userRouter.get('/:id/clearBookmarks', async (request,response) => {
-  await models.bookmarks.destroy({where: {user_id: request.params.id}})
+  await models.bookmarks.destroy({where: {user_id: request.params.id}});
   response.status(200).json({
     status:'success'
-  })
-})
+  });
+});
 
 userRouter.post('/:id/addBookmark/:postID', async (request,response) => {
-  const Bookmark = await models.bookmarks.create({user_id:request.params.id, post_id:request.params.postID})
-  console.log(Bookmark)
-  return response.status(200)
+  const Bookmark = await models.bookmarks.create({user_id:request.params.id, post_id:request.params.postID});
+  console.log(Bookmark);
+  return response.status(200);
 
-})
+});
 
 userRouter.delete('/:id/removeBookmark/:postID', async (request,response) => {
-  const Bookmark = await models.bookmarks.destroy({where: {user_id: request.params.id, post_id: request.params.postID}})
-  console.log(Bookmark)
-  return response.status(200)
+  const Bookmark = await models.bookmarks.destroy({where: {user_id: request.params.id, post_id: request.params.postID}});
+  console.log(Bookmark);
+  return response.status(200);
 
-})
+});
 
 module.exports = userRouter;
