@@ -7,7 +7,7 @@ import CustomInput from '../../components/CustomInput';
 import userService from '../../services/userService'
 import { Link, useHistory } from 'react-router-dom'
 import { ReactComponent as Logo } from '../../icons/Logo blue.svg';
-
+import parsedErrors from '../../utils/errorParser';
 
 const SignUp = () => {
   const history = useHistory();
@@ -39,16 +39,6 @@ const SignUp = () => {
     }
     
   };
-
-  const parsedErrors = (errors) => {
-    let parsedErrors = {};
-    errors.forEach(({field, message}) => {
-      parsedErrors[field] = message;
-    })
-    console.log(parsedErrors)
-    return parsedErrors;
-  }
-
 
   return(
     //added a grid to center it's child

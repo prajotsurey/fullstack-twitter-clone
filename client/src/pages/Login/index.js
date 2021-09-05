@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import CustomInput from '../../components/CustomInput';
 import loginService from '../../services/loginService';
 import { ReactComponent as Logo } from '../../icons/Logo blue.svg';
+import parsedErrors from '../../utils/errorParser';
 
 const Login = () => {
   const history = useHistory();
@@ -19,7 +20,7 @@ const Login = () => {
     password: Yup.string().required()
   })
 
-  const login = async (values) => {
+  const login = async (values, setErrors) => {
     try{
       const user = await loginService.login(values)
       history.push('/')
@@ -27,7 +28,7 @@ const Login = () => {
         'blogappuser', JSON.stringify(user)
       ) 
     } catch(error) {
-      console.log(error)
+      await setErrors(parsedErrors(error.response.data.error))
     }
   };
 
@@ -41,11 +42,13 @@ const Login = () => {
         <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values) => {login(values)}}
+        onSubmit={async (values, {setErrors}) => {
+         await login(values,setErrors)
+        }}
         > 
           {() => (
             <Form className="flex-col w-full">
-              <CustomInput label="Username" name="username" type="email" />
+              <CustomInput label="Username" name="username" type="text" />
               <CustomInput label="Password" name="password" type="password" />
               <button className="rounded-full w-full bg-enabledButton disabled:opacity-disabled h-12 px-4 font-bold text-white" type="submit">Login</button>
             </Form>

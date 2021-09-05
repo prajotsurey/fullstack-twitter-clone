@@ -11,17 +11,27 @@ loginRouter.post('/', async(request, response) => {
     attributes: {
       include:['password_hash']
     }
-  })
+  });
 
-  console.log(user.password_hash, body.password)
+  //returning errors with field information to update
+  //formik form and display errors in the fields
+  if (!user) {
+    return response.status(401).send({error: [{
+      field: 'username',
+      message: 'username is incorrect'
+    }] });
+  }
+
+  console.log(user.password_hash);
   const passwordCorrect = user === null
     ? false
-    : await bcrypt.compare(body.password, user.password_hash);
+    : await bcrypt.compare(body.password, user.password_hash); //comparing recieved password and stored password hash
 
-  if(!user || !passwordCorrect){
-    return response.status(401).json({
-      error: 'invalid username or password'
-    });
+  if (!passwordCorrect) {
+    return response.status(401).send({error: [{
+      field: 'password',
+      message: 'incorrect password'
+    }] });
   }
 
   const userForToken = {
@@ -30,7 +40,7 @@ loginRouter.post('/', async(request, response) => {
   };
 
 
-  const token = jwt.sign(userForToken, process.env.SECRET);
+  const token = jwt.sign(userForToken, process.env.SECRET); //signing token and returning it for storing in the browser
 
   response
     .status(200)
