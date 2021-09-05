@@ -22,6 +22,7 @@ const BlogList = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const user = JSON.parse(auth.getToken());
+      console.log(user.id)
       if(user.id){
         const returnedUser = await userService.getUser(user.id);
         setCurrentUser(returnedUser);

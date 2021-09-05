@@ -30,6 +30,7 @@ const SignUp = () => {
     const credentials = {
       username: values.username,
       password: values.password,
+      passwordConfirm: values.passwordConfirm
     }
     try{
       const response = await userService.createUser(credentials)
