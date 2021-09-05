@@ -14,13 +14,13 @@ module.exports = {
       height:{
         'coverPhotoHeight': '200px',
         'profilePicHeight': '133.5px',
+      },
+      screens: {
+        'leftShowLarge': '1230px',
+        'rightShowSmall': '1018px',
+        'rightShowLarge': '1107px'
       }
     },
-    screens: {
-      'leftShowLarge': '1230px',
-      'rightShowSmall': '1018px',
-      'rightShowLarge': '1107px'
-    }
   },
   variants: {
     extend: {},

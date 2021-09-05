@@ -38,26 +38,31 @@ const SignUp = () => {
   };
 
   return(
-    <div className="w-full md:w-4/12 h-screen flex flex-col p-5 bg-gray-200 align-center">
-      <div className="mb-4 text-2xl font-semibold">
-        Signup
+    //added a grid to center it's child
+    <div className="grid place-items-center h-screen">
+      <div className="flex flex-col items-center w-full sm:w-96 shadow-lg rounded-md p-4"> {/* form container*/}
+        <div className="mb-4 text-2xl font-semibold self-start">
+          Signup
+        </div>
+        <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={(values) => {submitForm(values)}}
+      > 
+        {() => (
+          <Form className="flex-col w-full">
+            {/* material ui textfield customized to work with formik*/}
+            <CustomInput label="Username" name="username" placeholder="you@example.com" type="email" />
+            <CustomInput label="Password" name="password" placeholder="Must be atleast 8 characters" type="password" />
+            <CustomInput label="Confirm password" name="passwordConfirm" placeholder="Confirm password" type="password" />
+            <button className="rounded-full w-full bg-green-100 disabled:opacity-50 h-12 px-4" type="submit">Sign up</button>
+          </Form>
+        )}
+        
+      </Formik>
+      <Link className="mt-4 self-center text-green-500 text-sm" to='/login'>Log In</Link>
       </div>
-      <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={(values) => {submitForm(values)}}
-    > 
-      {() => (
-        <Form className="flex-col">
-          <CustomInput label="Username" name="username" placeholder="you@example.com" type="email" />
-          <CustomInput label="Password" name="password" placeholder="Must be atleast 8 characters" type="password" />
-          <CustomInput label="Confirm password" name="passwordConfirm" placeholder="Confirm password" type="password" />
-          <button className="rounded-md w-full bg-green-200 h-12 px-4" type="submit">Sign up</button>
-        </Form>
-      )}
-      
-    </Formik>
-    <Link className="mt-4 self-center text-green-500 text-sm" to='/login'>Log In</Link>
+    
     </div>
   )
 }

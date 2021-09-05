@@ -1,17 +1,33 @@
 import React from 'react'
-import { Field, useField } from 'formik'
-const CustomInput = ({label, ...props}) => {
-  const [field, meta, helpers] = useField(props);
+import { useField } from 'formik'
+import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  root: {
+    width:'100%',
+    flex: '1',
+    
+  },
+
+}));
+
+const CustomInput = ({...props}) => {
+  const [field, meta] = useField(props);
+  const classes = useStyles();
   return (
-    <div className="mb-4">
-      <label className="mb-1 text-lg block">
-        {label}
-      </label>
-      <input className="w-full h-12 p-4 rounded-md" {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="text-red-600">{meta.error}</div>
-      ) : null}
-    </div>
+    <Box mb={3}  className={classes.root}>
+      <TextField 
+        variant="outlined" 
+        {...field} 
+        {...props}
+        error={meta.touched && Boolean(meta.error)}
+        helperText={meta.touched && meta.error}
+        color="primary"
+        fullWidth
+      />
+    </Box>
   );
 }
 

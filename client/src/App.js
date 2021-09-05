@@ -16,7 +16,7 @@ import Bookmarks from './pages/Bookmarks';
 import Profile from './pages/Profile';
 import useAuthStorage from './hooks/useAuthStorage';
 import userService from './services/userService';
-
+import Testing from './pages/Testing';
 const App = () => {
   const [user, setUser] = useState(null)
   const auth = useAuthStorage();
@@ -62,6 +62,9 @@ const App = () => {
       </PublicRoute>
       <PublicRoute path='/login'>
         <Login />
+      </PublicRoute>
+      <PublicRoute path='/testing'>
+        <Testing />
       </PublicRoute>
       <PublicRoute path='/'>
         <Landing />
