@@ -44,7 +44,7 @@ const SignUp = () => {
     <div className="grid place-items-center h-screen">
       <div className="flex flex-col items-center w-full sm:w-96 shadow-lg rounded-md p-4"> {/* form container*/}
         <div className="mb-4 text-2xl font-semibold self-start">
-            <Logo className="h-8 mb-8"/>
+            <Logo className="h-8 mb-8"/>  {/* svg */}
             Create your account
         </div>
         <Formik
