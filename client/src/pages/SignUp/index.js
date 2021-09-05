@@ -8,6 +8,7 @@ import userService from '../../services/userService'
 import { Link, useHistory } from 'react-router-dom'
 import { ReactComponent as Logo } from '../../icons/Logo blue.svg';
 import parsedErrors from '../../utils/errorParser';
+import StyledButton from '../../components/StyledButton';
 
 const SignUp = () => {
   const history = useHistory();
@@ -61,7 +62,7 @@ const SignUp = () => {
             <CustomInput label="Username" name="username" type="text" />
             <CustomInput label="Password" name="password" placeholder="Must be atleast 8 characters" type="password" />
             <CustomInput label="Confirm password" name="passwordConfirm" placeholder="Confirm password" type="password" />
-            <button className="rounded-full w-full bg-enabledButton disabled:opacity-disabled h-12 px-4 font-bold text-white" type="submit">Sign up</button>
+            <StyledButton type="submit">Sign up</StyledButton>
           </Form>
         )}
         

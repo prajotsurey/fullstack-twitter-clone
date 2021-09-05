@@ -1,13 +1,13 @@
 import React from 'react';
 
-const StyledButton = ({children, inverted, ...rest}) => {
-  if(inverted){
+const StyledButton = ({children, filled, ...rest}) => {
+  if(filled){
     return(
-      <button className="py-2 px-3 bg-white text-center rounded-full border bg-green-400 text-sm text-white font-bold" {...rest}>{children}</button>
+      <button className="rounded-full w-full bg-enabledButton disabled:opacity-disabled h-12 px-4 font-bold text-white" {...rest}>{children}</button>
     )  
   }
   return(
-    <button className="p-3 bg-white text-center rounded-full border mb-4 text-green-400 border-2 text-sm border-green-200 font-bold " {...rest}>{children}</button>
+    <button className="rounded-full w-full border border-gray-200 border-black bg-white disabled:opacity-disabled h-12 px-4 font-bold text-black" {...rest}>{children}</button>
   )
 }
 
