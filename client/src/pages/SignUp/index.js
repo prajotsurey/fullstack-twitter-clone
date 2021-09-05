@@ -6,6 +6,8 @@ import * as Yup from 'yup'
 import CustomInput from '../../components/CustomInput';
 import userService from '../../services/userService'
 import { Link, useHistory } from 'react-router-dom'
+import TwitterLogo from '../../components/TwitterLogo';
+import { ReactComponent as Logo } from '../../icons/Logo blue.svg';
 
 const SignUp = () => {
   const history = useHistory();
@@ -42,7 +44,8 @@ const SignUp = () => {
     <div className="grid place-items-center h-screen">
       <div className="flex flex-col items-center w-full sm:w-96 shadow-lg rounded-md p-4"> {/* form container*/}
         <div className="mb-4 text-2xl font-semibold self-start">
-          Signup
+            <Logo className="h-8 mb-8"/>
+            Create your account
         </div>
         <Formik
         initialValues={initialValues}
@@ -55,12 +58,12 @@ const SignUp = () => {
             <CustomInput label="Username" name="username" placeholder="you@example.com" type="email" />
             <CustomInput label="Password" name="password" placeholder="Must be atleast 8 characters" type="password" />
             <CustomInput label="Confirm password" name="passwordConfirm" placeholder="Confirm password" type="password" />
-            <button className="rounded-full w-full bg-green-100 disabled:opacity-50 h-12 px-4" type="submit">Sign up</button>
+            <button className="rounded-full w-full bg-enabledButton disabled:opacity-disabled h-12 px-4 font-bold text-white" type="submit">Sign up</button>
           </Form>
         )}
         
       </Formik>
-      <Link className="mt-4 self-center text-green-500 text-sm" to='/login'>Log In</Link>
+      <Link className="mt-4 self-center text-primary text-sm" to='/login'>Log In</Link>
       </div>
     
     </div>

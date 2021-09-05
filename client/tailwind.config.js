@@ -19,6 +19,15 @@ module.exports = {
         'leftShowLarge': '1230px',
         'rightShowSmall': '1018px',
         'rightShowLarge': '1107px'
+      },
+      colors: {
+        'primary': '#1b95e0',
+        'enabledButton': '#1d9bf0',
+        'hoveredButton': '',
+        'clickedButton': '',
+      },
+      opacity: {
+        'disabled': '.5'
       }
     },
   },
