@@ -6,8 +6,8 @@ import * as Yup from 'yup'
 import CustomInput from '../../components/CustomInput';
 import userService from '../../services/userService'
 import { Link, useHistory } from 'react-router-dom'
-import TwitterLogo from '../../components/TwitterLogo';
 import { ReactComponent as Logo } from '../../icons/Logo blue.svg';
+
 
 const SignUp = () => {
   const history = useHistory();

@@ -1,12 +1,11 @@
+import { Form, Formik } from 'formik';
 import React from 'react';
-import {
-  Formik, Field, Form
-} from 'formik';
-import * as Yup from 'yup'
-import TextInput from '../../components/CustomInput';
-import loginService from '../../services/loginService';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import * as Yup from 'yup';
+import CustomInput from '../../components/CustomInput';
+import loginService from '../../services/loginService';
+import { ReactComponent as Logo } from '../../icons/Logo blue.svg';
 
 const Login = () => {
   const history = useHistory();
@@ -33,25 +32,29 @@ const Login = () => {
   };
 
   return(
-    <div className="w-full md:w-4/12 h-screen flex flex-col p-5 bg-gray-200 align-center">
-      <div className="mb-4 text-2xl font-semibold">
-        Login
+    <div className="grid place-items-center"> {/* grid container */}
+      <div className="flex flex-col items-center w-full sm:w-96 p-4"> {/* form container*/}
+        <div className="mb-4 text-2xl font-semibold self-start">
+            <Logo className="h-8 mb-8"/>  {/* svg */}
+            Log in to twitter
+        </div>
+        <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={(values) => {login(values)}}
+        > 
+          {() => (
+            <Form className="flex-col w-full">
+              <CustomInput label="Username" name="username" type="email" />
+              <CustomInput label="Password" name="password" type="password" />
+              <button className="rounded-full w-full bg-enabledButton disabled:opacity-disabled h-12 px-4 font-bold text-white" type="submit">Login</button>
+            </Form>
+          )}
+          
+        </Formik>
+        <Link className="mt-4 self-center text-primary text-sm" to='/login'>Sign up</Link>
       </div>
-      <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={(values) => {login(values)}}
-      > 
-        {() => (
-          <Form className="flex-col">
-            <Field name="username" placeholder="Username" component={TextInput}/>
-            <Field name="password" placeholder="Password" component={TextInput}/>
-            <button className="rounded-md w-full bg-green-200 h-12 px-4" type="submit">Sign In</button>
-          </Form>
-        )}
-        
-      </Formik>
-      <Link className="mt-4 self-center text-green-500 text-sm" to='/signup'>Sign Up</Link>
+
     </div>
   )
 }
