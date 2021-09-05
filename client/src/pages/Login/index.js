@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import CustomInput from '../../components/CustomInput';
 import loginService from '../../services/loginService';
-import { ReactComponent as Logo } from '../../icons/Logo blue.svg';
+import { ReactComponent as Logo } from '../../icons/LogoBlue.svg';
 import parsedErrors from '../../utils/errorParser';
 
 const Login = () => {

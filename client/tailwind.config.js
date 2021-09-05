@@ -28,7 +28,10 @@ module.exports = {
       },
       opacity: {
         'disabled': '.5'
-      }
+      },
+      backgroundImage: theme => ({
+        'landing-left': "url('/src/icons/landing.png')"
+      })
     },
   },
   variants: {

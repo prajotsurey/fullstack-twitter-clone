@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import CustomInput from '../../components/CustomInput';
 import userService from '../../services/userService'
 import { Link, useHistory } from 'react-router-dom'
-import { ReactComponent as Logo } from '../../icons/Logo blue.svg';
+import { ReactComponent as Logo } from '../../icons/LogoBlue.svg';
 import parsedErrors from '../../utils/errorParser';
 import StyledButton from '../../components/StyledButton';
 
