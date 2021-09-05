@@ -3,18 +3,55 @@ const models = require('../models');
 const bcrypt = require('bcrypt');
 const { Model } = require('mongoose');
 
+// create user / sign up route
 userRouter.post('/', async (request, response, next) => {
   const saltRounds = 10;
   const body = request.body;
-  if(body.username && body.password && body.password.length > 7){
-    const passwordHash = await bcrypt.hash(body.password, saltRounds);
-    
-    // sequelize
 
-    const User = await models.user.create({ username: body.username, password_hash: passwordHash });
-    console.log('here');
-    response.status(200).json(User);
+  // check if a user with this username already exists
+  const User = await models.user.findOne({
+    where: {
+      username: body.username
+    }
+  });
+
+  //returning errors with field information to update
+  //formik form and display errors in the fields
+  if (User) {
+    return response.status(500).send({error: [{
+      field: 'username',
+      message: 'username already exists'
+    }] });
   }
+
+  // return error if password is short
+  if ((body.password).length < 7) {
+    return response.status(500).send({error: [{
+      field: 'password',
+      message: 'password should be atleast 8 characters long'
+    }] });
+  }
+  
+  // return error if passwords do not match
+  if (body.password != body.passwordConfirm) {
+    return response.status(500).send({error: [{
+      field: 'password',
+      message: 'passwords do not match'
+    }, 
+    {
+      field: 'passwordConfirm',
+      message: 'passwords do not match'
+    }]});
+  }
+  console.log('after everything')
+  try{
+    const passwordHash = await bcrypt.hash(body.password, saltRounds);
+    const User = await models.user.create({ username: body.username, password_hash: passwordHash });
+    response.status(200).json(User);
+  } catch(err) {
+    next(err);
+  }
+  
 });
 
 userRouter.get('/:id', async (request,response) => {

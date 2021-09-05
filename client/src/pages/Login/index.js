@@ -52,7 +52,7 @@ const Login = () => {
           )}
           
         </Formik>
-        <Link className="mt-4 self-center text-primary text-sm" to='/login'>Sign up</Link>
+        <Link className="mt-4 self-center text-primary text-sm" to='/signup'>Sign up</Link>
       </div>
 
     </div>

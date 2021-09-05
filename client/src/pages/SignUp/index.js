@@ -24,20 +24,31 @@ const SignUp = () => {
     passwordConfirm: Yup.string().required('Password confirmation is required').min(7, "password must be longer than 7 letters"),
   })
 
-  const submitForm = async (values) => {
+  const submitForm = async (values, setErrors) => {
+  
     const credentials = {
       username: values.username,
       password: values.password,
     }
     try{
-      await userService.createUser(credentials)
+      const response = await userService.createUser(credentials)
       history.push('/login')
     } catch(error) {
-      console.log(error)
+      const errors = error.response.data.error
+      await setErrors(parsedErrors(errors))
     }
     
-
   };
+
+  const parsedErrors = (errors) => {
+    let parsedErrors = {};
+    errors.forEach(({field, message}) => {
+      parsedErrors[field] = message;
+    })
+    console.log(parsedErrors)
+    return parsedErrors;
+  }
+
 
   return(
     //added a grid to center it's child
@@ -50,12 +61,14 @@ const SignUp = () => {
         <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values) => {submitForm(values)}}
+        onSubmit={async(values, {setErrors}) => {
+          await submitForm(values, setErrors)
+        }}
       > 
         {() => (
           <Form className="flex-col w-full">
             {/* material ui textfield customized to work with formik*/}
-            <CustomInput label="Username" name="username" placeholder="you@example.com" type="email" />
+            <CustomInput label="Username" name="username" type="text" />
             <CustomInput label="Password" name="password" placeholder="Must be atleast 8 characters" type="password" />
             <CustomInput label="Confirm password" name="passwordConfirm" placeholder="Confirm password" type="password" />
             <button className="rounded-full w-full bg-enabledButton disabled:opacity-disabled h-12 px-4 font-bold text-white" type="submit">Sign up</button>
