@@ -27,7 +27,7 @@ postRouter.get('/', async (request,response,next) => {
     const user = userResult.dataValues;
 
     const result = await sequelize.query(`
-    select p.*,(select value from likes where "userId" = ? and "postId" = p.id) "likeStatus" from posts p;
+    select p.*,json_build_object('id',u.id,'username',u.username) creator, (select value from likes where "userId" = ? and "postId" = p.id) "likeStatus" from posts p inner join users u on u.id = p."userId";
     `, { replacements: [user.id],type: Sequelize.QueryTypes.SELECT});
 
     console.log(result);
