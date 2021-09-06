@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      user.hasMany(models.post, {foreignKey: 'user_id', as:'created_posts'})
-      user.belongsToMany(models.post, {through: models.likes, foreignKey:'user_id',as:'liked_posts'})
-      user.belongsToMany(models.post, {through: models.bookmarks, foreignKey:'user_id',as:'bookmarked_posts'})
+      user.hasMany(models.post, {foreignKey: 'user_id', as:'created_posts'});
+      user.belongsToMany(models.post, {through: models.likes, foreignKey:'user_id',as:'liked_posts'});
+      user.belongsToMany(models.post, {through: models.bookmarks, foreignKey:'user_id',as:'bookmarked_posts'});
     }
   };
   user.init({
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     username: DataTypes.STRING,
     password_hash: DataTypes.STRING
   },{
-      defaultScope:{
+    defaultScope:{
       attributes: { 
         exclude: ['password_hash']
       }

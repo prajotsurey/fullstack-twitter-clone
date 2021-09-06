@@ -58,9 +58,9 @@ userRouter.get('/:id', async (request,response) => {
   const User = await models.user.findOne({ 
     where: {id: request.params.id}, 
     include: [
-      {model: models.post, as:'created_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
-      {model: models.post, as:'liked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
-      {model: models.post, as:'bookmarked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
+      // {model: models.post, as:'created_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
+      // {model: models.post, as:'liked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
+      // {model: models.post, as:'bookmarked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
     ]
   });
 

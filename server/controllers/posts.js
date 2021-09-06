@@ -5,7 +5,7 @@ const db = require('../db');
 
 
 const getTokenFrom = request => {
-  const authorization = request.get('authorization');
+  const authorization = request.get('Authorization');
   if(authorization && authorization.toLowerCase().startsWith('bearer')) {
     return authorization.substring(7);
   }
@@ -14,7 +14,7 @@ const getTokenFrom = request => {
 
 postRouter.get('/', async (request,response,next) => {
   try{
-    const result = await models.post.findAll({include: [{model: models.user, as:'creator'},{model: models.user, as:'likers'}]});
+    const result = await models.post.findAll({include: [{model: models.user, as:'creator'}]});
     console.log('here')
     return response.json(result);
   } catch(error) {
@@ -74,8 +74,9 @@ postRouter.get('/:id', async (request, response, next) => {
   }
 });
 
-postRouter.get('/like/:id', async (request, response, next) => {
+postRouter.post('/like/:id', async (request, response, next) => {
   const token = getTokenFrom(request);
+  console.log(token)
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
     console.log(decodedToken)
@@ -85,15 +86,40 @@ postRouter.get('/like/:id', async (request, response, next) => {
 
     const result = await models.user.findOne({where: {id: decodedToken.id}})
     const user = result.dataValues;
-
-    console.log(user)
-    const like = await models.likes.create({
-      user_id: user.id,
-      post_id: request.params.id
-    })
-    console.log(like)
-    response.json(like);
-
+    try{
+      const like = await models.likes.create({
+        user_id: user.id,
+        post_id: request.params.id
+      })
+      const post = await models.post.increment({
+        likes: +1
+      }, {
+        where: {
+          id: request.params.id
+        }
+      })
+      response.json(post);
+ 
+    } catch(err) {
+      console.log(err.errors[0].message)
+      if(err.errors[0].message.includes('must be unique')){
+        await models.likes.destroy({
+          where:{
+            user_id: user.id,
+            post_id: request.params.id
+          }
+        })
+        const post = await models.post.decrement({
+          likes: 1
+        }, {
+          where: {
+            id: request.params.id
+          }
+        })
+        response.json(post);
+      }
+    }
+    
   }  catch (error) {
     next(error);
   }

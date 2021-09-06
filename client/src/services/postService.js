@@ -5,6 +5,7 @@ let token = null
 
 const setToken = (newToken) => {
   token = `bearer ${newToken}`
+  console.log(token)
 }
 
 const getPosts = async() => {
@@ -31,5 +32,14 @@ const createPost = async (values) => {
   return response.data
 }
 
+const likePost = async (postId) => {
+  const config = { 
+    headers: {  Authorization : token },
+  }
+  console.log(token)
+  const response = await axios.post(`${baseUrl}/like/${postId}`,{},config)
+  return response.data
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { setToken, getPosts, createPost, getPost, getPostsByUser}
+export default { setToken, getPosts, createPost, getPost, getPostsByUser, likePost}

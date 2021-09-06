@@ -16,7 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   post.init({
-    content: DataTypes.STRING
+    content: DataTypes.STRING,
+    likes: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    }
   }, {
     sequelize,
     modelName: 'post',

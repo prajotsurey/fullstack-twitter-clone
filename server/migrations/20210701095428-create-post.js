@@ -18,6 +18,11 @@ module.exports = {
       updatedAt: {
         allowNull: true,
         type: Sequelize.DATE
+      },
+      likes:{
+        allowNull: false,
+        default: 0,
+        type: Sequelize.INTEGER
       }
     });
   },

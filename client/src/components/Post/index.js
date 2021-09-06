@@ -6,6 +6,7 @@ import { ReactComponent as LikeIcon } from '../../icons/LikeIcon.svg';
 import { ReactComponent as LikedIcon } from '../../icons/LikedIcon.svg';
 import { IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
+import postService from '../../services/postService';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -35,6 +36,12 @@ const Post = ({ post, user}) => {
   const RemoveBookmark = (postID) => {
     userService.removeBookmark(user.id,postID);
     console.log('remove bookmark',postID);
+  }
+
+  const handleLike = (postId) => {
+    const response = postService.likePost(postId)
+    console.log(response)
+    setLiked(!liked)
   }
 
   return(
@@ -79,7 +86,7 @@ const Post = ({ post, user}) => {
           </div>
           <div className="flex flex-row flex-grow justify-start items-center text-sm ">
             <div className=" rounded-full hover:text-pink-500 text-gray-400 hover:text-pink-500 hover:bg-pink-100 p-1.5">
-              <IconButton className={classes.root} onClick={() => { setLiked(!liked) }}>
+              <IconButton className={classes.root} onClick={() => { handleLike(post.id) }}>
                 {
                   liked
                   ?<LikedIcon />

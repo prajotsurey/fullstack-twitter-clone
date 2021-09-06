@@ -17,6 +17,7 @@ import Profile from './pages/Profile';
 import useAuthStorage from './hooks/useAuthStorage';
 import userService from './services/userService';
 import Testing from './pages/Testing';
+import postService from './services/postService';
 const App = () => {
   const [user, setUser] = useState(null)
   const auth = useAuthStorage();
@@ -27,6 +28,7 @@ const App = () => {
       if(user){
         const returnedUser = await userService.getUser(user.id);
         setUser(returnedUser);
+        await postService.setToken(user.token)
       }
     }
 

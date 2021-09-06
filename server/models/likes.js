@@ -11,12 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.post.belongsToMany(models.user, {through: models.likes, foreignKey: 'post_id',as:'liker'});
+      models.user.belongsToMany(models.post, {through: models.likes, foreignKey:'user_id',as:'liked_post'});
+      
+
     }
   };
   likes.init({
-    user_id: DataTypes.INTEGER,
-    post_id: DataTypes.INTEGER
+    user_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
+    post_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    }
   }, {
+    indexes:[
+      {
+        unique: true,
+        fields: ['user_id', 'post_id']
+      }
+    ],
     sequelize,
     modelName: 'likes',
   });
