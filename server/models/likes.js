@@ -18,19 +18,23 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   likes.init({
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    post_id: {
+    postId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+    },
+    value: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1
     }
   }, {
     indexes:[
       {
         unique: true,
-        fields: ['user_id', 'post_id']
+        fields: ['userId', 'postId']
       }
     ],
     sequelize,

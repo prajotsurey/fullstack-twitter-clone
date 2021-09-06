@@ -1,8 +1,8 @@
 const postRouter = require('express').Router();
 const models = require('../models');
 const jwt = require('jsonwebtoken');
-const db = require('../db');
-
+const sequelize = require('../db');
+const { Sequelize } = require('sequelize');
 
 const getTokenFrom = request => {
   const authorization = request.get('Authorization');
@@ -13,9 +13,27 @@ const getTokenFrom = request => {
 };
 
 postRouter.get('/', async (request,response,next) => {
+  const token = getTokenFrom(request);
+
   try{
-    const result = await models.post.findAll({include: [{model: models.user, as:'creator'}]});
-    console.log('here')
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log(decodedToken);
+    if(!token || !decodedToken.id) {
+      return response.status(401).json({error: 'token missing or invalid'});
+    }
+
+    const userResult = await models.user.findOne({where: {id: decodedToken.id}});
+
+    const user = userResult.dataValues;
+
+    const result = await sequelize.query(`
+    select p.*,(select value from likes where "userId" = ? and "postId" = p.id) "likeStatus" from posts p;
+    `, { replacements: [user.id],type: Sequelize.QueryTypes.SELECT});
+
+    console.log(result);
+
+    // const result = await models.post.findAll({include: [{model: models.user, as:'creator'}]});
+    console.log('here');
     return response.json(result);
   } catch(error) {
     next(error);
@@ -23,10 +41,10 @@ postRouter.get('/', async (request,response,next) => {
 });
 
 postRouter.get('/user/:id', async (request,response,next) => {
-  const id = request.params.id
+  const id = request.params.id;
   try{
     const result = await models.post.findAll({include: [{model: models.user, as:'creator'},{model: models.user, as:'likers'}]});
-    console.log('here')
+    console.log('here');
     return response.json(result);
   } catch(error) {
     next(error);
@@ -38,12 +56,12 @@ postRouter.post('/', async (request,response, next) => {
   const token = getTokenFrom(request);
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken)
+    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
 
-    const result = await models.user.findOne({where: {id: decodedToken.id}})
+    const result = await models.user.findOne({where: {id: decodedToken.id}});
 
     const user = result.dataValues;
 
@@ -51,7 +69,7 @@ postRouter.post('/', async (request,response, next) => {
       return response.status(400).json({error: 'content missing'});
     }
 
-    const savedBlog = await models.post.create({ content:body.content, user_id:user.id}) 
+    const savedBlog = await models.post.create({ content:body.content, user_id:user.id}); 
 
     response.json(savedBlog);
   
@@ -63,7 +81,7 @@ postRouter.post('/', async (request,response, next) => {
 
 postRouter.get('/:id', async (request, response, next) => {
   try{
-    const post = await models.post.findOne({where: {id: request.params.id}, include: [models.user]})
+    const post = await models.post.findOne({where: {id: request.params.id}, include: [models.user]});
     if(post) {
       response.json(post);
     } else {
@@ -76,46 +94,47 @@ postRouter.get('/:id', async (request, response, next) => {
 
 postRouter.post('/like/:id', async (request, response, next) => {
   const token = getTokenFrom(request);
-  console.log(token)
+  console.log(token);
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken)
+    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
 
-    const result = await models.user.findOne({where: {id: decodedToken.id}})
+    const result = await models.user.findOne({where: {id: decodedToken.id}});
     const user = result.dataValues;
     try{
       const like = await models.likes.create({
-        user_id: user.id,
-        post_id: request.params.id
-      })
+        userId: user.id,
+        postId: request.params.id
+      });
       const post = await models.post.increment({
         likes: +1
       }, {
         where: {
           id: request.params.id
         }
-      })
+      });
       response.json(post);
  
     } catch(err) {
-      console.log(err.errors[0].message)
+      console.log(err);
+      console.log(err.errors[0].message);
       if(err.errors[0].message.includes('must be unique')){
         await models.likes.destroy({
           where:{
-            user_id: user.id,
-            post_id: request.params.id
+            userId: user.id,
+            postId: request.params.id
           }
-        })
+        });
         const post = await models.post.decrement({
           likes: 1
         }, {
           where: {
             id: request.params.id
           }
-        })
+        });
         response.json(post);
       }
     }
@@ -130,10 +149,10 @@ postRouter.delete('/:id', async (request, response, next) => {
   try{
     await models.post.destroy({
       where: { id: request.params.id }
-    })
+    });
     response.status(204).json({
       status: 'success'
-    })
+    });
   } catch (error) {
     next(error);
   }

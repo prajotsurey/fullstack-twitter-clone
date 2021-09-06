@@ -8,11 +8,11 @@ const cors = require('cors');
 const loginRouter = require('./controllers/login');
 const path = require('path');
 
-const db = require('./db');
+const sequelize = require('./db');
 const app = express();
 require('dotenv').config();
 
-db.authenticate()
+sequelize.authenticate()
   .then(() => {
     console.log('connected to database...')
   })

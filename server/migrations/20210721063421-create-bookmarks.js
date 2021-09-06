@@ -8,14 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
           key: 'id'
         }
       },
-      post_id: {
+      postId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'posts',
