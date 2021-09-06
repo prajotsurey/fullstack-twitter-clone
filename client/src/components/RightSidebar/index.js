@@ -1,9 +1,7 @@
 import React from 'react';
+import SearchForm from '../SearchForm';
 
-import {
-  Formik, Field, Form
-} from 'formik';
-import SearchInput from '../../components/SearchInput';
+
 
 const initialValues = {
   search: "",
@@ -21,18 +19,7 @@ const RightSidebar = () => {
       <div className="top-0 bottom-0 flex-col ml-7 mr-3 lg:items-start hidden rightShowSmall:flex rightShowSmall:w-rightSmall rightShowLarge:w-rightLarge ">
         {/* after adding position fixed, the search bar does not follow width properties of its parent. Added those again to make it work  */}
         <div className="fixed h-14 bg-white flex flex-col justify-center hidden rightShowSmall:flex rightShowSmall:w-rightSmall rightShowLarge:w-rightLarge">
-          <Formik
-          initialValues={initialValues}
-          onSubmit={(values) => {search(values)}}
-          > 
-            {() => (
-              <Form className="flex-col w-full">
-                <Field name="search" placeholder="Search Twitter" component={SearchInput}/>
-                {/* <button className="rounded-md w-full bg-green-200 h-12 px-4" type="submit">Sign In</button> */}
-              </Form>
-            )}
-            
-          </Formik>
+          <SearchForm initialValues={initialValues} search={search} />
         </div>
         {/* dummy box to add margin so content does not hide behind search box */}
         <div className="h-14"></div>
