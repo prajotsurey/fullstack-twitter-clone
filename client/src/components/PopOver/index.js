@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
+import { ReactComponent as PostMenuIcon } from '../../icons/PostMenuIcon.svg';
 
 const PopOver = ({id, addHandler, removeHandler, add}) => {
 
@@ -26,8 +27,8 @@ const PopOver = ({id, addHandler, removeHandler, add}) => {
 
 return(
   <>
-    <button className="flex-grow text-sm text-gray-400" aria-controls={`menu${id}`} aria-haspopup="true" onClick={handleClick}>
-      {id}
+    <button className="block text-sm h-5" aria-controls={`menu${id}`} aria-haspopup="true" onClick={handleClick}>
+      <PostMenuIcon />
     </button>
     <Menu
       id={`menu${id}`}

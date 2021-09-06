@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Posts from '../../components/Posts';
+import Post from '../../components/Post';
 import userService from '../../services/userService';
 import useAuthStorage from '../../hooks/useAuthStorage';
 import Menu from '@material-ui/core/Menu';
@@ -69,7 +69,9 @@ const BookmarksList = () => {
         <MenuItem className="text-gray-400" onClick={clearBookmarks}>Clear Bookmarks</MenuItem>
       </Menu>
     </div>
-    <Posts posts={postsToShow} user={currentUser}/>
+    {
+      postsToShow.map(post => <Post key={post.id} post={post} user={currentUser}/>)
+    }
     </>
   );
 }

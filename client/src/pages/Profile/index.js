@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import userService from '../../services/userService';
-import Posts from '../../components/Posts';
+import Post from '../../components/Post';
 import SwitchButton from '../../components/SwitchButton';
 import useAuthStorage from '../../hooks/useAuthStorage';
 
@@ -105,7 +105,9 @@ const Profile = () => {
           </SwitchButton>
         </div>
         <div className="pl-4 flex flex-col">
-        <Posts posts={postsToShow} user={user}/>
+          {
+            postsToShow.map(post => <Post key={post.id} post={post} user={user}/>)
+          }
       </div>
       </div>
     )

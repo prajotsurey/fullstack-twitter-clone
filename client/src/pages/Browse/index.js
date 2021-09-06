@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Posts from '../../components/Posts';
 import { Field, Form, Formik} from 'formik';
 import useAuthStorage from '../../hooks/useAuthStorage';
 import userService from '../../services/userService';
 import blogService from '../../services/postService';
+import Post from '../../components/Post';
 const BlogList = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [posts, setPosts] = useState([])
@@ -65,7 +65,7 @@ const BlogList = () => {
     </div>
     <div className="h-3 bg-gray-50 border-b">
     </div>
-    <Posts posts={posts} user={currentUser}/>
+    {posts.map(post => <Post key={post.id} post={post} user={currentUser}/>)}
     </>
   );
 }
