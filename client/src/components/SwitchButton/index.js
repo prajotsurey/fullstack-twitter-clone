@@ -3,19 +3,25 @@ import React from 'react';
 const SwitchButton = ({children,name,currentSwitch, ...rest}) => {
   if(name === currentSwitch){
     return(
-      <button {...rest} 
-      className="text-green-600 flex-grow px-6 font-semibold box-border 
-      border-b-4 border-green-500 hover:bg-green-200 focus:outline-none active:bg-green-700 ">
-        {children}
-      </button>
+      <div {...rest} 
+      className="flex flex-col items-center justify-center text-sm flex-grow px-6 font-semibold box-border 
+      hover:bg-gray-200 active:bg-green-700 ">
+        <div className="flex flex-col justify-center flex-grow">
+            {children}
+        </div>
+        <div className=" h-1 border-2 border-blue-500 rounded-full w-full -mt-2"></div>
+      </div>
     )
   }
   return(
-    <button {...rest} 
-    className="text-green-600 flex-grow px-6 font-semibold box-border 
-    pb-1 hover:bg-green-200 focus:outline-none active:bg-green-700 ">
-      {children}
-    </button>
+    <div {...rest} 
+    className="flex flex-col items-center justify-center text-gray-500 text-sm flex-grow px-6 font-medium box-border
+    hover:bg-gray-200 active:bg-green-700 ">
+      <div className="flex flex-col justify-center flex-grow">
+          {children}
+      </div>
+      <div className=" h-1 w-full -mt-2"></div>
+    </div>
   )
 }
 
