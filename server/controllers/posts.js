@@ -183,7 +183,31 @@ postRouter.post('/addBookmark/:id', async (request,response) => {
     return response.status(200).json({...data.dataValues});
   } catch(err) {
     console.log(err);
-    return response.status(400);
+    return response.status(400).json({error: err.errors[0].message});
+  }
+
+});
+
+postRouter.post('/removeBookmark/:id', async (request,response) => {
+  const token = getTokenFrom(request);
+  try{
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log(decodedToken);
+    if(!token || !decodedToken.id) {
+      return response.status(401).json({error: 'token missing or invalid'});
+    }
+    
+    const data = await models.bookmarks.destroy({
+      where:{
+        userId:decodedToken.id,
+        postId:request.params.id
+      }
+    });
+    console.log(data);
+    return response.status(200).json({...data.dataValues});
+  } catch(err) {
+    console.log(err);
+    return response.status(400).json({error: err.errors[0].message});
   }
 
 });
