@@ -92,7 +92,18 @@ userRouter.get('/', async (request,response, next) => {
     group by u.id
     `, { replacements: [decodedToken.id, decodedToken.id, decodedToken.id],type: Sequelize.QueryTypes.SELECT});
 
-    return response.json(result[0]);
+    const likedPosts = await sequelize.query(`
+    select p.*,
+    (select value from likes where "userId" = ? and "postId" = p.id) "likeStatus",
+    (select cast("userId" as BOOLEAN) from bookmarks where "userId" = ? and "postId" = p.id) "bookmarkStatus"
+    from posts p inner join likes l on l."postId" = p.id and l."userId" = ?
+    `, { replacements: [decodedToken.id, decodedToken.id, decodedToken.id],type: Sequelize.QueryTypes.SELECT});
+
+
+    return response.json({
+      ...result,
+      likedPosts
+    });
   } catch(error) {
     next(error);
   }
