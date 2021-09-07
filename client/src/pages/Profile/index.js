@@ -13,8 +13,12 @@ const Profile = () => {
   const { id } = useParams();
 
   const auth = useAuthStorage();
-  const changePostsToShow = (posts) => {
-    console.log(posts)
+  const changePostsToShow = (selctor) => {
+    if(selctor === "likes") {
+      setPostsToShow(user.likedPosts)
+    } else if(selctor === "tweets") {
+      setPostsToShow(user.posts)
+    }
   }
 
   console.log('profile');
@@ -29,17 +33,6 @@ const Profile = () => {
     fetchUser();
   },[id])
 
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const user = JSON.parse(auth.getToken());
-      if(user.id){
-        const returnedUser = await userService.getUser(user.id);
-        console.log(returnedUser)
-      }
-    }
-    fetchUser();
-  },[auth])
   
   if(user){
     return(
