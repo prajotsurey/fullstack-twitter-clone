@@ -13,9 +13,13 @@ const getUserById = async (id) => {
 }
 
 const getUser = async () => {
+  const returnedToken = await token.getToken()
   const config = { 
-    headers: {  Authorization : token.token },
+    headers: {  Authorization : returnedToken },
   }
+
+  console.log(config)
+
   const response = await axios.get(`${baseUrl}`,config)
   return response.data
 }

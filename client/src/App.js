@@ -31,9 +31,9 @@ const App = () => {
       if(user){
         const returnedUser = await userService.getUserById(user.id);
         await setUser(returnedUser);
-        console.log(returnedUser)
         await postService.setToken(user.token)
-        await tokenUtil.setToken(user.token)
+        await tokenUtil.setToken(user.token) 
+        //this is a extracted global variable being set. It is similar to the token and settoken function in postsService.
       }
     }
 

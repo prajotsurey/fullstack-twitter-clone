@@ -21,9 +21,9 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const user = await userService.getUserByHandle(id)
+      const user = await userService.getUser()
       setUser(user);
-      setPostsToShow(user.created_posts)
+      setPostsToShow(user.posts)
     }
 
     fetchUser();
@@ -55,7 +55,7 @@ const Profile = () => {
               {user.username}
             </div>
             <div className="text-xs text-gray-500">
-              {user.created_posts.length} tweets
+              {user.posts.length} tweets
             </div>
           </div>
         </div>
