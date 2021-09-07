@@ -27,13 +27,9 @@ postRouter.get('/', async (request,response,next) => {
     const user = userResult.dataValues;
 
     const result = await sequelize.query(`
-    select p.*,json_build_object('id',u.id,'username',u.username) creator, (select value from likes where "userId" = ? and "postId" = p.id) "likeStatus" from posts p inner join users u on u.id = p."userId";
+    select p.*,json_build_object('id',u.id,'username',u.username) creator, (select value from likes where "userId" = ? and "postId" = p.id) "likeStatus" from posts p inner join users u on u.id = p."userId" order by p."createdAt" DESC;
     `, { replacements: [user.id],type: Sequelize.QueryTypes.SELECT});
 
-    console.log(result);
-
-    // const result = await models.post.findAll({include: [{model: models.user, as:'creator'}]});
-    console.log('here');
     return response.json(result);
   } catch(error) {
     next(error);
@@ -114,14 +110,21 @@ postRouter.post('/like/:id', async (request, response, next) => {
       }, {
         where: {
           id: request.params.id
-        }
+        },
+        returning: true,
+        plain: true
       });
-      response.json(post);
+      console.log(post)
+      return response.status(200).json(
+        {
+          ...post[0][0],
+          likeStatus: 1 //current user's like status
+        });
  
     } catch(err) {
-      console.log(err);
-      console.log(err.errors[0].message);
-      if(err.errors[0].message.includes('must be unique')){
+      // this means another like with same userid and postid is being created
+      // implement the code to unlike i.e. delete like object, decrement post's like & set votestatuts to null
+      if(err.errors[0].message.includes('must be unique')){ 
         await models.likes.destroy({
           where:{
             userId: user.id,
@@ -133,9 +136,14 @@ postRouter.post('/like/:id', async (request, response, next) => {
         }, {
           where: {
             id: request.params.id
-          }
+          },
+          returning: true,
+          plain: true
         });
-        response.json(post);
+        return response.status(200).json({
+          ...post[0][0],
+          likeStatus: null
+        });
       }
     }
     

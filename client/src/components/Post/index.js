@@ -18,15 +18,8 @@ const useStyles = makeStyles(() => ({
 
 const Post = ({ post, user}) => {
   const classes = useStyles()
-  const [liked, setLiked] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
-
-  useEffect(() => {
-    if(user){
-      setLiked(user.liked_posts.find(p => p.id === post.id) ? true : false)
-      setBookmarked(user.bookmarked_posts.find(p => p.id === post.id) ? true : false)
-    }
-  },[])
+  const [likeStatus, setLikeStatus] = useState(Boolean(post.likeStatus))
 
   const AddBookmark = (postID) => {
     userService.addBookmark(user.id,postID);
@@ -38,10 +31,10 @@ const Post = ({ post, user}) => {
     console.log('remove bookmark',postID);
   }
 
-  const handleLike = (postId) => {
-    const response = postService.likePost(postId)
-    console.log(response)
-    setLiked(!liked)
+  const handleLike = async (postId) => {
+    const response = await postService.likePost(postId)
+    setLikeStatus(Boolean(response.likeStatus))
+    console.log(response.likes)
   }
 
   return(
@@ -88,7 +81,7 @@ const Post = ({ post, user}) => {
             <div className=" rounded-full hover:text-pink-500 text-gray-400 hover:text-pink-500 hover:bg-pink-100 p-1.5">
               <IconButton className={classes.root} onClick={() => { handleLike(post.id) }}>
                 {
-                  liked
+                  likeStatus
                   ?<LikedIcon />
                   :<LikeIcon />
                   }

@@ -39,7 +39,6 @@ const likePost = async (postId) => {
   const config = { 
     headers: {  Authorization : token },
   }
-  console.log(token)
   const response = await axios.post(`${baseUrl}/like/${postId}`,{},config)
   return response.data
 }
