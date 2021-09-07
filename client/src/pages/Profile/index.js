@@ -4,6 +4,7 @@ import userService from '../../services/userService';
 import Post from '../../components/Post';
 import SwitchButton from '../../components/SwitchButton';
 import useAuthStorage from '../../hooks/useAuthStorage';
+import CenterHeader from '../../components/CenterHeader';
 
 const Profile = () => {
   const [postsToShow, setPostsToShow] = useState([]);
@@ -37,8 +38,10 @@ const Profile = () => {
   if(user){
     return(
       <div className="flex flex-col">
-        <div className="pl-4 h-14 flex flex-row items-center border-b fixed bg-white w-center "> 
-          <Link to="/">
+        <CenterHeader>
+        <div className="pl-4">
+        </div>
+        <Link to="/">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
@@ -51,9 +54,7 @@ const Profile = () => {
               {user.posts.length} tweets
             </div>
           </div>
-        </div>
-        <div className="pl-4 h-14 flex flex-row items-center border-b"> 
-      </div>
+        </CenterHeader>
         <div className="">
           <div className="w-full h-coverPhotoHeight bg-gray-100">
           </div>

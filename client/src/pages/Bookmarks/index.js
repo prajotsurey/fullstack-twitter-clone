@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import blogService from '../../services/postService';
 import Post from '../../components/Post';
+import CenterHeader from '../../components/CenterHeader';
 
 const Bookmarks = () => {
   const [posts, setPosts] = useState([])
@@ -17,13 +18,11 @@ const Bookmarks = () => {
 
   return(
     <div className="flex flex-col">
-    <div className="h-14 flex flex-row items-center border-b fixed bg-white w-center "> 
-      <div className="pl-4 text-xl font-semibold ">
-        Bookmarks
-      </div>
-    </div>
-    <div className="pl-4 h-14 flex flex-row items-center border-b"> 
-    </div>
+      <CenterHeader>
+        <div className="pl-4 text-xl font-semibold ">
+          Bookmarks
+        </div>
+      </CenterHeader>
     {posts.map(post => <Post key={post.id} post={post} />)}
     </div>
   );

@@ -5,6 +5,7 @@ import userService from '../../services/userService';
 import blogService from '../../services/postService';
 import Post from '../../components/Post';
 import postService from '../../services/postService';
+import CenterHeader from '../../components/CenterHeader';
 
 const BlogList = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -35,13 +36,11 @@ const BlogList = () => {
 
   return(
     <div className="flex flex-col">
-      <div className="h-14 flex flex-row items-center border-b fixed bg-white w-center "> 
+      <CenterHeader>
         <div className="pl-4 text-xl font-semibold ">
           Home
         </div>
-      </div>
-      <div className="pl-4 h-14 flex flex-row items-center border-b"> 
-      </div>
+      </CenterHeader>
       <div className="border-b">
         <div className="flex flex-row px-3 pt-1">
           <div className="mr-4">
