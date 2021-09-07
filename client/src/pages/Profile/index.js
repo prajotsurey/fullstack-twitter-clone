@@ -17,6 +17,8 @@ const Profile = () => {
     console.log(posts)
   }
 
+  console.log('profile');
+
   useEffect(() => {
     const fetchUser = async () => {
       const user = await userService.getUserByHandle(id)
