@@ -85,6 +85,7 @@ userRouter.get('/', async (request,response, next) => {
         'likeStatus', (select value from likes where "userId" = ? and "postId" = p.id),
         'bookmarkStatus', (select cast("userId" as BOOLEAN) from bookmarks where "userId" = ? and "postId" = p.id)
         )
+      order by p."createdAt" DESC
       ) posts
     from users u inner join posts p on u.id = p."userId"
     where u.id = ?
