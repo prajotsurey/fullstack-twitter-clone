@@ -11,11 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.post.belongsToMany(models.user, {through: models.bookmarks, foreignKey: 'postId',as:'bookmarkingUsers'});
+      models.user.belongsToMany(models.post, {through: models.bookmarks, foreignKey:'userId',as:'bookmarkedPosts'});
     }
   };
   bookmarks.init({
-    userId: DataTypes.INTEGER,
-    postId: DataTypes.INTEGER
+    userId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
+    postId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
   }, {
     sequelize,
     modelName: 'bookmarks',
