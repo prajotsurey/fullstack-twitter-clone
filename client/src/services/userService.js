@@ -23,18 +23,5 @@ const clearBookmarks = async (id) => {
   return response.data
 }
 
-const addBookmark = async (id,postID) => {
-  const config = { 
-    headers: {  Authorization : token },
-  }
-  const response = await axios.post(`${baseUrl}/${id}/addBookmark/${postID}`,{},config)
-  return response.data
-}
-
-const removeBookmark = async (id,postID) => {
-  const response = await axios.delete(`${baseUrl}/${id}/removeBookmark/${postID}`)
-  return response.data
-}
-
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { createUser, getUser, clearBookmarks, addBookmark, removeBookmark, getUserByHandle }
+export default { createUser, getUser, clearBookmarks,  getUserByHandle }

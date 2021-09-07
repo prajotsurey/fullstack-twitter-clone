@@ -43,5 +43,21 @@ const likePost = async (postId) => {
   return response.data
 }
 
+const addBookmark = async (id,postID) => {
+  const config = { 
+    headers: {  Authorization : token },
+  }
+  const response = await axios.post(`${baseUrl}/addBookmark/${postID}`,{},config)
+  return response.data
+}
+
+const removeBookmark = async (id,postID) => {
+  const config = { 
+    headers: {  Authorization : token },
+  }
+  const response = await axios.delete(`${baseUrl}/removeBookmark/${postID}`, {}, config)
+  return response.data
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { setToken, getPosts, createPost, getPost, getPostsByUser, likePost, token}
+export default { setToken, getPosts, createPost, getPost, getPostsByUser, likePost, addBookmark, removeBookmark, token}

@@ -21,14 +21,14 @@ const Post = ({ post, user}) => {
   const [bookmarked, setBookmarked] = useState(false);
   const [likeStatus, setLikeStatus] = useState(Boolean(post.likeStatus))
 
-  const AddBookmark = (postID) => {
-    userService.addBookmark(user.id,postID);
-    console.log('add bookmark',postID);
+  const AddBookmark = async (postID) => {
+    const data = await postService.addBookmark(user.id,postID);
+    console.log('add bookmark: ',data);
   }
   
-  const RemoveBookmark = (postID) => {
-    userService.removeBookmark(user.id,postID);
-    console.log('remove bookmark',postID);
+  const RemoveBookmark = async (postID) => {
+    const data = await postService.removeBookmark(user.id,postID);
+    console.log('remove bookmark',data);
   }
 
   const handleLike = async (postId) => {
