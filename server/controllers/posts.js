@@ -55,7 +55,6 @@ postRouter.post('/', async (request,response, next) => {
   const token = getTokenFrom(request);
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
@@ -68,11 +67,19 @@ postRouter.post('/', async (request,response, next) => {
       return response.status(400).json({error: 'content missing'});
     }
 
-    const savedBlog = await models.post.create({ content:body.content, user_id:user.id}); 
+    const savedBlog = await models.post.create({ content:body.content, userId:user.id}); 
 
-    response.json(savedBlog);
+    return response.json({
+      ...savedBlog.dataValues,
+      likeStatus:0,
+      creator:{
+        id: user.id,
+        username: user.username
+      }
+    });
   
   } catch(error) {
+    console.log(error)
     next(error);
   }
 
@@ -127,6 +134,7 @@ postRouter.post('/like/:id', async (request, response, next) => {
     } catch(err) {
       // this means another like with same userid and postid is being created
       // implement the code to unlike i.e. delete like object, decrement post's like & set votestatuts to null
+      console.log(err)
       if(err.errors[0].message.includes('must be unique')){ 
         await models.likes.destroy({
           where:{

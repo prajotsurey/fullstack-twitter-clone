@@ -4,6 +4,7 @@ import useAuthStorage from '../../hooks/useAuthStorage';
 import userService from '../../services/userService';
 import blogService from '../../services/postService';
 import Post from '../../components/Post';
+import postService from '../../services/postService';
 
 const BlogList = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -49,14 +50,15 @@ const BlogList = () => {
             </div>
           </div>
           <Formik
-            initialValues={{ tweet: ''}}
-            onSubmit={(values, actions) => {
-              console.log(values)
+            initialValues={{ content: ''}}
+            onSubmit={ async (values, actions) => {
+              const response = await postService.createPost(values)
+              setPosts([response,...posts])
             }}
             >
             {() => (
               <Form className="flex flex-col w-full">
-                <Field className="w-full py-3 text-xl outline-none border-b " name="tweet" placeholder="What's hapenning?" as="textarea" />
+                <Field className="w-full py-3 text-xl outline-none border-b " name="content" placeholder="What's hapenning?" as="textarea" />
                 <div className="self-end mt-3 mb-2">
                   <button className="text-white font-bold text-sm py-2 px-3 rounded-full bg-green-400" type="submit">Tweet</button>
                 </div>

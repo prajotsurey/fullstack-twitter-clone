@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      post.belongsTo(models.user, {foreignKey: 'userId',as:'creator'})
-      post.belongsToMany(models.user, {through: models.likes, foreignKey: 'postId',as:'likers'})
-      post.belongsToMany(models.user, {through: models.bookmarks, foreignKey: 'postId',as:'bookmarkers'})
+      // post.belongsTo(models.user, {foreignKey: 'userId',as:'creator'})
+      // post.belongsToMany(models.user, {through: models.likes, foreignKey: 'postId',as:'likers'})
+      // post.belongsToMany(models.user, {through: models.bookmarks, foreignKey: 'postId',as:'bookmarkers'})
     }
   };
   post.init({
@@ -21,12 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
-    },
-    likeStatus: {
-      type: DataTypes.VIRTUAL,
-      get() {
-        const like = likes.find({})
-      }
     }
   }, {
     sequelize,

@@ -98,7 +98,7 @@ const Profile = () => {
             Likes
           </SwitchButton>
         </div>
-        <div className="pl-4 flex flex-col">
+        <div className="flex flex-col">
           {
             postsToShow.map(post => <Post key={post.id} post={post} user={user}/>)
           }
