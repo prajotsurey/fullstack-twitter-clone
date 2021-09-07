@@ -2,7 +2,6 @@ var token = null
 
 const setToken = (newToken) => {
   token = `bearer ${newToken}`
-  console.log('set token in function: ',token)
 }
 
 const getToken = () => token

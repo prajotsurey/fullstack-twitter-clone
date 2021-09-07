@@ -7,7 +7,6 @@ const Bookmarks = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      console.log('in bookmarks')
       const posts = await blogService.getBookmarks();
       setPosts(posts)
     }
@@ -17,7 +16,7 @@ const Bookmarks = () => {
   },[])
 
   return(
-    <>
+    <div className="flex flex-col">
     <div className="h-14 flex flex-row items-center border-b fixed bg-white w-center "> 
       <div className="pl-4 text-xl font-semibold ">
         Bookmarks
@@ -26,7 +25,7 @@ const Bookmarks = () => {
     <div className="pl-4 h-14 flex flex-row items-center border-b"> 
     </div>
     {posts.map(post => <Post key={post.id} post={post} />)}
-    </>
+    </div>
   );
 }
 

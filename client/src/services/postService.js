@@ -5,7 +5,6 @@ let token = null
 
 const setToken = (newToken) => {
   token = `bearer ${newToken}`
-  console.log('set token in postservice: ',token)
 }
 
 const getPosts = async() => {

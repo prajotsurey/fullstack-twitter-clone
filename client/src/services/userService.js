@@ -18,8 +18,6 @@ const getUser = async () => {
     headers: {  Authorization : returnedToken },
   }
 
-  console.log(config)
-
   const response = await axios.get(`${baseUrl}`,config)
   return response.data
 }
@@ -31,7 +29,6 @@ const getUserByHandle = async (handle) => {
 
 const clearBookmarks = async (id) => {
   const response = await axios.get(`${baseUrl}/${id}/clearBookmarks`)
-  console.log(response)
   return response.data
 }
 
