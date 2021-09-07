@@ -1,6 +1,8 @@
 const userRouter = require('express').Router();
 const models = require('../models');
 const bcrypt = require('bcrypt');
+const getTokenFrom = require('../utils/getTokenFrom');
+const jwt = require('jsonwebtoken');
 
 // create user / sign up route
 userRouter.post('/', async (request, response, next) => {
@@ -89,14 +91,9 @@ userRouter.get('/:id/clearBookmarks', async (request,response) => {
   });
 });
 
-userRouter.post('/:id/addBookmark/:postID', async (request,response) => {
-  const Bookmark = await models.bookmarks.create({user_id:request.params.id, post_id:request.params.postID});
-  console.log(Bookmark);
-  return response.status(200);
 
-});
 
-userRouter.delete('/:id/removeBookmark/:postID', async (request,response) => {
+userRouter.delete('removeBookmark/:id', async (request,response) => {
   const Bookmark = await models.bookmarks.destroy({where: {user_id: request.params.id, post_id: request.params.postID}});
   console.log(Bookmark);
   return response.status(200);

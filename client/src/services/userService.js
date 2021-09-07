@@ -1,6 +1,7 @@
 import axios from 'axios'
-const baseUrl = '/api/users'
+import { token } from './userService.js'
 
+const baseUrl = '/api/users'
 const createUser = async (credentials) => {
   const response = await axios.post(baseUrl, credentials)
   return response.data
@@ -23,7 +24,10 @@ const clearBookmarks = async (id) => {
 }
 
 const addBookmark = async (id,postID) => {
-  const response = await axios.post(`${baseUrl}/${id}/addBookmark/${postID}`)
+  const config = { 
+    headers: {  Authorization : token },
+  }
+  const response = await axios.post(`${baseUrl}/${id}/addBookmark/${postID}`,{},config)
   return response.data
 }
 

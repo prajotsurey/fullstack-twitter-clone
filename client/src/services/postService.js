@@ -44,4 +44,4 @@ const likePost = async (postId) => {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { setToken, getPosts, createPost, getPost, getPostsByUser, likePost}
+export default { setToken, getPosts, createPost, getPost, getPostsByUser, likePost, token}
