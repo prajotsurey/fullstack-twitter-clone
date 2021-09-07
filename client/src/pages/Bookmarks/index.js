@@ -18,12 +18,12 @@ const Bookmarks = () => {
 
   return(
     <>
-    <div className="pl-4 h-14 flex flex-row items-center border-b"> 
-      <div className="text-xl font-semibold">
+    <div className="h-14 flex flex-row items-center border-b fixed bg-white w-center "> 
+      <div className="pl-4 text-xl font-semibold ">
         Bookmarks
       </div>
     </div>
-    <div className="h-3 bg-gray-50 border-b">
+    <div className="pl-4 h-14 flex flex-row items-center border-b"> 
     </div>
     {posts.map(post => <Post key={post.id} post={post} />)}
     </>

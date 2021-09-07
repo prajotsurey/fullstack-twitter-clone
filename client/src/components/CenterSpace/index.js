@@ -7,8 +7,8 @@ const CentreSpace = (props) => {
     return(
       <div className="flex md:flex-row justify-center">
         <LeftSidebar username={props.user.username}/>
-        <div className="w-center"> 
-          <div className="flex flex-col border-r border-l">
+        <div className="flex flex-col border-r border-l">
+          <div className="w-center"> 
             {props.children}
           </div>
         </div>

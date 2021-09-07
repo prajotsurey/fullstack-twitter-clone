@@ -37,10 +37,12 @@ const BlogList = () => {
 
   return(
     <>
-    <div className="pl-4 h-14 flex flex-row items-center border-b"> 
-      <div className="text-xl font-semibold">
+    <div className="h-14 flex flex-row items-center border-b fixed bg-white w-center "> 
+      <div className="pl-4 text-xl font-semibold ">
         Home
       </div>
+    </div>
+    <div className="pl-4 h-14 flex flex-row items-center border-b"> 
     </div>
     <div className="border-b">
       <div className="flex flex-row px-3 pt-1">
@@ -65,8 +67,6 @@ const BlogList = () => {
           )}
         </Formik>
       </div>
-    </div>
-    <div className="h-3 bg-gray-50 border-b">
     </div>
     {posts.map(post => <Post key={post.id} post={post} user={currentUser}/>)}
     </>
