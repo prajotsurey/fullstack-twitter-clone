@@ -18,17 +18,25 @@ const useStyles = makeStyles(() => ({
 
 const Post = ({ post, user}) => {
   const classes = useStyles()
-  const [bookmarked, setBookmarked] = useState(false);
+  const [bookmarkStatus, setBookmarkStatus] = useState(Boolean(post.bookmarkeStatus));
   const [likeStatus, setLikeStatus] = useState(Boolean(post.likeStatus))
 
   const AddBookmark = async (postID) => {
-    const data = await postService.addBookmark(user.id,postID);
-    console.log('add bookmark: ',data);
+    try{
+      const data = await postService.addBookmark(postID);
+      console.log('add bookmark: ',data);
+    } catch(err) {
+      console.log(err)
+    }
   }
   
   const RemoveBookmark = async (postID) => {
-    const data = await postService.removeBookmark(user.id,postID);
-    console.log('remove bookmark',data);
+    try{
+      const data = await postService.removeBookmark(postID);
+      console.log('remove bookmark',data);
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   const handleLike = async (postId) => {
@@ -90,7 +98,7 @@ const Post = ({ post, user}) => {
           </div>
           <div className="flex flex-row flex-grow justify-start items-center text-sm ">
             <div className="text-gray-400 rounded-full text-gray-400 hover:text-blue-400 hover:bg-blue-100 p-1.5">
-              <PopOver id={post.id} addHandler={AddBookmark} removeHandler={RemoveBookmark} add={!bookmarked}>
+              <PopOver id={post.id} addHandler={AddBookmark} removeHandler={RemoveBookmark} bookmarkStatus={bookmarkStatus} setBookmarkStatus={setBookmarkStatus}>
                 button
               </PopOver>
             </div>

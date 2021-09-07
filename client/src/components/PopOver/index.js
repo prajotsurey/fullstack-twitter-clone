@@ -3,7 +3,7 @@ import { Menu } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
 import { ReactComponent as PostMenuIcon } from '../../icons/PostMenuIcon.svg';
 
-const PopOver = ({id, addHandler, removeHandler, add}) => {
+const PopOver = ({id, addHandler, removeHandler, bookmarkStatus, setBookmarkStatus}) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -14,11 +14,13 @@ const PopOver = ({id, addHandler, removeHandler, add}) => {
   const handleAddClick = () => {
     addHandler(id);
     handleClose();
+    setBookmarkStatus(!bookmarkStatus)
   }
   
   const handleRemoveClick = () => {
     removeHandler(id);
     handleClose();
+    setBookmarkStatus(!bookmarkStatus)
   }
 
   const handleClose = () => {
@@ -37,15 +39,16 @@ return(
       open={Boolean(anchorEl)}
       onClose={handleClose}
     >
-      {add
+      {bookmarkStatus
       ?
-        <MenuItem className="text-gray-400" onClick={() => {handleAddClick()}}>
-          Add to bookmarks
-        </MenuItem>
-      :
         <MenuItem className="text-gray-400" onClick={() => {handleRemoveClick()}}>
           Remove from  bookmarks
         </MenuItem>
+      : 
+        <MenuItem className="text-gray-400" onClick={() => {handleAddClick()}}>
+          Add to bookmarks
+        </MenuItem>
+        
       }
     </Menu>
   </>

@@ -43,7 +43,7 @@ const likePost = async (postId) => {
   return response.data
 }
 
-const addBookmark = async (id,postID) => {
+const addBookmark = async (postID) => {
   const config = { 
     headers: {  Authorization : token },
   }
@@ -51,11 +51,11 @@ const addBookmark = async (id,postID) => {
   return response.data
 }
 
-const removeBookmark = async (id,postID) => {
+const removeBookmark = async (postID) => {
   const config = { 
     headers: {  Authorization : token },
   }
-  const response = await axios.delete(`${baseUrl}/removeBookmark/${postID}`, {}, config)
+  const response = await axios.delete(`${baseUrl}/removeBookmark/${postID}`,config)
   return response.data
 }
 
