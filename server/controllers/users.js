@@ -3,6 +3,9 @@ const models = require('../models');
 const bcrypt = require('bcrypt');
 const getTokenFrom = require('../utils/getTokenFrom');
 const jwt = require('jsonwebtoken');
+const { Sequelize } = require('sequelize');
+const sequelize = require('../db');
+
 
 // create user / sign up route
 userRouter.post('/', async (request, response, next) => {
@@ -55,18 +58,37 @@ userRouter.post('/', async (request, response, next) => {
   
 });
 
-userRouter.get('/:id', async (request,response) => {
-  // get posts
-  const User = await models.user.findOne({ 
-    where: {id: request.params.id}, 
-    include: [
-      // {model: models.post, as:'created_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
-      // {model: models.post, as:'liked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
-      // {model: models.post, as:'bookmarked_posts', include:[{model: models.user, as:'creator'},{model: models.user, as:'likers'}]},
-    ]
-  });
+userRouter.get('/', async (request,response, next) => {
+  const token = getTokenFrom(request);
+  try{
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log(decodedToken);
+    if(!token || !decodedToken.id) {
+      return response.status(401).json({error: 'token missing or invalid'});
+    }
 
-  return response.status(200).json(User);  
+    const result = await sequelize.query(`
+    select u.*,
+    array_agg(
+      json_build_object(
+        'id', p.id,
+        'content', p.content,
+        'creator', json_build_object('id',u.id,'username',u.username),
+        'likeStatus', (select value from likes where "userId" = ? and "postId" = p.id),
+        'bookmarkStatus', (select cast("userId" as BOOLEAN) from bookmarks where "userId" = ? and "postId" = p.id)
+        )
+      ) posts
+    from users u inner join posts p on u.id = p."userId"
+    where u.id = ?
+    group by u.id
+    `, { replacements: [decodedToken.id, decodedToken.id, decodedToken.id],type: Sequelize.QueryTypes.SELECT});
+
+    return response.json(result[0]);
+  } catch(error) {
+    next(error);
+  }
+
+  return response.status(200).json();  
 });
 
 userRouter.get('/handle/:handle', async (request,response) => {
