@@ -18,6 +18,8 @@ import useAuthStorage from './hooks/useAuthStorage';
 import userService from './services/userService';
 import Testing from './pages/Testing';
 import postService from './services/postService';
+import tokenUtil from './utils/token';
+
 const App = () => {
   const [user, setUser] = useState(null)
   const auth = useAuthStorage();
@@ -27,10 +29,11 @@ const App = () => {
       console.log('in app.js')
       const user = await JSON.parse(auth.getToken());
       if(user){
-        const returnedUser = await userService.getUser(user.id);
+        const returnedUser = await userService.getUserById(user.id);
         await setUser(returnedUser);
-        console.log('set token in app js: ', user.token)
+        console.log(returnedUser)
         await postService.setToken(user.token)
+        await tokenUtil.setToken(user.token)
       }
     }
 
