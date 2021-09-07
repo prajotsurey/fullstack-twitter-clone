@@ -1,7 +1,13 @@
 import React from 'react';
 import { ReactComponent as HomeIcon } from '../../icons/HomeIcon.svg';
+import { ReactComponent as HomeIconClicked } from '../../icons/HomeIconClicked.svg';
+
 import { ReactComponent as BookmarksIcon } from '../../icons/BookmarksIcon.svg';
+import { ReactComponent as BookmarksIconClicked } from '../../icons/BookmarksClicked.svg';
+
 import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
+import { ReactComponent as ProfileIconClicked } from '../../icons/ProfileClicked.svg';
+
 import { ReactComponent as Logo } from '../../icons/LogoBlue.svg';
 import { Link } from 'react-router-dom';
 import LeftSidebarLink from '../LeftSidebarLink';
@@ -21,16 +27,20 @@ const LeftSidebar = ({username}) => {
         </Link>
         <LeftSidebarLink
           Icon={<HomeIcon/>}
+          IconSelected={<HomeIconClicked />}
           to="/posts"
           Text="Home"
         />
         <LeftSidebarLink
           Icon={<BookmarksIcon/>}
+          IconSelected={<BookmarksIconClicked />}
+
           to="/bookmarks"
           Text="Bookmarks"
         />
         <LeftSidebarLink
           Icon={<ProfileIcon/>}
+          IconSelected={<ProfileIconClicked />}
           to="/profile"
           Text="Profile"
         />
