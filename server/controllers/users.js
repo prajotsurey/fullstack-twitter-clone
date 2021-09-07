@@ -58,13 +58,13 @@ userRouter.post('/', async (request, response, next) => {
   
 });
 
-userRouter.get('/:id', async (request, response, next) => {
+userRouter.get('/:id', async (request, response) => {
   const User = await models.user.findOne({ 
     where: {id: request.params.id},
-  })
+  });
 
-  return response.status(200).json(User)
-})
+  return response.status(200).json(User);
+});
 
 userRouter.get('/', async (request,response, next) => {
   const token = getTokenFrom(request);
