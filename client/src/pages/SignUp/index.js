@@ -1,14 +1,12 @@
+import { Form, Formik } from 'formik';
 import React from 'react';
-import {
-  Formik, Field, Form
-} from 'formik';
-import * as Yup from 'yup'
+import { Link, useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 import CustomInput from '../../components/CustomInput';
-import userService from '../../services/userService'
-import { Link, useHistory } from 'react-router-dom'
-import { ReactComponent as Logo } from '../../icons/LogoBlue.svg';
-import parsedErrors from '../../utils/errorParser';
 import StyledButton from '../../components/StyledButton';
+import { ReactComponent as Logo } from '../../icons/LogoBlue.svg';
+import userService from '../../services/userService';
+import parsedErrors from '../../utils/errorParser';
 
 const SignUp = () => {
   const history = useHistory();
@@ -34,6 +32,7 @@ const SignUp = () => {
     }
     try{
       const response = await userService.createUser(credentials)
+      console.log(response)
       history.push('/login')
     } catch(error) {
       const errors = error.response.data.error

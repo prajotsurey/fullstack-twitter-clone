@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../icons/LogoBlue.svg';
 import StyledLink from '../../components/StyledLink';
 import { ReactComponent as LogoWhite } from '../../icons/LogoWhite.svg';

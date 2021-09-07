@@ -5,7 +5,7 @@ let token = null
 
 const setToken = (newToken) => {
   token = `bearer ${newToken}`
-  console.log(token)
+  console.log('set token in postservice: ',token)
 }
 
 const getPosts = async() => {
@@ -47,6 +47,7 @@ const addBookmark = async (postID) => {
   const config = { 
     headers: {  Authorization : token },
   }
+  console.log(token)
   const response = await axios.post(`${baseUrl}/addBookmark/${postID}`,{},config)
   return response.data
 }
@@ -59,5 +60,15 @@ const removeBookmark = async (postID) => {
   return response.data
 }
 
+
+const getBookmarks = async() => {
+  const config = { 
+    headers: {  Authorization : token },
+  }
+  console.log(token)
+  const response = await axios.get(`${baseUrl}/bookmarks/all`,config)
+  return response.data
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { setToken, getPosts, createPost, getPost, getPostsByUser, likePost, addBookmark, removeBookmark, token}
+export default { setToken, getPosts, createPost, getPost, getPostsByUser, likePost, addBookmark, removeBookmark, token, getBookmarks}

@@ -216,5 +216,33 @@ postRouter.delete('/removeBookmark/:id', async (request,response) => {
 
 });
 
+postRouter.get('/bookmarks/all', async (request,response,next) => {
+  const token = getTokenFrom(request);
+  console.log(request.headers)
+  try{
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log(decodedToken);
+    if(!token || !decodedToken.id) {
+      return response.status(401).json({error: 'token missing or invalid'});
+    }
+
+    const userResult = await models.user.findOne({where: {id: decodedToken.id}});
+
+    const user = userResult.dataValues;
+
+    const result = await sequelize.query(`
+    select p.*,json_build_object('id',u.id,'username',u.username) creator, 
+    (select value from likes where "userId" = ? and "postId" = p.id) "likeStatus",
+    (select "postId" from bookmarks where "userId" = ? and "postId" = p.id) "bookmarkStatus"
+    from posts p inner join users u on u.id = p."userId" 
+    where p.id in (select "postId" from bookmarks where "userId" = ? and "postId" = p.id)
+    order by p."createdAt" DESC;
+    `, { replacements: [user.id, user.id, user.id],type: Sequelize.QueryTypes.SELECT});
+
+    return response.json(result);
+  } catch(error) {
+    next(error);
+  }
+});
 
 module.exports = postRouter;

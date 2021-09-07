@@ -24,10 +24,12 @@ const App = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      console.log('in app.js')
       const user = await JSON.parse(auth.getToken());
       if(user){
         const returnedUser = await userService.getUser(user.id);
-        setUser(returnedUser);
+        await setUser(returnedUser);
+        console.log('set token in app js: ', user.token)
         await postService.setToken(user.token)
       }
     }

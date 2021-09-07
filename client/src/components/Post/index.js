@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { IconButton, makeStyles } from '@material-ui/core';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import userService from '../../services/userService';
-import PopOver from '../PopOver';
-import { ReactComponent as LikeIcon } from '../../icons/LikeIcon.svg';
 import { ReactComponent as LikedIcon } from '../../icons/LikedIcon.svg';
-import { IconButton } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
+import { ReactComponent as LikeIcon } from '../../icons/LikeIcon.svg';
 import postService from '../../services/postService';
+import PopOver from '../PopOver';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,7 +14,7 @@ const useStyles = makeStyles(() => ({
 
 }));
 
-const Post = ({ post, user}) => {
+const Post = ({ post }) => {
   const classes = useStyles()
   const [bookmarkStatus, setBookmarkStatus] = useState(Boolean(post.bookmarkeStatus));
   const [likeStatus, setLikeStatus] = useState(Boolean(post.likeStatus))

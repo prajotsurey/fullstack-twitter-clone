@@ -6,7 +6,6 @@ import SwitchButton from '../../components/SwitchButton';
 import useAuthStorage from '../../hooks/useAuthStorage';
 
 const Profile = () => {
-  const [currentUser, setCurrentUser] = useState(null);
   const [postsToShow, setPostsToShow] = useState([]);
   const [currentSwitch, setCurrentSwitch] = useState('1');
 
@@ -26,7 +25,7 @@ const Profile = () => {
     }
 
     fetchUser();
-  },[])
+  },[id])
 
 
   useEffect(() => {
@@ -34,7 +33,7 @@ const Profile = () => {
       const user = JSON.parse(auth.getToken());
       if(user.id){
         const returnedUser = await userService.getUser(user.id);
-        setCurrentUser(returnedUser);
+        console.log(returnedUser)
       }
     }
     fetchUser();

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { token } from './userService.js'
 
 const baseUrl = '/api/users'
 const createUser = async (credentials) => {

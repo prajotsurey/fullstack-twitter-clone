@@ -4,6 +4,7 @@ import useAuthStorage from '../../hooks/useAuthStorage';
 import userService from '../../services/userService';
 import blogService from '../../services/postService';
 import Post from '../../components/Post';
+
 const BlogList = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [posts, setPosts] = useState([])
@@ -11,6 +12,7 @@ const BlogList = () => {
   const auth = useAuthStorage();
   useEffect(() => {
     const fetchPosts = async () => {
+      console.log('in browse')
       const posts = await blogService.getPosts();
       setPosts(posts)
     }
@@ -21,6 +23,7 @@ const BlogList = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      console.log('in browse 2')
       const user = JSON.parse(auth.getToken());
       console.log(user.id)
       if(user.id){
