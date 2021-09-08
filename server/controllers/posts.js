@@ -29,7 +29,7 @@ postRouter.get('/', async (request,response,next) => {
     const result = await sequelize.query(`
     select p.*,json_build_object('id',u.id,'username',u.username) creator, 
     (select value from likes where "userId" = ? and "postId" = p.id) "likeStatus",
-    (select "postId" from bookmarks where "userId" = ? and "postId" = p.id) "bookmarkeStatus"
+    (select "postId" from bookmarks where "userId" = ? and "postId" = p.id) "bookmarkStatus"
     from posts p inner join users u on u.id = p."userId" order by p."createdAt" DESC;
     `, { replacements: [user.id, user.id],type: Sequelize.QueryTypes.SELECT});
 

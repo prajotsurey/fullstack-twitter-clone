@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
 
 const Post = ({ post , activateModal}) => {
   const classes = useStyles()
-  const [bookmarkStatus, setBookmarkStatus] = useState(Boolean(post.bookmarkeStatus));
+  const [bookmarkStatus, setBookmarkStatus] = useState(Boolean(post.bookmarkStatus));
   const [likeStatus, setLikeStatus] = useState(Boolean(post.likeStatus))
 
   const AddBookmark = async (postID) => {
