@@ -53,7 +53,6 @@ const BlogList = () => {
           Home
         </div>
       </CenterHeader>
-      <button onClick={() => {checker()}}> click</button>
       <div className="border-b">
         <div className="flex flex-row px-3 pt-1">
           <div className="mr-4">
