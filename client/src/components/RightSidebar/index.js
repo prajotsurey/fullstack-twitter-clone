@@ -22,85 +22,84 @@ const RightSidebar = () => {
           <SearchForm initialValues={initialValues} search={search} />
         </div>
         {/* dummy box to add margin so content does not hide behind search box */}
-        <div className="h-14"></div>
-        <div className="flex flex-col mt-3 rounded-xl bg-gray-50 w-full">
-          <div className="px-4 py-3 text-xl font-semibold border-b">
-            What's happening
+        <div className="fixed flex flex-col rightShowSmall:flex rightShowSmall:w-rightSmall rightShowLarge:w-rightLarge mt-3 rounded-xl bg-gray-50 w-full top-14">
+            <div className="px-4 py-3 text-xl font-semibold border-b">
+              What's happening
+            </div>
+            <div className="px-4 py-3 border-b flex flex-row">
+              <div className="flex flex-col">
+                <div className="text-xs text-gray-500 mb-1">
+                  <span>
+                    News 
+                  </span> 
+                  <span className="pl-1">
+                    . time
+                  </span>
+                </div>
+                <div className="text-sm font-semibold">
+                  Lorem ipsum dolor sit amet, 
+                  consectetur adipiscing elit,  
+                  labore et dolore magna aliqua.
+                </div>
+              </div>
+              <div className="w-52 rounded-lg bg-green-100">
+              </div>
+            </div>
+            <div className="px-4 py-3 border-b flex flex-row justify-between">
+              <div className="flex flex-col">
+                <div className="text-xs text-gray-500 mb-1">
+                  Trending in India
+                </div>
+                <div className="text-sm font-semibold mb-1">
+                  #Lorem ipsum dolor sit
+                </div>
+                <div className="text-xs text-gray-500 mb-1">
+                  Trending with something
+                </div>
+              </div>
+              <div className="">
+                button
+              </div>
+            </div>
+            <div className="px-4 py-3 border-b flex flex-row justify-between">
+              <div className="flex flex-col">
+                <div className="text-xs text-gray-500 mb-1">
+                  Trending in India
+                </div>
+                <div className="text-sm font-semibold mb-1">
+                  #Lorem ipsum dolor sit
+                </div>
+                <div className="text-xs text-gray-500 mb-1">
+                  Trending with something
+                </div>
+              </div>
+              <div className="">
+                button
+              </div>
+            </div>
+            <div className="px-4 py-3 border-b flex flex-row">
+              <div className="flex flex-col">
+                <div className="text-xs text-gray-500 mb-1">
+                  <span>
+                    News 
+                  </span> 
+                  <span className="pl-1">
+                    . time
+                  </span>
+                </div>
+                <div className="text-sm font-semibold">
+                  Lorem ipsum dolor sit amet, 
+                  consectetur adipiscing elit,  
+                  labore et dolore magna aliqua.
+                </div>
+              </div>
+              <div className="w-52 rounded-lg bg-green-100">
+              </div>
+            </div>
+            <div className="px-4 py-4 text-sm flex flex-row text-green-300">
+              Show more
+            </div>
           </div>
-          <div className="px-4 py-3 border-b flex flex-row">
-            <div className="flex flex-col">
-              <div className="text-xs text-gray-500 mb-1">
-                <span>
-                  News 
-                </span> 
-                <span className="pl-1">
-                  . time
-                </span>
-              </div>
-              <div className="text-sm font-semibold">
-                Lorem ipsum dolor sit amet, 
-                consectetur adipiscing elit,  
-                labore et dolore magna aliqua.
-              </div>
-            </div>
-            <div className="w-52 rounded-lg bg-green-100">
-            </div>
-          </div>
-          <div className="px-4 py-3 border-b flex flex-row justify-between">
-            <div className="flex flex-col">
-              <div className="text-xs text-gray-500 mb-1">
-                Trending in India
-              </div>
-              <div className="text-sm font-semibold mb-1">
-                #Lorem ipsum dolor sit
-              </div>
-              <div className="text-xs text-gray-500 mb-1">
-                Trending with something
-              </div>
-            </div>
-            <div className="">
-              button
-            </div>
-          </div>
-          <div className="px-4 py-3 border-b flex flex-row justify-between">
-            <div className="flex flex-col">
-              <div className="text-xs text-gray-500 mb-1">
-                Trending in India
-              </div>
-              <div className="text-sm font-semibold mb-1">
-                #Lorem ipsum dolor sit
-              </div>
-              <div className="text-xs text-gray-500 mb-1">
-                Trending with something
-              </div>
-            </div>
-            <div className="">
-              button
-            </div>
-          </div>
-          <div className="px-4 py-3 border-b flex flex-row">
-            <div className="flex flex-col">
-              <div className="text-xs text-gray-500 mb-1">
-                <span>
-                  News 
-                </span> 
-                <span className="pl-1">
-                  . time
-                </span>
-              </div>
-              <div className="text-sm font-semibold">
-                Lorem ipsum dolor sit amet, 
-                consectetur adipiscing elit,  
-                labore et dolore magna aliqua.
-              </div>
-            </div>
-            <div className="w-52 rounded-lg bg-green-100">
-            </div>
-          </div>
-          <div className="px-4 py-4 text-sm flex flex-row text-green-300">
-            Show more
-          </div>
-        </div>
       </div>
     </div>
   )
