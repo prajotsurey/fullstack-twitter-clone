@@ -5,6 +5,8 @@ import Post from '../../components/Post';
 import SwitchButton from '../../components/SwitchButton';
 import useAuthStorage from '../../hooks/useAuthStorage';
 import CenterHeader from '../../components/CenterHeader';
+import SlideUpModal from '../../components/SlideUpModal';
+
 
 const Profile = () => {
   const [postsToShow, setPostsToShow] = useState([]);
@@ -12,6 +14,17 @@ const Profile = () => {
 
   const [user, setUser] = useState(null);
   const { id } = useParams();
+
+  const [checked, setChecked] = React.useState(false);
+  const [slideText, setSlideText] = React.useState('')
+
+  const checker = (text) => {
+    setChecked(true)
+    setSlideText(text)
+    setTimeout(() => {
+      setChecked(false)
+    },500)
+  }
 
   const auth = useAuthStorage();
   const changePostsToShow = (selctor) => {
@@ -103,8 +116,10 @@ const Profile = () => {
         </div>
         <div className="flex flex-col">
           {
-            postsToShow.map(post => <Post key={post.id} post={post} user={user}/>)
+            postsToShow.map(post => <Post key={post.id} post={post} user={user} activateModal={checker}/>)
           }
+          <SlideUpModal checked={checked} text={slideText}/>
+
       </div>
       </div>
     )

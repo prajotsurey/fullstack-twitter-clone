@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
 
 }));
 
-const Post = ({ post }) => {
+const Post = ({ post , activateModal}) => {
   const classes = useStyles()
   const [bookmarkStatus, setBookmarkStatus] = useState(Boolean(post.bookmarkeStatus));
   const [likeStatus, setLikeStatus] = useState(Boolean(post.likeStatus))
@@ -22,7 +22,7 @@ const Post = ({ post }) => {
   const AddBookmark = async (postID) => {
     try{
       const data = await postService.addBookmark(postID);
-      console.log('add bookmark: ',data);
+      activateModal('Tweet added to your bookmarks')
     } catch(err) {
       console.log(err)
     }
@@ -31,7 +31,7 @@ const Post = ({ post }) => {
   const RemoveBookmark = async (postID) => {
     try{
       const data = await postService.removeBookmark(postID);
-      console.log('remove bookmark',data);
+      activateModal('Tweet removed from your bookmarks')
     } catch(err) {
       console.log(err)
     }

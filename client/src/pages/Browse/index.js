@@ -6,10 +6,22 @@ import blogService from '../../services/postService';
 import Post from '../../components/Post';
 import postService from '../../services/postService';
 import CenterHeader from '../../components/CenterHeader';
+import SlideUpModal from '../../components/SlideUpModal';
 
 const BlogList = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [posts, setPosts] = useState([])
+  
+  const [checked, setChecked] = React.useState(false);
+  const [slideText, setSlideText] = React.useState('')
+
+  const checker = (text) => {
+    setChecked(true)
+    setSlideText(text)
+    setTimeout(() => {
+      setChecked(false)
+    },500)
+  }
 
   const auth = useAuthStorage();
   useEffect(() => {
@@ -41,6 +53,7 @@ const BlogList = () => {
           Home
         </div>
       </CenterHeader>
+      <button onClick={() => {checker()}}> click</button>
       <div className="border-b">
         <div className="flex flex-row px-3 pt-1">
           <div className="mr-4">
@@ -66,9 +79,10 @@ const BlogList = () => {
           </Formik>
         </div>
       </div>
-      {posts.map(post => <Post key={post.id} post={post} user={currentUser}/>)}
+      {posts.map(post => <Post key={post.id} post={post} activateModal={checker}/>)}
+      <SlideUpModal checked={checked} text={slideText}/>
     </div>
   );
 }
 
-export default BlogList
+export default BlogList;
