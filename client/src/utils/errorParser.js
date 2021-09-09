@@ -3,7 +3,6 @@ const parsedErrors = (errors) => {
   errors.forEach(({field, message}) => {
     parsedErrors[field] = message;
   })
-  console.log(parsedErrors)
   return parsedErrors;
 }
 

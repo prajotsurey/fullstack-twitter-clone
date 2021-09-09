@@ -47,7 +47,6 @@ userRouter.post('/', async (request, response, next) => {
       message: 'passwords do not match'
     }]});
   }
-  console.log('after everything');
   try{
     const passwordHash = await bcrypt.hash(body.password, saltRounds);
     const User = await models.user.create({ username: body.username, password_hash: passwordHash });
@@ -70,7 +69,6 @@ userRouter.get('/', async (request,response, next) => {
   const token = getTokenFrom(request);
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
@@ -139,7 +137,6 @@ userRouter.get('/:id/clearBookmarks', async (request,response) => {
 
 userRouter.delete('removeBookmark/:id', async (request,response) => {
   const Bookmark = await models.bookmarks.destroy({where: {user_id: request.params.id, post_id: request.params.postID}});
-  console.log(Bookmark);
   return response.status(200);
 
 });

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import token from '../utils/tokenUtil';
+import createConfig from '../utils/createConfig';
 
 const baseUrl = '/api/users'
 const createUser = async (credentials) => {
@@ -13,10 +13,8 @@ const getUserById = async (id) => {
 }
 
 const getUser = async () => {
-  const returnedToken = await token.getToken()
-  const config = { 
-    headers: {  Authorization : returnedToken },
-  }
+  const config = await createConfig();
+
 
   const response = await axios.get(`${baseUrl}`,config)
   return response.data

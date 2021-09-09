@@ -7,7 +7,6 @@ import CustomInput from '../../components/CustomInput';
 import loginService from '../../services/loginService';
 import { ReactComponent as Logo } from '../../icons/LogoBlue.svg';
 import parsedErrors from '../../utils/errorParser';
-import tokenUtil from '../../utils/tokenUtil';
 
 const Login = () => {
   const history = useHistory();
@@ -27,8 +26,6 @@ const Login = () => {
       window.localStorage.setItem(
         'blogappuser', JSON.stringify(user)
       )
-      console.log(user)
-      await tokenUtil.setToken(user.token) 
       history.push('/posts')
     } catch(error) {
       await setErrors(parsedErrors(error.response.data.error))

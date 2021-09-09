@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 
 const LeftSidebarLink = ({Icon, IconSelected, Text, to}) => {
   const location = useLocation();
-  console.log(location.pathname.includes(to))
   return(
     <Link to={to} className="flex flex-col items-start group">
       <div className="my-1.5">

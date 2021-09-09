@@ -32,7 +32,6 @@ const SignUp = () => {
     }
     try{
       const response = await userService.createUser(credentials)
-      console.log(response)
       history.push('/login')
     } catch(error) {
       const errors = error.response.data.error

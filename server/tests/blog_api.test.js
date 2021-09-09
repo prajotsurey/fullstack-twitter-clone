@@ -49,8 +49,6 @@ describe('blog test', () => {
       });
     expect(response.status).toBe(200);
     expect(response.body.title).toBe('title new');
-    console.log(savedUser);
-    console.log(response.body);
     expect(response.body.author).toEqual(savedUser.id);
     const blogs = await helper.blogsInDb();
     expect(blogs.length).toBe(helper.initialBlogs.length + 1);
@@ -62,7 +60,6 @@ describe('blog test', () => {
         title: 'title new',
         content: 'content new',
       });
-    console.log(response);
     expect(response.status).toBe(401);
     const blogs = await helper.blogsInDb();
     expect(blogs.length).toBe(helper.initialBlogs.length);

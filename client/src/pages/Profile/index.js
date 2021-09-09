@@ -5,7 +5,6 @@ import Post from '../../components/Post';
 import SwitchButton from '../../components/SwitchButton';
 import CenterHeader from '../../components/CenterHeader';
 import SlideUpModal from '../../components/SlideUpModal';
-import tokenUtil from '../../utils/tokenUtil';
 
 const Profile = () => {
   const [postsToShow, setPostsToShow] = useState([]);
@@ -33,11 +32,9 @@ const Profile = () => {
     }
   }
 
-  console.log('profile');
 
   useEffect(() => {
     const fetchUser = async () => {
-      tokenUtil.setToken()
       const user = await userService.getUser()
       setUser(user);
       setPostsToShow(user.posts)

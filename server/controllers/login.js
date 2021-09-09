@@ -22,7 +22,6 @@ loginRouter.post('/', async(request, response) => {
     }] });
   }
 
-  console.log(user.password_hash);
   const passwordCorrect = user === null
     ? false
     : await bcrypt.compare(body.password, user.password_hash); //comparing recieved password and stored password hash

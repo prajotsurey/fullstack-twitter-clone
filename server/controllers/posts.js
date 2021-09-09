@@ -43,7 +43,6 @@ postRouter.get('/user/:id', async (request,response,next) => {
   const id = request.params.id;
   try{
     const result = await models.post.findAll({include: [{model: models.user, as:'creator'},{model: models.user, as:'likers'}]});
-    console.log('here');
     return response.json(result);
   } catch(error) {
     next(error);
@@ -100,10 +99,8 @@ postRouter.get('/:id', async (request, response, next) => {
 
 postRouter.post('/like/:id', async (request, response, next) => {
   const token = getTokenFrom(request);
-  console.log(token);
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
@@ -124,7 +121,6 @@ postRouter.post('/like/:id', async (request, response, next) => {
         returning: true,
         plain: true
       });
-      console.log(post)
       return response.status(200).json(
         {
           ...post[0][0],
@@ -181,7 +177,6 @@ postRouter.post('/addBookmark/:id', async (request,response) => {
   const token = getTokenFrom(request);
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
@@ -190,7 +185,6 @@ postRouter.post('/addBookmark/:id', async (request,response) => {
       userId:decodedToken.id,
       postId:request.params.id
     });
-    console.log(data.dataValues);
     return response.status(200).json({...data.dataValues});
   } catch(err) {
     console.log(err);
@@ -201,10 +195,8 @@ postRouter.post('/addBookmark/:id', async (request,response) => {
 
 postRouter.delete('/removeBookmark/:id', async (request,response) => {
   const token = getTokenFrom(request);
-  console.log(token)
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
@@ -215,7 +207,6 @@ postRouter.delete('/removeBookmark/:id', async (request,response) => {
         postId:request.params.id
       }
     });
-    console.log(data);
     return response.status(200).json({...data.dataValues});
   } catch(err) {
     console.log(err);
@@ -226,10 +217,8 @@ postRouter.delete('/removeBookmark/:id', async (request,response) => {
 
 postRouter.get('/bookmarks/all', async (request,response,next) => {
   const token = getTokenFrom(request);
-  console.log(request.headers)
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
