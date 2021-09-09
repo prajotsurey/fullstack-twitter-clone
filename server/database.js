@@ -15,11 +15,6 @@ module.exports = {
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "localhost",
-    "dialect": "postgres",
     "use_env_variable": "DATABASE_URL"
   }
 }

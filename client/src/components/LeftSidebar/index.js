@@ -1,5 +1,4 @@
 import { Fade, Menu, MenuItem } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -15,17 +14,8 @@ import LeftSidebarLink from '../LeftSidebarLink';
 
 
 
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '400px'
-  }
-}));
-
 const LeftSidebar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const classes = useStyles()
   const history = useHistory()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -93,7 +83,6 @@ const LeftSidebar = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
             TransitionComponent={Fade}
-            classes={classes.root}
           > 
             <MenuItem className="text-gray-400" onClick={handleLogout}>
               Logout
