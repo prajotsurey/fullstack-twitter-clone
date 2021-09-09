@@ -4,7 +4,7 @@ const DATABASE = process.env.NODE_ENV === "development"
   ? 
   process.env.DEV_DATABASE
   : 
-  process.env.DATABASE;
+  process.env.DATABASE_URL;
 
 
 const sequelize = process.env.NODE_ENV === "development"
