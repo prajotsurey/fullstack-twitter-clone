@@ -14,7 +14,7 @@ const getTokenFrom = request => {
 
 postRouter.get('/', async (request,response,next) => {
   const token = getTokenFrom(request);
-
+  console.log('token: ', token)
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
     console.log(decodedToken);
