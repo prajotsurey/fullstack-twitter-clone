@@ -3,6 +3,7 @@ module.exports = {
     './src/**/*.html',
     './src/**/*.vue',
     './src/**/*.js',
+    './src/**/*.svg',
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
