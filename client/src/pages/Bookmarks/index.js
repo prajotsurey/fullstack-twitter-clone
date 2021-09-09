@@ -3,6 +3,7 @@ import blogService from '../../services/postService';
 import Post from '../../components/Post';
 import CenterHeader from '../../components/CenterHeader';
 import SlideUpModal from '../../components/SlideUpModal';
+import tokenUtil from '../../utils/tokenUtil';
 
 const Bookmarks = () => {
   const [posts, setPosts] = useState([])
@@ -20,6 +21,7 @@ const Bookmarks = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      tokenUtil.setToken()
       const posts = await blogService.getBookmarks();
       setPosts(posts)
     }

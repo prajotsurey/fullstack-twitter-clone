@@ -7,7 +7,8 @@ import CustomInput from '../../components/CustomInput';
 import loginService from '../../services/loginService';
 import { ReactComponent as Logo } from '../../icons/LogoBlue.svg';
 import parsedErrors from '../../utils/errorParser';
-import postService from '../../services/postService';
+import tokenUtil from '../../utils/tokenUtil';
+
 const Login = () => {
   const history = useHistory();
   const initialValues = {
@@ -23,12 +24,12 @@ const Login = () => {
   const login = async (values, setErrors) => {
     try{
       const user = await loginService.login(values)
-      history.push('/')
       window.localStorage.setItem(
         'blogappuser', JSON.stringify(user)
       )
       console.log(user)
-      await postService.setToken(user.token)
+      await tokenUtil.setToken(user.token) 
+      history.push('/posts')
     } catch(error) {
       await setErrors(parsedErrors(error.response.data.error))
     }

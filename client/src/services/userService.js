@@ -1,5 +1,5 @@
 import axios from 'axios'
-import token from '../utils/token';
+import token from '../utils/tokenUtil';
 
 const baseUrl = '/api/users'
 const createUser = async (credentials) => {

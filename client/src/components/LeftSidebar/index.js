@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
+import { Fade, Menu, MenuItem } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { ReactComponent as BookmarksIconClicked } from '../../icons/BookmarksClicked.svg';
+import { ReactComponent as BookmarksIcon } from '../../icons/BookmarksIcon.svg';
 import { ReactComponent as HomeIcon } from '../../icons/HomeIcon.svg';
 import { ReactComponent as HomeIconClicked } from '../../icons/HomeIconClicked.svg';
-
-import { ReactComponent as BookmarksIcon } from '../../icons/BookmarksIcon.svg';
-import { ReactComponent as BookmarksIconClicked } from '../../icons/BookmarksClicked.svg';
-
-import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
-import { ReactComponent as ProfileIconClicked } from '../../icons/ProfileClicked.svg';
-
 import { ReactComponent as Logo } from '../../icons/LogoBlue.svg';
 import { ReactComponent as MoreIcon } from '../../icons/MoreIcon.svg';
-
-import { Link } from 'react-router-dom';
+import { ReactComponent as ProfileIconClicked } from '../../icons/ProfileClicked.svg';
+import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
 import LeftSidebarLink from '../LeftSidebarLink';
-import Slide from '@material-ui/core/Slide';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { Fade } from '@material-ui/core';
-import { Menu } from '@material-ui/core';
-import { MenuItem } from '@material-ui/core';
-import { useHistory } from 'react-router';
+
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const LeftSidebar = ({username}) => {
+const LeftSidebar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const classes = useStyles()
   const history = useHistory()
@@ -82,7 +78,7 @@ const LeftSidebar = ({username}) => {
             <div className="flex flex-row items-center justify-between px-3 py-2.5 ">
               <div className="flex  flex-row items-center">
                 <div className="text-md font-bold">
-                  {username}
+                  {'username'}
                 </div>
               </div>
               <div className="">

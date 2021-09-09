@@ -1,15 +1,12 @@
+import { Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { Field, Form, Formik} from 'formik';
-import useAuthStorage from '../../hooks/useAuthStorage';
-import userService from '../../services/userService';
-import blogService from '../../services/postService';
-import Post from '../../components/Post';
-import postService from '../../services/postService';
 import CenterHeader from '../../components/CenterHeader';
+import Post from '../../components/Post';
 import SlideUpModal from '../../components/SlideUpModal';
+import { default as blogService, default as postService } from '../../services/postService';
+import tokenUtil from '../../utils/tokenUtil';
 
 const BlogList = () => {
-  const [currentUser, setCurrentUser] = useState(null);
   const [posts, setPosts] = useState([])
   
   const [checked, setChecked] = React.useState(false);
@@ -23,9 +20,9 @@ const BlogList = () => {
     },500)
   }
 
-  const auth = useAuthStorage();
   useEffect(() => {
     const fetchPosts = async () => {
+      tokenUtil.setToken()
       const posts = await blogService.getPosts();
       setPosts(posts)
     }
@@ -33,18 +30,6 @@ const BlogList = () => {
     fetchPosts();
 
   },[])
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const user = JSON.parse(auth.getToken());
-      if(user.id){
-        const returnedUser = await userService.getUser(user.id);
-        setCurrentUser(returnedUser);
-      }
-    }
-
-    fetchUser();
-  },[auth])
 
   return(
     <div className="flex flex-col">

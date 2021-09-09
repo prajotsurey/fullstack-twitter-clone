@@ -3,10 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import userService from '../../services/userService';
 import Post from '../../components/Post';
 import SwitchButton from '../../components/SwitchButton';
-import useAuthStorage from '../../hooks/useAuthStorage';
 import CenterHeader from '../../components/CenterHeader';
 import SlideUpModal from '../../components/SlideUpModal';
-
+import tokenUtil from '../../utils/tokenUtil';
 
 const Profile = () => {
   const [postsToShow, setPostsToShow] = useState([]);
@@ -26,7 +25,6 @@ const Profile = () => {
     },500)
   }
 
-  const auth = useAuthStorage();
   const changePostsToShow = (selctor) => {
     if(selctor === "likes") {
       setPostsToShow(user.likedPosts)
@@ -39,6 +37,7 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      tokenUtil.setToken()
       const user = await userService.getUser()
       setUser(user);
       setPostsToShow(user.posts)
