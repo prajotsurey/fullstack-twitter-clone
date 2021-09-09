@@ -46,7 +46,7 @@ const Post = ({ post , activateModal}) => {
   return(
     <div key={post.id} className="flex flex-row border-b p-3 hover:bg-gray-50">
       <div className="mr-3">
-        <div className="h-12 w-12 rounded-xl bg-green-200">
+        <div className="h-12 w-12 rounded-xl bg-primary">
         </div>
       </div>
       <div className="flex flex-col w-full">

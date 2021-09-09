@@ -40,7 +40,7 @@ const BlogList = () => {
       <div className="border-b">
         <div className="flex flex-row px-3 pt-1">
           <div className="mr-4">
-            <div className="pt-2 w-12 h-12 rounded-full bg-green-100">
+            <div className="pt-2 w-12 h-12 rounded-full bg-primary">
 
             </div>
           </div>
@@ -55,7 +55,7 @@ const BlogList = () => {
               <Form className="flex flex-col w-full">
                 <Field className="w-full py-3 text-xl outline-none border-b " name="content" placeholder="What's hapenning?" as="textarea" />
                 <div className="self-end mt-3 mb-2">
-                  <button className="text-white font-bold text-sm py-2 px-3 rounded-full bg-green-400" type="submit">Tweet</button>
+                  <button className="text-white font-bold text-sm py-2 px-3 rounded-full bg-primary" type="submit">Tweet</button>
                 </div>
               </Form>
             )}

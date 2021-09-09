@@ -42,7 +42,7 @@ const RightSidebar = () => {
                   labore et dolore magna aliqua.
                 </div>
               </div>
-              <div className="w-52 rounded-lg bg-green-100">
+              <div className="w-52 rounded-lg bg-primary">
               </div>
             </div>
             <div className="px-4 py-3 border-b flex flex-row justify-between">
@@ -93,10 +93,10 @@ const RightSidebar = () => {
                   labore et dolore magna aliqua.
                 </div>
               </div>
-              <div className="w-52 rounded-lg bg-green-100">
+              <div className="w-52 rounded-lg bg-primary">
               </div>
             </div>
-            <div className="px-4 py-4 text-sm flex flex-row text-green-300">
+            <div className="px-4 py-4 text-sm flex flex-row text-primary">
               Show more
             </div>
           </div>
