@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { 
-  Switch,
-} from 'react-router-dom'
-
-import { PrivateRoute, PublicRoute } from './helpers/routes';
-
-import Browse from './pages/Browse';
-import BlogDetail from './pages/BlogDetail';
-import CreateBlog from './pages/CreateBlog';
+import React from 'react';
+import {
+  Switch
+} from 'react-router-dom';
 import CentreSpace from './components/CenterSpace';
-import Login from './pages/Login';
-import Landing from './pages/Landing';
-import SignUp from './pages/SignUp';
+import { PrivateRoute, PublicRoute } from './helpers/routes';
+import BlogDetail from './pages/BlogDetail';
 import Bookmarks from './pages/Bookmarks';
+import Browse from './pages/Browse';
+import CreateBlog from './pages/CreateBlog';
+import Landing from './pages/Landing';
+import Login from './pages/Login';
 import Profile from './pages/Profile';
+import SignUp from './pages/SignUp';
 import Testing from './pages/Testing';
+
+
 
 const App = () => {
   return(

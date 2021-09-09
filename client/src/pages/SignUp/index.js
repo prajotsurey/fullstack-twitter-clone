@@ -31,7 +31,7 @@ const SignUp = () => {
       passwordConfirm: values.passwordConfirm
     }
     try{
-      const response = await userService.createUser(credentials)
+      await userService.createUser(credentials)
       history.push('/login')
     } catch(error) {
       const errors = error.response.data.error

@@ -21,7 +21,7 @@ const Post = ({ post , activateModal}) => {
 
   const AddBookmark = async (postID) => {
     try{
-      const data = await postService.addBookmark(postID);
+      await postService.addBookmark(postID);
       activateModal('Tweet added to your bookmarks')
     } catch(err) {
       console.log(err)
@@ -30,7 +30,7 @@ const Post = ({ post , activateModal}) => {
   
   const RemoveBookmark = async (postID) => {
     try{
-      const data = await postService.removeBookmark(postID);
+      await postService.removeBookmark(postID);
       activateModal('Tweet removed from your bookmarks')
     } catch(err) {
       console.log(err)
