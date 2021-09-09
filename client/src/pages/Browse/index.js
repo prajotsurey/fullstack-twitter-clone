@@ -22,7 +22,10 @@ const BlogList = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      tokenUtil.setToken()
+      tokenUtil.setToken() //this sets the token private variable inside utils/token. Have to do this in every component that is calling a route that requires a token
+                          // as header because the token is cleared on page reload. I was setting the token in useEffect of app.js and calling the token requiring routes
+                          // inside child's useeffect but since child useeffect is called before parent's the routes were being called BEFORE the token was set and erroring out.
+                          //this is a temporary fix till i find a better way to store tokens
       const posts = await blogService.getPosts();
       setPosts(posts)
     }
