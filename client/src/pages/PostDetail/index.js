@@ -16,8 +16,6 @@ const PostDetail = () => {
   const classes = makeStyles()
 
   // const [bookmarkStatus, setBookmarkStatus] = useState(true);
-  const [likeStatus, setLikeStatus] = useState(false)
-  const [ likes, setLikes ] = useState()
   const [checked, setChecked] = React.useState(false);
   const [slideText, setSlideText] = React.useState('')
 
@@ -25,8 +23,6 @@ const PostDetail = () => {
     const getPost = async () => {
       const post = await postService.getPost(postId)
       setPost(post)
-      setLikeStatus(post.likeStatus)
-      setLikes(post.likes)
     }
     getPost()
   },[postId])
@@ -42,8 +38,7 @@ const PostDetail = () => {
   const handleLike = async (postId,e) => {
     e.stopPropagation()
     const response = await postService.likePost(postId)
-    setLikeStatus(Boolean(response.likeStatus))
-    setLikes(response.likes)
+    setPost(response)
   }
 
   return(
@@ -80,8 +75,8 @@ const PostDetail = () => {
           {post?.createdAt}
         </div>
         <div className="mt-4 border-t border-b py-3.5 pl-1 text-sm">
-          <span className="font-bold mr-1">{likes}</span>
-          {likes === 1
+          <span className="font-bold mr-1">{post?.likes}</span>
+          {post?.likes === 1
           ?
           <span className="text-gray-500">like</span>
           :
@@ -92,7 +87,7 @@ const PostDetail = () => {
           <div className="flex flex-row justify-start items-center text-sm ">
             <IconButton className={classes.root} onClick={(e) => { handleLike(post?.id,e) }}>
               {
-                likeStatus
+                post?.likeStatus
                 ?<LikedIcon />
                 :<LikeIcon />
                 }
