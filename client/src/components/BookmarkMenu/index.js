@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
 import { ReactComponent as PostMenuIcon } from '../../icons/PostMenuIcon.svg';
 import { IconButton, makeStyles } from '@material-ui/core';
+import postService from '../../services/postService';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,31 +18,50 @@ const useStyles = makeStyles(() => ({
 
 }));
 
-const PopOver = ({id, addHandler, removeHandler, bookmarkStatus, setBookmarkStatus}) => {
+const BookmarkMenu = ({id, status, notify}) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [bookmarkStatus, setBookmarkStatus] = useState();
+
+
+  useEffect(() => {
+    setBookmarkStatus(status)
+  },[status])
+
+  const addBookmark = async (e) => {
+    try{
+      e.stopPropagation()
+      handleClose();
+      await postService.addBookmark(id);
+      setBookmarkStatus(true)
+      setBookmarkStatus(!bookmarkStatus)
+    } catch(err) {
+      console.log(err)
+    }
+  }
+  
+  const removeBookmark = async (e) => {
+    try{
+      e.stopPropagation()  
+      handleClose();
+      await postService.removeBookmark(id);
+      setBookmarkStatus(false)
+      setBookmarkStatus(!bookmarkStatus)
+    } catch(err) {
+      console.log(err)
+    }
+  }
 
   const handleClick = (e) => {
     e.stopPropagation()
     setAnchorEl(e.currentTarget);
   };
 
-  const handleAddClick = () => {
-    addHandler(id);
-    handleClose();
-    setBookmarkStatus(!bookmarkStatus)
-  }
-  
-  const handleRemoveClick = () => {
-    removeHandler(id);
-    handleClose();
-    setBookmarkStatus(!bookmarkStatus)
-  }
-
-  const handleClose = () => {
+  const handleClose = (e) => {
     setAnchorEl(null);
+    
   };
-
+  
 return(
   <>
     <IconButton className={classes.root} onClick={(e) => { handleClick(e) }}>
@@ -50,17 +70,16 @@ return(
     <Menu
       id={`menu${id}`}
       anchorEl={anchorEl}
-      keepMounted
       open={Boolean(anchorEl)}
       onClose={handleClose}
     >
       {bookmarkStatus
       ?
-        <MenuItem className="text-gray-400" onClick={() => {handleRemoveClick()}}>
+        <MenuItem className="text-gray-400" onClick={(e) => {removeBookmark(e)}}>
           Remove from  bookmarks
         </MenuItem>
       : 
-        <MenuItem className="text-gray-400" onClick={() => {handleAddClick()}}>
+        <MenuItem className="text-gray-400" onClick={(e) => {addBookmark(e)}}>
           Add to bookmarks
         </MenuItem>
         
@@ -69,4 +88,4 @@ return(
   </>
 )}
 
-export default PopOver;
+export default BookmarkMenu;

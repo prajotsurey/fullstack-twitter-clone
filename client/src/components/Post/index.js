@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as LikedIcon } from '../../icons/LikedIcon.svg';
 import { ReactComponent as LikeIcon } from '../../icons/LikeIcon.svg';
 import postService from '../../services/postService';
-import PopOver from '../PopOver';
 import { useHistory } from 'react-router';
+import BookmarkMenu from '../BookmarkMenu';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -22,27 +22,8 @@ const useStyles = makeStyles(() => ({
 
 const Post = ({ post , activateModal}) => {
   const classes = useStyles()
-  const [bookmarkStatus, setBookmarkStatus] = useState(post.bookmarkStatus);
   const [likeStatus, setLikeStatus] = useState(Boolean(post.likeStatus))
   const history = useHistory()
-
-  const AddBookmark = async (postID) => {
-    try{
-      await postService.addBookmark(postID);
-      activateModal('Tweet added to your bookmarks')
-    } catch(err) {
-      console.log(err)
-    }
-  }
-  
-  const RemoveBookmark = async (postID) => {
-    try{
-      await postService.removeBookmark(postID);
-      activateModal('Tweet removed from your bookmarks')
-    } catch(err) {
-      console.log(err)
-    }
-  }
 
   const handleLike = async (postId,e) => {
     e.stopPropagation()
@@ -52,6 +33,7 @@ const Post = ({ post , activateModal}) => {
   }
 
   const openPost = () => {
+    console.log('inside open post')
     history.push(`/${post.creator.username}/post/${post.id}`)
   }
 
@@ -94,10 +76,8 @@ const Post = ({ post , activateModal}) => {
                   }
               </IconButton>
           </div>
-          <div className="flex flex-row flex-grow justify-start items-center text-sm ">
-            <PopOver id={post.id} addHandler={AddBookmark} removeHandler={RemoveBookmark} bookmarkStatus={bookmarkStatus} setBookmarkStatus={setBookmarkStatus}>
-              button
-            </PopOver>
+          <div onClick={(e) => e.stopPropagation()} className="flex flex-row flex-grow justify-start items-center text-sm ">
+            <BookmarkMenu id={post?.id} status={post?.bookmarkStatus} notify={activateModal} />
           </div>
         </div>
       </div>

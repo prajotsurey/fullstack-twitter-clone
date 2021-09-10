@@ -1,23 +1,22 @@
+import { IconButton, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import postService from '../../services/postService';
-import { IconButton, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import CenterHeader from '../../components/CenterHeader';
+import BookmarkMenu from '../../components/BookmarkMenu';
+import SlideUpModal from '../../components/SlideUpModal';
 import { ReactComponent as LikedIcon } from '../../icons/LikedIcon.svg';
 import { ReactComponent as LikeIcon } from '../../icons/LikeIcon.svg';
-import PopOver from '../../components/PopOver';
-import { useHistory } from 'react-router';
-import SlideUpModal from '../../components/SlideUpModal';
-import CenterHeader from '../../components/CenterHeader';
+import postService from '../../services/postService';
 
 
 const PostDetail = () => {
   const [post, setPost] = useState()
-  let { username, postId } = useParams();
+  let { postId } = useParams();
   const classes = makeStyles()
-  const [bookmarkStatus, setBookmarkStatus] = useState(true);
+
+  // const [bookmarkStatus, setBookmarkStatus] = useState(true);
   const [likeStatus, setLikeStatus] = useState(false)
-  const history = useHistory()
   const [ likes, setLikes ] = useState()
   const [checked, setChecked] = React.useState(false);
   const [slideText, setSlideText] = React.useState('')
@@ -26,32 +25,13 @@ const PostDetail = () => {
     const getPost = async () => {
       const post = await postService.getPost(postId)
       setPost(post)
-      setBookmarkStatus(post.bookmarkStatus)
       setLikeStatus(post.likeStatus)
       setLikes(post.likes)
     }
     getPost()
-  },[])
+  },[postId])
 
-  const AddBookmark = async (postID) => {
-    try{
-      await postService.addBookmark(postID);
-      activateModal('Tweet added to your bookmarks')
-    } catch(err) {
-      console.log(err)
-    }
-  }
-  
-  const RemoveBookmark = async (postID) => {
-    try{
-      await postService.removeBookmark(postID);
-      activateModal('Tweet removed from your bookmarks')
-    } catch(err) {
-      console.log(err)
-    }
-  }
-
-  const activateModal = (text) => {
+  const notify = (text) => {
     setChecked(true)
     setSlideText(text)
     setTimeout(() => {
@@ -64,10 +44,6 @@ const PostDetail = () => {
     const response = await postService.likePost(postId)
     setLikeStatus(Boolean(response.likeStatus))
     setLikes(response.likes)
-  }
-
-  const openPost = () => {
-    history.push(`/${post.creator.username}/post/${post.id}`)
   }
 
   return(
@@ -123,9 +99,7 @@ const PostDetail = () => {
             </IconButton>
           </div>
           <div className="flex flex-row justify-start items-center text-sm ">
-            <PopOver id={post?.id} addHandler={AddBookmark} removeHandler={RemoveBookmark} bookmarkStatus={bookmarkStatus} setBookmarkStatus={setBookmarkStatus}>
-              button
-            </PopOver>
+            <BookmarkMenu id={post?.id} status={post?.bookmarkStatus} notify={notify} />
           </div>
         </div>
         <SlideUpModal checked={checked} text={slideText}/>
