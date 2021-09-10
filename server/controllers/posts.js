@@ -111,49 +111,52 @@ postRouter.post('/like/:id', async (request, response, next) => {
     const result = await models.user.findOne({where: {id: decodedToken.id}});
     const user = result.dataValues;
     try{
-      const like = await models.likes.create({
-        userId: user.id,
-        postId: request.params.id
+
+      const result = await sequelize.query(`
+        insert into likes ("userId", "postId", "createdAt" )
+        values (:userid, :postid, NOW());
+
+        update posts 
+        set likes = likes + 1
+        where id = :postid;
+
+        select p.*,json_build_object('id',u.id,'username',u.username) creator, 
+        (select value from likes where "userId" = :userid and "postId" = p.id) "likeStatus",
+        (select cast("userId" as BOOLEAN) from bookmarks where "userId" = :userid and "postId" = p.id) "bookmarkStatus"
+        from posts p inner join users u on u.id = p."userId" where p.id = :postid order by p."createdAt" DESC;
+      `,{
+        replacements: {
+          userid: user.id,
+          postid: request.params.id
+        }
       });
-      const post = await models.post.increment({
-        likes: +1
-      }, {
-        where: {
-          id: request.params.id
-        },
-        returning: true,
-        plain: true
-      });
-      return response.status(200).json(
-        {
-          ...post[0][0],
-          likeStatus: 1 //current user's like status
-        });
+      return response.status(200).json(result[0][0]);
  
     } catch(err) {
       // this means another like with same userid and postid is being created
       // implement the code to unlike i.e. delete like object, decrement post's like & set votestatuts to null
-      console.log(err)
+      console.log('error message: ',err.errors[0].message);
       if(err.errors[0].message.includes('must be unique')){ 
-        await models.likes.destroy({
-          where:{
-            userId: user.id,
-            postId: request.params.id
+
+        const result = await sequelize.query(`
+        delete from  likes
+        where "userId" = :userid and "postId" = :postid;
+
+        update posts 
+        set likes = likes - 1
+        where id = :postid;
+
+        select p.*,json_build_object('id',u.id,'username',u.username) creator, 
+        (select value from likes where "userId" = :userid and "postId" = p.id) "likeStatus",
+        (select cast("userId" as BOOLEAN) from bookmarks where "userId" = :userid and "postId" = p.id) "bookmarkStatus"
+        from posts p inner join users u on u.id = p."userId" where p.id = :postid order by p."createdAt" DESC;
+      `,{
+          replacements: {
+            userid: user.id,
+            postid: request.params.id
           }
         });
-        const post = await models.post.decrement({
-          likes: 1
-        }, {
-          where: {
-            id: request.params.id
-          },
-          returning: true,
-          plain: true
-        });
-        return response.status(200).json({
-          ...post[0][0],
-          likeStatus: null
-        });
+        return response.status(200).json(result[0][0]);
       }
     }
     
