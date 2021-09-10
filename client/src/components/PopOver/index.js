@@ -2,13 +2,28 @@ import React from 'react';
 import { Menu } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
 import { ReactComponent as PostMenuIcon } from '../../icons/PostMenuIcon.svg';
+import { IconButton, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(() => ({
+  root: {
+    borderRadius: '9999px',
+    color: 'rgba(156, 163, 175, 1)',
+    padding: '0.375rem',
+    '&:hover': {
+      color: 'rgba(96, 165, 250, 1)',
+      backgroundColor: 'rgba(219, 234, 254, 1);'
+    }
+  },
+
+}));
 
 const PopOver = ({id, addHandler, removeHandler, bookmarkStatus, setBookmarkStatus}) => {
-
+  const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (e) => {
+    e.stopPropagation()
+    setAnchorEl(e.currentTarget);
   };
 
   const handleAddClick = () => {
@@ -29,9 +44,9 @@ const PopOver = ({id, addHandler, removeHandler, bookmarkStatus, setBookmarkStat
 
 return(
   <>
-    <button className="block text-sm h-5" aria-controls={`menu${id}`} aria-haspopup="true" onClick={handleClick}>
+    <IconButton className={classes.root} onClick={(e) => { handleClick(e) }}>
       <PostMenuIcon />
-    </button>
+    </IconButton>
     <Menu
       id={`menu${id}`}
       anchorEl={anchorEl}

@@ -8,8 +8,13 @@ import PopOver from '../PopOver';
 
 const useStyles = makeStyles(() => ({
   root: {
-    padding: '0px',
-    color: 'inherit'
+    borderRadius: '9999px',
+    color: 'rgba(156, 163, 175, 1)',
+    padding: '0.375rem',
+    '&:hover': {
+      color: 'rgba(236, 72, 153, 1)',
+      backgroundColor: 'rgba(252, 231, 243, 1)'
+    }
   },
 
 }));
@@ -37,14 +42,15 @@ const Post = ({ post , activateModal}) => {
     }
   }
 
-  const handleLike = async (postId) => {
+  const handleLike = async (postId,e) => {
+    e.stopPropagation()
     const response = await postService.likePost(postId)
     setLikeStatus(Boolean(response.likeStatus))
     console.log(response.likes)
   }
 
   return(
-    <div key={post.id} className="flex flex-row border-b p-3 hover:bg-gray-50">
+    <div key={post.id} className="flex flex-row border-b p-3 hover:bg-gray-50" onClick={() => {console.log('click on post')}}>
       <div className="mr-3">
         <div className="h-12 w-12 rounded-xl bg-primary">
         </div>
@@ -74,32 +80,18 @@ const Post = ({ post , activateModal}) => {
         </div>
         <div className="flex flex-row justify-between mt-3">
           <div className="flex flex-row flex-grow justify-start items-center text-sm ">
-            <div className="text-gray-400 rounded-full text-gray-400 hover:text-blue-400 hover:bg-blue-100 p-1.5">
-              <LikeIcon />
-            </div>
-          </div>
-          <div className="flex flex-row flex-grow justify-start items-center text-sm ">
-            <div className="text-gray-400 rounded-full text-gray-400 hover:text-green-500 hover:bg-green-100 p-1.5">
-              <LikeIcon />
-            </div>
-          </div>
-          <div className="flex flex-row flex-grow justify-start items-center text-sm ">
-            <div className=" rounded-full hover:text-pink-500 text-gray-400 hover:text-pink-500 hover:bg-pink-100 p-1.5">
-              <IconButton className={classes.root} onClick={() => { handleLike(post.id) }}>
+              <IconButton className={classes.root} onClick={(e) => { handleLike(post.id,e) }}>
                 {
                   likeStatus
                   ?<LikedIcon />
                   :<LikeIcon />
                   }
               </IconButton>
-            </div>
           </div>
           <div className="flex flex-row flex-grow justify-start items-center text-sm ">
-            <div className="text-gray-400 rounded-full text-gray-400 hover:text-blue-400 hover:bg-blue-100 p-1.5">
-              <PopOver id={post.id} addHandler={AddBookmark} removeHandler={RemoveBookmark} bookmarkStatus={bookmarkStatus} setBookmarkStatus={setBookmarkStatus}>
-                button
-              </PopOver>
-            </div>
+            <PopOver id={post.id} addHandler={AddBookmark} removeHandler={RemoveBookmark} bookmarkStatus={bookmarkStatus} setBookmarkStatus={setBookmarkStatus}>
+              button
+            </PopOver>
           </div>
         </div>
       </div>
