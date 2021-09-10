@@ -17,7 +17,9 @@ const getPostsByUser = async (userID) => {
 }
 
 const getPost = async(id) => {
-  const response = await axios.get(`${baseUrl}/${id}`)
+  const config = await createConfig();
+
+  const response = await axios.get(`${baseUrl}/${id}`,config)
   return response.data
 }
 

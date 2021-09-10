@@ -39,11 +39,27 @@ postRouter.get('/', async (request,response,next) => {
   }
 });
 
-postRouter.get('/user/:id', async (request,response,next) => {
-  const id = request.params.id;
+postRouter.get('/:id', async (request,response,next) => {
+  const token = getTokenFrom(request);
   try{
-    const result = await models.post.findAll({include: [{model: models.user, as:'creator'},{model: models.user, as:'likers'}]});
-    return response.json(result);
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log(decodedToken);
+    if(!token || !decodedToken.id) {
+      return response.status(401).json({error: 'token missing or invalid'});
+    }
+
+    const userResult = await models.user.findOne({where: {id: decodedToken.id}});
+
+    const user = userResult.dataValues;
+
+    const result = await sequelize.query(`
+    select p.*,json_build_object('id',u.id,'username',u.username) creator, 
+    (select value from likes where "userId" = ? and "postId" = p.id) "likeStatus",
+    (select cast("userId" as BOOLEAN) from bookmarks where "userId" = ? and "postId" = p.id) "bookmarkStatus"
+    from posts p inner join users u on u.id = p."userId" where p.id = ? order by p."createdAt" DESC;
+    `, { replacements: [user.id, user.id, request.params.id],type: Sequelize.QueryTypes.SELECT});
+
+    return response.json(result[0]);
   } catch(error) {
     next(error);
   }
@@ -82,19 +98,6 @@ postRouter.post('/', async (request,response, next) => {
     next(error);
   }
 
-});
-
-postRouter.get('/:id', async (request, response, next) => {
-  try{
-    const post = await models.post.findOne({where: {id: request.params.id}, include: [models.user]});
-    if(post) {
-      response.json(post);
-    } else {
-      response.status(404).end();
-    }
-  } catch (error) {
-    next(error);
-  }
 });
 
 postRouter.post('/like/:id', async (request, response, next) => {

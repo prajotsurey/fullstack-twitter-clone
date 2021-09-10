@@ -5,6 +5,7 @@ import { ReactComponent as LikedIcon } from '../../icons/LikedIcon.svg';
 import { ReactComponent as LikeIcon } from '../../icons/LikeIcon.svg';
 import postService from '../../services/postService';
 import PopOver from '../PopOver';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -23,6 +24,7 @@ const Post = ({ post , activateModal}) => {
   const classes = useStyles()
   const [bookmarkStatus, setBookmarkStatus] = useState(post.bookmarkStatus);
   const [likeStatus, setLikeStatus] = useState(Boolean(post.likeStatus))
+  const history = useHistory()
 
   const AddBookmark = async (postID) => {
     try{
@@ -49,8 +51,12 @@ const Post = ({ post , activateModal}) => {
     console.log(response.likes)
   }
 
+  const openPost = () => {
+    history.push(`/${post.creator.username}/post/${post.id}`)
+  }
+
   return(
-    <div key={post.id} className="flex flex-row border-b p-3 hover:bg-gray-50" onClick={() => {console.log('click on post')}}>
+    <div key={post.id} className="flex flex-row border-b p-3 hover:bg-gray-50" onClick={openPost}>
       <div className="mr-3">
         <div className="h-12 w-12 rounded-xl bg-primary">
         </div>

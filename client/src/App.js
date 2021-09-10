@@ -4,7 +4,6 @@ import {
 } from 'react-router-dom';
 import CentreSpace from './components/CenterSpace';
 import { PrivateRoute, PublicRoute } from './helpers/routes';
-import BlogDetail from './pages/BlogDetail';
 import Bookmarks from './pages/Bookmarks';
 import Browse from './pages/Browse';
 import CreateBlog from './pages/CreateBlog';
@@ -13,7 +12,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import Testing from './pages/Testing';
-
+import PostDetail from './pages/PostDetail';
 
 
 const App = () => {
@@ -23,8 +22,10 @@ const App = () => {
       <PrivateRoute path='/addBlog'>
         <CreateBlog />
       </PrivateRoute>
-      <PrivateRoute path='/posts/:id'>
-        <BlogDetail />
+      <PrivateRoute path='/:username/post/:postId'>
+        <CentreSpace >
+          <PostDetail />
+        </CentreSpace>
       </PrivateRoute>
       <PrivateRoute path='/posts'>
         <CentreSpace >
