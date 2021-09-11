@@ -6,6 +6,7 @@ import { ReactComponent as LikeIcon } from '../../icons/LikeIcon.svg';
 import postService from '../../services/postService';
 import { useHistory } from 'react-router';
 import BookmarkMenu from '../BookmarkMenu';
+import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -40,7 +41,10 @@ const Post = ({ post , activateModal}) => {
   return(
     <div key={post.id} className="flex flex-row border-b p-3 hover:bg-gray-50" onClick={openPost}>
       <div className="mr-3">
-        <div className="h-12 w-12 rounded-xl bg-primary">
+        <div className="flex flex-row items-center justify-center h-12 w-12 rounded-full bg-gray-300 text-gray-400">
+          <div className="h-9 w-9">
+          <ProfileIcon />
+          </div>
         </div>
       </div>
       <div className="flex flex-col w-full">

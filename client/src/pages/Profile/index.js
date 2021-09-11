@@ -5,6 +5,7 @@ import Post from '../../components/Post';
 import SwitchButton from '../../components/SwitchButton';
 import CenterHeader from '../../components/CenterHeader';
 import SlideUpModal from '../../components/SlideUpModal';
+import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
 
 const Profile = () => {
   const [postsToShow, setPostsToShow] = useState([]);
@@ -69,7 +70,10 @@ const Profile = () => {
           </div>
           <div className="p-3 w-full flex flex-col">
             <div className="flex flex-row justify-between items-end">
-              <div className="h-profilePicHeight w-profilePicWidth border-4 border-white -mt-20 rounded-full bg-green-200">
+              <div className="h-profilePicHeight w-profilePicWidth flex flex-row items-center justify-center border-4 border-white -mt-20 rounded-full bg-gray-300 text-gray-400 ">
+                <div className="h-16 w-16">
+                  <ProfileIcon />
+                </div>
               </div>
               <div className="mb-6">
                 <Link to="/" className="p-3 bg-white text-center rounded-full border mb-4 text-green-400 border-2 text-sm border-green-200 font-bold ">

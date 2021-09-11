@@ -4,6 +4,7 @@ import CenterHeader from '../../components/CenterHeader';
 import Post from '../../components/Post';
 import SlideUpModal from '../../components/SlideUpModal';
 import { default as blogService, default as postService } from '../../services/postService';
+import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
 
 const BlogList = () => {
   const [posts, setPosts] = useState([])
@@ -40,9 +41,11 @@ const BlogList = () => {
       <div className="border-b">
         <div className="flex flex-row px-3 pt-1">
           <div className="mr-4">
-            <div className="pt-2 w-12 h-12 rounded-full bg-primary">
-
+          <div className="flex flex-row items-center justify-center h-12 w-12 rounded-full bg-gray-300 text-gray-400 mt-2">
+            <div className="h-9 w-9">
+            <ProfileIcon />
             </div>
+          </div>
           </div>
           <Formik
             initialValues={{ content: ''}}

@@ -67,8 +67,11 @@ const LeftSidebar = () => {
           <div className="my-1.5 rounded-full hover:bg-black hover:bg-opacity-10 " onClick={handleClick}>
             <div className="flex flex-row items-center justify-between px-3 py-2.5 ">
               <div className="flex  flex-row items-center">
-                <div className="pt-2 w-12 h-12 rounded-full bg-primary">
+              <div className="flex flex-row items-center justify-center h-12 w-12 rounded-full bg-gray-300 text-gray-400">
+                <div className="h-9 w-9">
+                <ProfileIcon />
                 </div>
+              </div>
                 <div className="hidden leftShowLarge:ml-2 leftShowLarge:block text-md font-bold">
                   {'username'}
                 </div>

@@ -8,6 +8,7 @@ import SlideUpModal from '../../components/SlideUpModal';
 import { ReactComponent as LikedIcon } from '../../icons/LikedIcon.svg';
 import { ReactComponent as LikeIcon } from '../../icons/LikeIcon.svg';
 import postService from '../../services/postService';
+import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
 
 
 const PostDetail = () => {
@@ -57,7 +58,10 @@ const PostDetail = () => {
       </CenterHeader>
       <div className="flex flex-col p-3">
         <div className="flex flex-row items-center mr-3">
-          <div className="h-12 w-12 rounded-full bg-primary mr-3">
+          <div className="flex flex-row items-center justify-center h-12 w-12 rounded-full bg-gray-300 text-gray-400 mr-3">
+            <div className="h-9 w-9">
+            <ProfileIcon />
+            </div>
           </div>
           <div className="text-sm font-semibold hover:underline">
             <Link to={`/${post?.creator?.username}`}>
