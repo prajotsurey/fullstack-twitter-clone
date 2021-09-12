@@ -23,14 +23,13 @@ const useStyles = makeStyles(() => ({
 
 const Post = ({ post , activateModal}) => {
   const classes = useStyles()
-  const [likeStatus, setLikeStatus] = useState(Boolean(post.likeStatus))
+  const [POST, setPost] = useState(post)
   const history = useHistory()
 
   const handleLike = async (postId,e) => {
     e.stopPropagation()
     const response = await postService.likePost(postId)
-    setLikeStatus(Boolean(response.likeStatus))
-    console.log(response.likes)
+    setPost(response)
   }
 
   const openPost = () => {
@@ -74,11 +73,14 @@ const Post = ({ post , activateModal}) => {
           <div className="flex flex-row flex-grow justify-start items-center text-sm ">
               <IconButton className={classes.root} onClick={(e) => { handleLike(post.id,e) }}>
                 {
-                  likeStatus
+                  POST.likeStatus
                   ?<LikedIcon />
                   :<LikeIcon />
-                  }
+                }
               </IconButton>
+              <div className="fixed ml-7 text-pink-500">
+                {POST.likes?POST.likes:null}
+              </div>
           </div>
           <div onClick={(e) => e.stopPropagation()} className="flex flex-row flex-grow justify-start items-center text-sm ">
             <BookmarkMenu id={post?.id} status={post?.bookmarkStatus} notify={activateModal} />
