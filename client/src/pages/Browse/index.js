@@ -5,12 +5,21 @@ import Post from '../../components/Post';
 import SlideUpModal from '../../components/SlideUpModal';
 import { default as blogService, default as postService } from '../../services/postService';
 import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
+import * as Yup from 'yup';
 
 const BlogList = () => {
   const [posts, setPosts] = useState([])
   
   const [checked, setChecked] = React.useState(false);
   const [slideText, setSlideText] = React.useState('')
+
+  const initialValues = {
+    content: "",
+  }
+
+  const validationSchema = Yup.object().shape({
+    content: Yup.string().required().min(1)
+  })
 
   const notify = (text) => {
     setChecked(true)
@@ -47,18 +56,20 @@ const BlogList = () => {
           </div>
           </div>
           <Formik
-            initialValues={{ content: ''}}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
             onSubmit={ async (values, actions) => {
+              console.log('in submit')
               const response = await postService.createPost(values)
               setPosts([response,...posts])
             }}
             >
-            {() => (
+            {(isValid, dirty) => (
               <Form className="flex flex-col w-full">
                 <Field className="w-full py-3 text-xl outline-none border-b " name="content" placeholder="What's hapenning?" as="textarea" />
                 <div className="self-end mt-3 mb-2">
-                  <button className="text-white font-bold text-sm py-2 px-3 rounded-full bg-primary" type="submit">Tweet</button>
-                </div>
+                  <button className="text-white font-bold text-sm py-2 px-3 rounded-full bg-primary disabled:opacity-50" type="submit" disabled={!isValid || !dirty}>Tweet</button>
+                </div> 
               </Form>
             )}
           </Formik>

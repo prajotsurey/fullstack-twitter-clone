@@ -55,13 +55,13 @@ const SignUp = () => {
           await submitForm(values, setErrors)
         }}
       > 
-        {() => (
+        {(isValid, dirty) => (
           <Form className="flex-col w-full">
             {/* material ui textfield customized to work with formik*/}
             <CustomInput label="Username" name="username" type="text" />
             <CustomInput label="Password" name="password" placeholder="Must be atleast 8 characters" type="password" />
             <CustomInput label="Confirm password" name="passwordConfirm" placeholder="Confirm password" type="password" />
-            <StyledButton type="submit">Sign up</StyledButton>
+            <StyledButton filled type="submit" disabled={!isValid || !dirty}>Sign up</StyledButton>
           </Form>
         )}
         

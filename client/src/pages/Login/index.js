@@ -7,6 +7,8 @@ import CustomInput from '../../components/CustomInput';
 import loginService from '../../services/loginService';
 import { ReactComponent as Logo } from '../../icons/LogoBlue.svg';
 import parsedErrors from '../../utils/errorParser';
+import StyledButton from '../../components/StyledButton';
+
 
 const Login = () => {
   const history = useHistory();
@@ -46,11 +48,11 @@ const Login = () => {
          await login(values,setErrors)
         }}
         > 
-          {() => (
+          {({isValid, dirty}) => (
             <Form className="flex-col w-full">
               <CustomInput label="Username" name="username" type="text" />
               <CustomInput label="Password" name="password" type="password" />
-              <button className="rounded-full w-full bg-enabledButton disabled:opacity-disabled h-12 px-4 font-bold text-white" type="submit">Login</button>
+              <StyledButton filled type="submit" disabled={!isValid || !dirty}>Log in</StyledButton>
             </Form>
           )}
           
