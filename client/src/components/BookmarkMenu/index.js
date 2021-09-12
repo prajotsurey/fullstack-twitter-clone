@@ -35,6 +35,7 @@ const BookmarkMenu = ({id, status, notify}) => {
       await postService.addBookmark(id);
       setBookmarkStatus(true)
       setBookmarkStatus(!bookmarkStatus)
+      notify('Tweet added to your bookmarks')
     } catch(err) {
       console.log(err)
     }
@@ -47,6 +48,7 @@ const BookmarkMenu = ({id, status, notify}) => {
       await postService.removeBookmark(id);
       setBookmarkStatus(false)
       setBookmarkStatus(!bookmarkStatus)
+      notify('Tweet removed from your bookmarks')
     } catch(err) {
       console.log(err)
     }

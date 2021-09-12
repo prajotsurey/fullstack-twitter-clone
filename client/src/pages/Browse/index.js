@@ -12,7 +12,7 @@ const BlogList = () => {
   const [checked, setChecked] = React.useState(false);
   const [slideText, setSlideText] = React.useState('')
 
-  const checker = (text) => {
+  const notify = (text) => {
     setChecked(true)
     setSlideText(text)
     setTimeout(() => {
@@ -22,7 +22,6 @@ const BlogList = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      
       const posts = await blogService.getPosts();
       setPosts(posts)
     }
@@ -65,7 +64,7 @@ const BlogList = () => {
           </Formik>
         </div>
       </div>
-      {posts.map(post => <Post key={post.id} post={post} activateModal={checker}/>)}
+      {posts.map(post => <Post key={post.id} post={post} notify={notify}/>)}
       <SlideUpModal checked={checked} text={slideText}/>
     </div>
   );

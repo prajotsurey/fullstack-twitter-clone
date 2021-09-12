@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
 
 }));
 
-const Post = ({ post , activateModal}) => {
+const Post = ({ post , notify}) => {
   const classes = useStyles()
   const [POST, setPost] = useState(post)
   const history = useHistory()
@@ -83,7 +83,7 @@ const Post = ({ post , activateModal}) => {
               </div>
           </div>
           <div onClick={(e) => e.stopPropagation()} className="flex flex-row flex-grow justify-start items-center text-sm ">
-            <BookmarkMenu id={post?.id} status={post?.bookmarkStatus} notify={activateModal} />
+            <BookmarkMenu id={post?.id} status={post?.bookmarkStatus} notify={notify} />
           </div>
         </div>
       </div>
