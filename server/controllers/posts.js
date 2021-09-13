@@ -135,7 +135,6 @@ postRouter.post('/like/:id', async (request, response, next) => {
     } catch(err) {
       // this means another like with same userid and postid is being created
       // implement the code to unlike i.e. delete like object, decrement post's like & set votestatuts to null
-      console.log('error message: ',err.errors[0].message);
       console.log('error message: ',err);
       if(err.errors[0].message.includes('must be unique')){ 
 
