@@ -62,8 +62,8 @@ const Landing = () => {
           </div>
         </div>
       </div>
-      <div class="absolute inset-x-0 bottom-0 h-11 z-10 bg-white text-center leading-10 text-gray-500 text-sm">
-          About
+      <div class="fixed inset-x-0 bottom-0 h-11 z-10 bg-white text-center leading-10 text-gray-500 text-sm">
+        <a href="https://github.com/prajotsurey/fullstack-twitter-clone" target="_blank" rel="noreferrer">GitHub</a>
       </div>
     </div>
   )
