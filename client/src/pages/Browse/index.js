@@ -64,7 +64,7 @@ const BlogList = () => {
               setPosts([response,...posts])
             }}
             >
-            {(isValid, dirty) => (
+            {({isValid, dirty}) => (
               <Form className="flex flex-col w-full">
                 <Field className="w-full py-3 text-xl outline-none border-b " name="content" placeholder="What's hapenning?" as="textarea" />
                 <div className="self-end mt-3 mb-2">

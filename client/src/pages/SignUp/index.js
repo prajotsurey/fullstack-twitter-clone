@@ -55,7 +55,7 @@ const SignUp = () => {
           await submitForm(values, setErrors)
         }}
       > 
-        {(isValid, dirty) => (
+        {({isValid, dirty}) => (
           <Form className="flex-col w-full">
             {/* material ui textfield customized to work with formik*/}
             <CustomInput label="Username" name="username" type="text" />
