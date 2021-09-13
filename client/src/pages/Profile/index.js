@@ -6,6 +6,7 @@ import SwitchButton from '../../components/SwitchButton';
 import CenterHeader from '../../components/CenterHeader';
 import SlideUpModal from '../../components/SlideUpModal';
 import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
+import toDate from '../../utils/toDate';
 
 const Profile = () => {
   const [postsToShow, setPostsToShow] = useState([]);
@@ -84,14 +85,14 @@ const Profile = () => {
             <div className="text-2xl font-semibold">
               {user.username}
             </div>
-            <div className="text-sm text-gray-500">
+            {/* <div className="text-sm text-gray-500">
               @something
             </div>
             <div className="text-sm my-2">
               bio
-            </div>
+            </div> */}
             <div className="text-sm mb-2 text-gray-500">
-              joined date
+              Joined {toDate(user.createdAt).userDate}
             </div>
             <div className="text-sm text-gray-500">
               <span className="text-black font-bold">32</span> following

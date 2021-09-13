@@ -9,7 +9,7 @@ import { ReactComponent as LikedIcon } from '../../icons/LikedIcon.svg';
 import { ReactComponent as LikeIcon } from '../../icons/LikeIcon.svg';
 import postService from '../../services/postService';
 import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
-
+import toDate from '../../utils/toDate'
 
 const PostDetail = () => {
   const [post, setPost] = useState()
@@ -42,6 +42,8 @@ const PostDetail = () => {
     setPost(response)
   }
 
+
+  
   return(
     <div className="flex flex-col">
       <CenterHeader>
@@ -76,7 +78,7 @@ const PostDetail = () => {
           {post?.content}
         </div>
         <div className="text-sm text-gray-500 mt-3">
-          {post?.createdAt}
+          {toDate(post?.createdAt).postDate}
         </div>
         <div className="mt-4 border-t border-b py-3.5 pl-1 text-sm">
           <span className="font-bold mr-1">{post?.likes}</span>
