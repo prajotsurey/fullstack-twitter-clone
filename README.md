@@ -1,4 +1,4 @@
-# fullstack-twitter-clone (WIP)
+# fullstack-twitter-clone (WIP) [LINK](https://socialist-poutine-39664.herokuapp.com/)
 
 A minimal Fullstack Twitter clone made using Express and React.
 
@@ -36,24 +36,16 @@ npm install
 4. Start PostgreSQL server
 5. Create database named 'twitter'
 6. Add a user with the username `postgres` and password `password`
+7. Create a .env file with the following data
+```
+PORT= *port number*
+SECRET= *your secret string*
+DEV_DATABASE='twitter'
+```
 7. Run Migrations
 ```bash
 npx sequelize-cli db:migrate
 ```
-8. Install [Visual Studio Code REST client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
-9. Create a file named `requests.rest` at the root and in it write:
-
-```bash
-POST http://localhost:3001/api/users/ HTTP/1.1
-content-type: application/json
-
-{
-    "username": "newusername",
-    "password": "newpassword"
-}
-```
-10. Run the request by clicking on the prompt
-
 ## Usage
 
 1. Start Server
@@ -74,12 +66,7 @@ npm start
 
 ## Features
 
-1. Login
-2. Create, bookmark and like tweets
-3. Deploy backend and frontend
-
-### WIP
-
-* Register user
-* Follow users
-* Logout
+1. Register User
+2. Login
+3. Create, bookmark and like tweets
+3. Logout
