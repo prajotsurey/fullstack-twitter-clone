@@ -78,7 +78,7 @@ const Post = ({ post , notify}) => {
                   :<LikeIcon />
                 }
               </IconButton>
-              <div className="absolute ml-7 text-pink-500">
+              <div className={`absolute ml-7 ${POST.likeStatus ? 'text-pink-500' : null}`}>
                 {POST.likes?POST.likes:null}
               </div>
           </div>
