@@ -11,6 +11,13 @@ const getPosts = async() => {
   return response.data
 }
 
+const getPaginatedPosts = async(cursor) => {
+  const config = await createConfig();
+
+  const response = await axios.get(`${baseUrl}/paginated/${cursor}`,config)
+  return response.data
+}
+
 const getPostsByUser = async (userID) => {
   const response = await axios.get(`${baseUrl}/user/${userID}`)
   return response.data
@@ -60,4 +67,4 @@ const getBookmarks = async() => {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default {  getPosts, createPost, getPost, getPostsByUser, likePost, addBookmark, removeBookmark, getBookmarks}
+export default {  getPosts, createPost, getPost, getPostsByUser, likePost, addBookmark, removeBookmark, getBookmarks, getPaginatedPosts}

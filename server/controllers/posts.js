@@ -15,6 +15,7 @@ const getTokenFrom = request => {
 postRouter.get('/', async (request,response,next) => {
   const token = getTokenFrom(request);
   console.log('token: ', token)
+  const limit = 7;
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
     console.log(decodedToken);
@@ -30,14 +31,56 @@ postRouter.get('/', async (request,response,next) => {
     select p.*,json_build_object('id',u.id,'username',u.username) creator, 
     (select value from likes where "userId" = ? and "postId" = p.id) "likeStatus",
     (select cast("userId" as BOOLEAN) from bookmarks where "userId" = ? and "postId" = p.id) "bookmarkStatus"
-    from posts p inner join users u on u.id = p."userId" order by p."createdAt" DESC;
-    `, { replacements: [user.id, user.id],type: Sequelize.QueryTypes.SELECT});
-
-    return response.json(result);
+    from posts p inner join users u on u.id = p."userId" order by p."createdAt" DESC
+    limit ?;
+    `, { replacements: [user.id, user.id, limit+1],type: Sequelize.QueryTypes.SELECT});
+    // call the first 8 posts and return the first 7 posts
+    // if 8th post exists, meaning we can call more posts via paginated posts hence set hasMore to true
+    return response.json({
+      posts: result.slice(0, limit),
+      hasMore: result.length === limit+1 
+    });
   } catch(error) {
     next(error);
   }
 });
+
+postRouter.get('/paginated/:cursor', async (request,response,next) => {
+  const token = getTokenFrom(request);
+  const cursor = request.params.cursor;
+  const limit = 7;
+  try{
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log(decodedToken);
+    if(!token || !decodedToken.id) {
+      return response.status(401).json({error: 'token missing or invalid'});
+    }
+
+    const userResult = await models.user.findOne({where: {id: decodedToken.id}});
+
+    const user = userResult.dataValues;
+
+    const result = await sequelize.query(`
+    select p.*,json_build_object('id',u.id,'username',u.username) creator, 
+    (select value from likes where "userId" = ? and "postId" = p.id) "likeStatus",
+    (select cast("userId" as BOOLEAN) from bookmarks where "userId" = ? and "postId" = p.id) "bookmarkStatus"
+    from posts p inner join users u on u.id = p."userId" 
+    ${cursor ? `where p."createdAt" < ?` : ''}
+    order by p."createdAt" DESC limit ?;
+    `, { replacements: [user.id, user.id, cursor, limit+1],type: Sequelize.QueryTypes.SELECT});
+    
+    // call the first 8 posts after the cursor and return the first 7 posts
+    // if 8th post exists, meaning we can call more posts via paginated posts. Hence set hasMore to true
+    
+    return response.json({
+      posts: result.slice(0, limit),
+      hasMore: result.length === limit+1 
+    });
+  } catch(error) {
+    next(error);
+  }
+});
+
 
 postRouter.get('/:id', async (request,response,next) => {
   const token = getTokenFrom(request);
@@ -170,6 +213,19 @@ postRouter.delete('/:id', async (request, response, next) => {
   try{
     await models.post.destroy({
       where: { id: request.params.id }
+    });
+    response.status(204).json({
+      status: 'success'
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+postRouter.delete('/', async (request, response, next) => {
+  try{
+    await models.post.destroy({
+      where: {}
     });
     response.status(204).json({
       status: 'success'

@@ -8,7 +8,7 @@ import { ReactComponent as ProfileIcon } from '../../icons/ProfileIcon.svg';
 import * as Yup from 'yup';
 
 const BlogList = () => {
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState()
   
   const [checked, setChecked] = React.useState(false);
   const [slideText, setSlideText] = React.useState('')
@@ -31,13 +31,23 @@ const BlogList = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const posts = await blogService.getPosts();
-      setPosts(posts)
+      const response = await blogService.getPosts();
+      setPosts(response)
     }
 
     fetchPosts();
 
   },[])
+
+  const getNextPosts = async () => {
+    const response = await blogService.getPaginatedPosts(posts.posts[posts.posts.length-1].createdAt);
+    setPosts({
+      posts: [...posts.posts, ...response.posts],
+      hasMore: response.hasMore
+    })
+  }
+
+  console.log(posts)
 
   return(
     <div className="flex flex-col">
@@ -75,7 +85,14 @@ const BlogList = () => {
           </Formik>
         </div>
       </div>
-      {posts.map(post => <Post key={post.id} post={post} notify={notify}/>)}
+      {posts?.posts?.map(post => <Post key={post.id} post={post} notify={notify}/>)}
+      <div> 
+        {posts?.hasMore 
+        ?
+        <button onClick={getNextPosts}>'hello'</button> 
+        :null
+        }
+      </div>
       <SlideUpModal checked={checked} text={slideText}/>
     </div>
   );
