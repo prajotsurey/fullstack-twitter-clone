@@ -54,12 +54,12 @@ const Post = ({ post , notify}) => {
                 {post.creator.username}
               </Link>
             </span>
-            <span className="text-sm text-gray-400 pl-1">
+            {/* <span className="text-sm text-gray-400 pl-1">
               @handle
             </span>
             <span className="text-sm text-gray-400 pl-1">
               . date
-            </span>
+            </span> */}
             <div>
             {post.content}
             </div>
@@ -70,7 +70,7 @@ const Post = ({ post , notify}) => {
           </div>
         </div>
         <div className="flex flex-row justify-between mt-3">
-          <div className="flex flex-row flex-grow justify-start items-center text-sm ">
+          <div className="relative flex flex-row flex-grow justify-start items-center text-sm ">
               <IconButton className={classes.root} onClick={(e) => { handleLike(post.id,e) }}>
                 {
                   POST.likeStatus
@@ -78,7 +78,7 @@ const Post = ({ post , notify}) => {
                   :<LikeIcon />
                 }
               </IconButton>
-              <div className="fixed ml-7 text-pink-500">
+              <div className="absolute ml-7 text-pink-500">
                 {POST.likes?POST.likes:null}
               </div>
           </div>
