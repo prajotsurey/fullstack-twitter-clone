@@ -5,6 +5,7 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        onDelete:'CASCADE',
         references: {
           model: 'users',
           key: 'id'
@@ -13,6 +14,7 @@ module.exports = {
       postId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        onDelete:'CASCADE',
         references: {
           model: 'posts',
           key: 'id'
@@ -23,7 +25,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.DATE
       },
       value: {
