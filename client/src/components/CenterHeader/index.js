@@ -4,7 +4,7 @@ const CenterHeader = ({children}) => {
   
   return(
     <>
-      <div className="h-14 flex flex-row items-center border-b fixed bg-white w-center "> 
+      <div className="h-14 flex flex-row items-center border-b fixed bg-white w-center z-10"> 
         {children}
       </div>
       <div className="pl-4 h-14 flex flex-row items-center border-b"></div>
