@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SearchForm from '../SearchForm';
 import newsService from '../../services/newsService';
-
+import newsObject from '../../utils/newsObject';
 
 const initialValues = {
   search: "",
@@ -22,7 +22,12 @@ const RightSidebar = () => {
     if(today.getDate() === newsDate.getDate() && today.getMonth() === newsDate.getMonth()){
       return 'Today'
     }
-    return `${today.getDate()} ${today.getMonth()}`
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    return `${today.getDate()} ${monthNames[today.getMonth()]}`
   }
 
   const openNews = (url) => {
@@ -32,8 +37,15 @@ const RightSidebar = () => {
 
   useEffect(() => {
     const getHeadlines = async () => {
-      const news = await newsService.getHeadlines()
-      setNews(news.articles)
+      //this does not work in prod on a devloper account. dev account only allows access from localhost
+      //uncomment the following in dev
+        // const news = await newsService.getHeadlines() 
+        // console.log("%j", (JSON.stringify(news.articles.slice(0,5))))
+        // setNews(news.articles)
+
+      //added this dummy object for prod
+      setNews(newsObject)
+      console.log(newsObject)
     }
 
     getHeadlines()
