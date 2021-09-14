@@ -17,7 +17,12 @@ const RightSidebar = () => {
   }
 
   const dateToText = (date) => {
-    return date
+    const today = new Date()
+    const newsDate = new Date(date)
+    if(today.getDate() === newsDate.getDate() && today.getMonth() === newsDate.getMonth()){
+      return 'Today'
+    }
+    return `${today.getDate()} ${today.getMonth()}`
   }
 
   const openNews = (url) => {
