@@ -71,7 +71,10 @@ const BlogList = () => {
             onSubmit={ async (values, actions) => {
               console.log('in submit')
               const response = await postService.createPost(values)
-              setPosts([response,...posts])
+              setPosts({
+                posts: [response, ...posts.posts],
+                hasMore: response.hasMore
+              })
             }}
             >
             {({isValid, dirty}) => (
