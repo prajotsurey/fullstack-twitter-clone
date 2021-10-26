@@ -38,7 +38,7 @@ const LeftSidebar = () => {
       </div>
       <div className="top-0 bottom-0 flex flex-col py-1 px-3 items-center justify-between leftShowLarge:items-stretch md:flex leftShowLarge:w-leftLarge w-leftSmall fixed">
         <div>
-          <Link to="/posts" className="flex flex-row self-start p-3 rounded-full hover:bg-blue-100 ">
+          <Link to="/posts" className="flex flex-row self-start p-3 rounded-full hover:bg-blue-100 w-14 ">
             <div className="h-8 w-8 flex items-center justify-items-center">
               <Logo/>
             </div> 
