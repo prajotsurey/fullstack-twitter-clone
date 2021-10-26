@@ -23,7 +23,8 @@ module.exports = {
       screens: {
         'leftShowLarge': '1230px',
         'rightShowSmall': '1018px',
-        'rightShowLarge': '1107px'
+        'rightShowLarge': '1107px',
+        'medium': '750px',
       },
       colors: {
         'primary': '#1b95e0',
