@@ -59,7 +59,7 @@ const RightSidebar = () => {
           <SearchForm initialValues={initialValues} search={search} />
         </div>
         {/* dummy box to add margin so content does not hide behind search box */}
-        <div className="fixed flex flex-col w-rightLarge mt-3 rounded-xl bg-gray-50 w-full top-14">
+        <div className="fixed flex flex-col w-rightLarge mt-3 rounded-xl bg-gray-50 w-full top-14 bottom-0 overflow-y-scroll">
           <div className="px-4 py-3 text-xl font-semibold ">
             What's happening
           </div>
