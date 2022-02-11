@@ -86,10 +86,10 @@ const BlogList = () => {
         </div>
       </div>
       {posts?.posts?.map(post => <Post key={post.id} post={post} notify={notify}/>)}
-      <div> 
+      <div className='flex flex-row justify-center items-center p-4'>
         {posts?.hasMore 
         ?
-        <button onClick={getNextPosts}>'hello'</button> 
+        <button className='w-56 text-white bg-enabledButton py-1 rounded-md' filled onClick={getNextPosts}>Load More Posts</button>
         :null
         }
       </div>
