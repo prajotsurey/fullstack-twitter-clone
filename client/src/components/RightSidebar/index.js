@@ -50,13 +50,13 @@ const RightSidebar = () => {
 
   return(
     <div className="flex flex-col flex-grow items-start">
-      <div className="top-0 bottom-0 flex-col ml-7 mr-3 lg:items-start hidden rightShowLarge:flex rightShowLarge:w-rightLarge ">
+      <div className="top-0 bottom-0 h-full flex-col ml-7 mr-3 lg:items-start hidden rightShowLarge:flex rightShowLarge:w-rightLarge ">
         {/* after adding position fixed, the search bar does not follow width properties of its parent. Added those again to make it work  */}
         <div className="fixed h-14 bg-white flex flex-col justify-center hidden rightShowLarge:flex rightShowLarge:w-rightLarge">
           <SearchForm initialValues={initialValues} search={search} />
         </div>
         {/* dummy box to add margin so content does not hide behind search box */}
-        <div className="fixed flex flex-col w-rightLarge mt-3 rounded-xl bg-gray-50 w-full top-14 bottom-0 overflow-y-scroll">
+        <div className="mt-20 sticky top-20 flex flex-col w-rightLarge mt-3 rounded-xl bg-gray-50 w-full top-14 bottom-0 overflow-y-scroll">
           <div className="px-4 py-3 text-xl font-semibold ">
             What's happening
           </div>
