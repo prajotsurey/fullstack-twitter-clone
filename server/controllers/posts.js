@@ -14,11 +14,9 @@ const getTokenFrom = request => {
 
 postRouter.get('/', async (request,response,next) => {
   const token = getTokenFrom(request);
-  console.log('token: ', token)
   const limit = 7;
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
@@ -51,7 +49,6 @@ postRouter.get('/paginated/:cursor', async (request,response,next) => {
   const limit = 7;
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
@@ -86,7 +83,6 @@ postRouter.get('/:id', async (request,response,next) => {
   const token = getTokenFrom(request);
   try{
     const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log(decodedToken);
     if(!token || !decodedToken.id) {
       return response.status(401).json({error: 'token missing or invalid'});
     }
@@ -137,7 +133,7 @@ postRouter.post('/', async (request,response, next) => {
     });
   
   } catch(error) {
-    console.log(error)
+    console.log(error);
     next(error);
   }
 

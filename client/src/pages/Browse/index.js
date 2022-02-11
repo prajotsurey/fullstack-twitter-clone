@@ -47,8 +47,6 @@ const BlogList = () => {
     })
   }
 
-  console.log(posts)
-
   return(
     <div className="flex flex-col">
       <CenterHeader>
@@ -69,7 +67,6 @@ const BlogList = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={ async (values, actions) => {
-              console.log('in submit')
               const response = await postService.createPost(values)
               setPosts({
                 posts: [response, ...posts.posts],

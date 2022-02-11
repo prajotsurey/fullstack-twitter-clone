@@ -17,6 +17,7 @@ const getUser = async () => {
 
 
   const response = await axios.get(`${baseUrl}`,config)
+  console.log(response)
   return response.data
 }
 

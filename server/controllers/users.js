@@ -112,7 +112,6 @@ userRouter.get('/', async (request,response, next) => {
 });
 
 userRouter.get('/handle/:handle', async (request,response) => {
-  console.log('here');
   const User = await models.user.findOne({ 
     where: {username: request.params.handle}, 
     include: [

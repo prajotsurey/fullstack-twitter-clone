@@ -45,7 +45,6 @@ const Profile = () => {
     fetchUser();
   },[id])
 
-  
   if(user){
     return(
       <div className="flex flex-col">

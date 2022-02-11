@@ -33,7 +33,6 @@ const Post = ({ post , notify}) => {
   }
 
   const openPost = () => {
-    console.log('inside open post')
     history.push(`/${post.creator.username}/post/${post.id}`)
   }
 

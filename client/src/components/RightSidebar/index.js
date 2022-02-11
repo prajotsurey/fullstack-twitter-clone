@@ -13,7 +13,6 @@ const RightSidebar = () => {
   const [news,setNews] = useState([])
 
   const search = (search) => {
-    console.log(search)
   }
 
   const dateToText = (date) => {
@@ -40,12 +39,10 @@ const RightSidebar = () => {
       //this does not work in prod on a devloper account. dev account only allows access from localhost
       //uncomment the following in dev
         // const news = await newsService.getHeadlines() 
-        // console.log("%j", (JSON.stringify(news.articles.slice(0,5))))
         // setNews(news.articles)
 
       //added this dummy object for prod
       setNews(newsObject)
-      console.log(newsObject)
     }
 
     getHeadlines()
