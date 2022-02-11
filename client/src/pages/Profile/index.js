@@ -38,8 +38,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const user = await userService.getUser()
+      if(!user.posts) {
+        user.posts = []
+      }      
       setUser(user);
-      setPostsToShow(user.posts)
+      setPostsToShow(user.posts? user.posts : [])
     }
 
     fetchUser();
