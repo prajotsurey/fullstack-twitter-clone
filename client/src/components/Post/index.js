@@ -32,12 +32,9 @@ const Post = ({ post , notify}) => {
     setPost(response)
   }
 
-  const openPost = () => {
-    history.push(`/${post.creator.username}/post/${post.id}`)
-  }
 
   return(
-    <div key={post.id} className="flex flex-row border-b p-3 hover:bg-gray-50" onClick={openPost}>
+    <div  key={post.id} className="flex flex-row border-b p-3 hover:bg-gray-50">
       <div className="mr-3">
         <div className="flex flex-row items-center justify-center h-12 w-12 rounded-full bg-gray-300 text-gray-400">
           <div className="h-9 w-9">
@@ -46,8 +43,8 @@ const Post = ({ post , notify}) => {
         </div>
       </div>
       <div className="flex flex-col w-full">
-        <div className="flex flex-row justify-between">
-          <div className="">
+        <div className="flex flex-row justify-stretch">
+          <div className="flex-grow">
             <span className="text-sm font-semibold hover:underline">
               <Link to={`/${post.creator.username}`}>
                 {post.creator.username}
@@ -59,17 +56,13 @@ const Post = ({ post , notify}) => {
             <span className="text-sm text-gray-400 pl-1">
               . date
             </span> */}
-            <div>
+            <Link className="block" to={`/${post.creator.username}/post/${post.id}`}>
             {post.content}
-            </div>
-          </div>
-          <div >
-            <button className="w-10 h-10 p-2 rounded-full bg-gray-50 hover:bg-gray-100" >
-            </button>
+            </Link>
           </div>
         </div>
         <div className="flex flex-row justify-between mt-3">
-          <div className="relative flex flex-row flex-grow justify-start items-center text-sm ">
+          <div className="relative z-10 flex flex-row flex-grow justify-start items-center text-sm ">
               <IconButton className={classes.root} onClick={(e) => { handleLike(post.id,e) }}>
                 {
                   POST.likeStatus
@@ -81,7 +74,7 @@ const Post = ({ post , notify}) => {
                 {POST.likes?POST.likes:null}
               </div>
           </div>
-          <div onClick={(e) => e.stopPropagation()} className="flex flex-row flex-grow justify-start items-center text-sm ">
+          <div onClick={(e) => e.stopPropagation()} className="z-10 flex flex-row flex-grow justify-start items-center text-sm ">
             <BookmarkMenu id={post?.id} status={post?.bookmarkStatus} notify={notify} />
           </div>
         </div>
